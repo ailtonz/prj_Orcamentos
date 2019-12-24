@@ -1883,7 +1883,7 @@ End With
 Do While Not rstListagem.EOF
 
     With Sheets(Guia)
-        .Cells(Linha, Coluna).value = rstListagem.Fields("DESCRICAO")
+        .Cells(Linha, 11).value = rstListagem.Fields("DESCRICAO")
         rstListagem.MoveNext
         Linha = Linha + 1
     End With

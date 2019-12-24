@@ -119,18 +119,18 @@ Dim sValor As String: sValor = Me.txtValorMoeda.value
 Dim sMoeda As String: sMoeda = "Dolar"
 Dim sID As String: sID = "1"
 
-Dim sDataAtualizacao As String: sDataAtualizacao = Controle
+Dim controleAtualizacao As String: controleAtualizacao = Controle
 Dim sDescricao As String: sDescricao = "Atualização do dolar"
 
 sScript = "UPDATE admcategorias SET admcategorias.Descricao01 = '" & sValor & "' WHERE (((admcategorias.categoria)='" & sMoeda & "') AND ((admcategorias.codRelacao)=(SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='MOEDA' and codRelacao = 0)))"
 
 loadBancos
 
-'' CADASTRO DA SUBCATEGORIA
-admCadastroAtualizacao banco(0), "UPDATESYSTEM", sDataAtualizacao, ""
+'' ATUALIZAÇÃO
+admCadastroAtualizacao banco(0), controleAtualizacao, getIdSubCategoria(banco(0), "UPDATESYSTEM")
 
-'' CADASTRO DA ATUALIZAÇÃO
-admCadastroAtualizacaoScript banco(0), sDataAtualizacao, sDescricao, sScript
+'' CADASTRAR
+admCadastroAtualizacaoScript banco(0), getIdSubCategoria(banco(0), controleAtualizacao), sDescricao, sScript
 
 '' MSGBOX
 MsgBox "Valor do Dolar Atualizado com sucesso.", vbInformation + vbOKOnly, "Atualização de moeda"
@@ -275,42 +275,30 @@ Dim strCaminhoDoBancoServer As String: strCaminhoDoBancoServer = Me.txtCaminhoDo
 End Sub
 
 Private Sub cmdNovoClienteAtualizar_Click()
-'Dim sScript As String
-'Dim sValor As String
-'Dim sDescricao As String: sDescricao = "CADASTRO DE CLIENTE"
-'Dim sID As String: sID = "2"
-'Dim intCurrentRow As Long
-''Dim sDataAtualizacao As String: sDataAtualizacao = Format(Now(), "dd/mm/yy")
-'Dim controleAtualizacao As String: controleAtualizacao = Controle
-'
-''' CARREGAR BANCO
-'loadBancos
-'
-'admCadastroUpdateSystem banco(0), controleAtualizacao, "Cadastro de clientes."
-'
-'getIdSubCategoria banco(0), controleAtualizacao
-'
-'
-''' LIMPAR
-'admNovoCliente_LIMPAR banco(0)
-'
-'For intCurrentRow = 0 To lstNovosClientes.ListCount - 1
-'    If Not IsNull(lstNovosClientes.Column(0, intCurrentRow)) Then
-'        sValor = lstNovosClientes.Column(0, intCurrentRow)
-'        'sScript = "INSERT INTO admCategorias (admCategorias.codRelacao, admCategorias.Categoria) SELECT (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao ,'" & sValor & "'"
-'
-'        sScript = "INSERT INTO admCategorias ( codRelacao, Categoria ) SELECT TOP 1 (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao, '" & sValor & "' AS strDescricao FROM admCategorias"
-'
-'        '' CADASTRAR
-'        admNovoCliente_CADASTRAR banco(0), sID, sDescricao, sScript, controleAtualizacao
-'
-'    End If
-'Next intCurrentRow
-'
-''' ATUALIZAR
-'admNovoCliente_ATUALIZAR banco(0)
-'
-'MsgBox "OK!", vbInformation + vbOKOnly, "CADASTRO DE CLIENTES"
+Dim sScript As String
+Dim sValor As String
+Dim sDescricao As String: sDescricao = "CADASTRO DE CLIENTE"
+Dim sID As String: sID = "2"
+Dim intCurrentRow As Long
+Dim controleAtualizacao As String: controleAtualizacao = Controle
+
+'' CARREGAR BANCO
+loadBancos
+
+admCadastroAtualizacao banco(0), controleAtualizacao, getIdSubCategoria(banco(0), "UPDATESYSTEM")
+
+For intCurrentRow = 0 To lstNovosClientes.ListCount - 1
+    If Not IsNull(lstNovosClientes.Column(0, intCurrentRow)) Then
+        sValor = lstNovosClientes.Column(0, intCurrentRow)
+        sScript = "INSERT INTO admCategorias ( codRelacao, Categoria ) SELECT TOP 1 (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao, '" & sValor & "' AS strDescricao FROM admCategorias"
+
+        '' CADASTRAR
+        admCadastroAtualizacaoScript banco(0), getIdSubCategoria(banco(0), controleAtualizacao), sDescricao, sScript
+
+    End If
+Next intCurrentRow
+
+MsgBox "OK!", vbInformation + vbOKOnly, "CADASTRO DE CLIENTES"
 
 End Sub
 

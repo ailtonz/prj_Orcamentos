@@ -409,27 +409,28 @@ admUpdateSystem_err:
     
 End Function
 
+
 Sub teste_UpdateSystem(sDescricao As String, sScript As String)
 Dim sDataAtualizacao As String: sDataAtualizacao = Controle
 
 loadBancos
-admCadastroAtualizacao banco(0), sDataAtualizacao
+admCadastroAtualizacao banco(0), sDataAtualizacao, 0
 admCadastroAtualizacaoScript banco(0), sDataAtualizacao, sDescricao, sScript
 
 End Sub
 
 
-Sub teste_admCadastroUpdateSystem()
-Dim sDataAtualizacao As String: sDataAtualizacao = Controle
-
-loadBancos
-'admCadastroAtualizacao banco(0), sDataAtualizacao
-'admCadastroAtualizacaoScript banco(0), sDataAtualizacao, "Objetivo da atualização", "Select * from admCategorias"
-
-'' CADASTRO DA SUBCATEGORIA
-admCadastroAtualizacao banco(0), sDataAtualizacao, "1346"
-
-End Sub
+'Sub teste_admCadastroUpdateSystem()
+'Dim sDataAtualizacao As String: sDataAtualizacao = Controle
+'
+'loadBancos
+''admCadastroAtualizacao banco(0), sDataAtualizacao
+''admCadastroAtualizacaoScript banco(0), sDataAtualizacao, "Objetivo da atualização", "Select * from admCategorias"
+'
+''' CADASTRO DA SUBCATEGORIA
+'admCadastroAtualizacao banco(0), sDataAtualizacao, "1346"
+'
+'End Sub
 
 
 Function admCadastroAtualizacao(strBanco As infBanco, sAtualizacao As String, sIDSubCategoria As String) As Boolean: admCadastroAtualizacao = True
@@ -476,9 +477,9 @@ Dim cmd As ADODB.Command
 Set cmd = New ADODB.Command
 With cmd
     .ActiveConnection = cnn
-    .CommandText = "admCategoriaSubNovo"
+    .CommandText = "admCategoriaScript"
     .CommandType = adCmdStoredProc
-    .Parameters.Append .CreateParameter("@NM_CATEGORIA", adVarChar, adParamInput, 100, sAtualizacao)
+    .Parameters.Append .CreateParameter("@ID_SUBCATEGORIA", adVarChar, adParamInput, 10, sAtualizacao)
     .Parameters.Append .CreateParameter("@NM_SUBCATEGORIA", adVarChar, adParamInput, 100, sDescricao)
     .Parameters.Append .CreateParameter("@NM_SELECAO", adVarChar, adParamInput, 2000, sScript)
         
@@ -507,7 +508,7 @@ Sub teste_getIdSubCategoria()
 
 loadBancos
 
-MsgBox getIdSubCategoria(banco(0), "150414-0953")
+MsgBox getIdSubCategoria(banco(0), "150505-1623")
 
 End Sub
 
@@ -527,3 +528,45 @@ Dim rst As New ADODB.Recordset
     End If
     connection.Close
 End Function
+
+
+Function carregarAtualizacoesGuia(strServidor As infBanco)
+On Error GoTo admUpdateSystem_err
+Dim cnnServidor As New ADODB.connection
+Dim cnnLocal As New ADODB.connection
+Dim rst As New ADODB.Recordset
+
+    Set cnnServidor = OpenConnection(strServidor)
+    If cnnServidor.State = 1 Then
+        Call rst.Open("SELECT * FROM qryUpdateSystem ", cnnServidor, adOpenStatic, adLockOptimistic)
+        rst.MoveLast
+        rst.MoveFirst
+        
+        Do While Not rst.EOF
+                    
+            With Sheets(Guia)
+                .Cells(Linha, Coluna).value = rstListagem.Fields("DESCRICAO")
+                rstListagem.MoveNext
+                Linha = Linha + 1
+            End With
+        
+        Loop
+'    Else
+'        MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "ERROR DE FUNÇÃO: admUpdateSystem"
+    End If
+    
+    cnnServidor.Close
+    cnnLocal.Close
+    
+admUpdateSystem_Fim:
+    Set cnnServidor = Nothing
+    Set cnnLocal = Nothing
+    Set rst = Nothing
+    
+    Exit Function
+admUpdateSystem_err:
+    MsgBox Err.Description
+    Resume admUpdateSystem_Fim
+    
+End Function
+
