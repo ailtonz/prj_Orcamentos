@@ -113,13 +113,13 @@ Dim x As Integer
 
 For x = 0 To 1
 
-    Debug.Print banco(x).strSource
-    Debug.Print banco(x).strDriver
-    Debug.Print banco(x).strLocation
-    Debug.Print banco(x).strDatabase
-    Debug.Print banco(x).strUser
-    Debug.Print banco(x).strPassword
-    Debug.Print banco(x).strPort
+    Debug.Print Banco(x).strSource
+    Debug.Print Banco(x).strDriver
+    Debug.Print Banco(x).strLocation
+    Debug.Print Banco(x).strDatabase
+    Debug.Print Banco(x).strUser
+    Debug.Print Banco(x).strPassword
+    Debug.Print Banco(x).strPort
     
     Debug.Print "--------------------"
     Debug.Print "--------------------"
@@ -2424,7 +2424,7 @@ End Sub
 Sub testeListarUsuariosAtivos()
 
 loadBancos
-Saida ListarUsuariosAtivos(banco(0)), "Usuarios"
+Saida ListarUsuariosAtivos(Banco(0)), "Usuarios"
 
 
 

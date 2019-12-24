@@ -2,7 +2,7 @@ Attribute VB_Name = "basSynchronism"
 Sub loadBancos()
 
     '' SERVER
-    With banco(0)
+    With Banco(0)
         .strSource = Sheets("BANCOS").Range("C2")
         .strDriver = Sheets("BANCOS").Range("C3")
         .strLocation = Sheets("BANCOS").Range("C4")
@@ -14,7 +14,7 @@ Sub loadBancos()
     End With
     
     '' LOCAL
-    With banco(1)
+    With Banco(1)
         .strSource = Sheets("BANCOS").Range("F2")
         .strDriver = Sheets("BANCOS").Range("F3")
         .strLocation = Sheets("BANCOS").Range("F4")
@@ -58,13 +58,13 @@ If IsInternetConnected() = True Then
             If strOperacao = "ENVIAR" Then
                 '' server ( RECEBER )
                 loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle
-                loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle, strStatus:=ID_STATUS(banco(1), orcamento)
-                Call admOrcamentoAtualizarEtapaADO(banco(0), orcamento)
+                loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle, strStatus:=ID_STATUS(Banco(1), orcamento)
+                Call admOrcamentoAtualizarEtapaADO(Banco(0), orcamento)
             ElseIf strOperacao = "RECEBER" Then
                 '' local ( ENVIAR )
                 loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle
-                loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle, strStatus:=ID_STATUS(banco(0), orcamento)
-                Call admOrcamentoAtualizarEtapaADO(banco(1), orcamento)
+                loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle, strStatus:=ID_STATUS(Banco(0), orcamento)
+                Call admOrcamentoAtualizarEtapaADO(Banco(1), orcamento)
             End If
             
             rstSincronismo.MoveNext
@@ -169,8 +169,8 @@ loadBancos
 
 '' server ( RECEBER )
 loadOrcamento "VANESSA VICTORELLO", "117-14"
-loadOrcamento "VANESSA VICTORELLO", "117-14", strStatus:=ID_STATUS(banco(1), orcamento)
-Call admOrcamentoAtualizarEtapaADO(banco(0), orcamento)
+loadOrcamento "VANESSA VICTORELLO", "117-14", strStatus:=ID_STATUS(Banco(1), orcamento)
+Call admOrcamentoAtualizarEtapaADO(Banco(0), orcamento)
 
 
 End Sub
@@ -221,7 +221,7 @@ Dim sID As String: sID = "1"
 sScript = "UPDATE admcategorias SET admcategorias.Descricao01 = '" & sValor & "' WHERE (((admcategorias.categoria)='" & sMoeda & "') AND ((admcategorias.codRelacao)=(SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='MOEDA' and codRelacao = 0)))"
 
 loadBancos
-admUpdateMoeda banco(0), sID, sMoeda, sScript
+admUpdateMoeda Banco(0), sID, sMoeda, sScript
 
 End Sub
 
@@ -356,10 +356,78 @@ End Function
 Sub UpdateSystem()
 
     loadBancos
-    admUpdateSystem banco(0), banco(1), "1"
-    admUpdateSystem banco(0), banco(1), "2"
+    admUpdateSystem Banco(0), Banco(1), "1"
+    admUpdateSystem Banco(0), Banco(1), "2"
 
  End Sub
+
+
+
+'Sub listUpdate()
+'Dim myArray() As String
+'
+'Dim numLimit As Long: numLimit = 20
+'
+'
+'ReDim myArray(1 To numLimit)
+'
+'For x = 1 To numLimit
+'    myArray(x) = x
+'Next x
+'
+'
+'MsgBox UBound(myArray), vbInformation, "LIMITE"
+'MsgBox LBound(myArray), vbInformation, "INICIO"
+'
+'End Sub
+
+
+
+Sub listUpdate(myArray As String)
+Dim x As Integer
+
+For x = LBound(myArray) To UBound(myArray)
+    MsgBox myArray(x)
+Next x
+
+End Sub
+
+'Function listarAtualizacoes(Banco As infBanco, sUserName As String)
+'On Error GoTo listarAtualizacoes_err
+'Dim cnnServidor As New ADODB.connection
+'Dim rst As New ADODB.Recordset
+'Dim myArray() As String
+'
+'    Set cnnServidor = OpenConnection(strServidor)
+'    If cnnServidor.State = 1 Then
+'        Call rst.Open("SELECT * FROM qryUpdateSystem WHERE UserNames  '%" & sUserName & "'% ORDER BY id ", cnnServidor, adOpenStatic, adLockOptimistic)
+'        rst.MoveLast
+'        rst.MoveFirst
+'
+'        For x = 1 To rst.RecordCount
+'
+'
+'            rst.MoveNext
+'        Next x
+'    Else
+'        MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "ERROR DE FUNÇÃO: listarAtualizacoes"
+'    End If
+'
+'    cnnServidor.Close
+'    cnnLocal.Close
+'
+'listarAtualizacoes_Fim:
+'    Set cnnServidor = Nothing
+'    Set rst = Nothing
+'
+'    Exit Function
+'listarAtualizacoes_err:
+'    MsgBox Err.Description
+'    Resume listarAtualizacoes_Fim
+'
+'End Function
+
+
 
 Function admUpdateSystem(strServidor As infBanco, strLocal As infBanco, idAtualizacao As Integer)
 On Error GoTo admUpdateSystem_err
@@ -414,8 +482,8 @@ Sub teste_UpdateSystem(sDescricao As String, sScript As String)
 Dim sDataAtualizacao As String: sDataAtualizacao = Controle
 
 loadBancos
-admCadastroAtualizacao banco(0), sDataAtualizacao, 0
-admCadastroAtualizacaoScript banco(0), sDataAtualizacao, sDescricao, sScript
+admCadastroAtualizacao Banco(0), sDataAtualizacao, 0
+admCadastroAtualizacaoScript Banco(0), sDataAtualizacao, sDescricao, sScript
 
 End Sub
 
@@ -509,7 +577,7 @@ Sub teste_getIdSubCategoria()
 
 loadBancos
 
-MsgBox getIdSubCategoria(banco(0), "150505-1623")
+MsgBox getIdSubCategoria(Banco(0), "150505-1623")
 
 End Sub
 

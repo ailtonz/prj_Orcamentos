@@ -127,10 +127,10 @@ sScript = "UPDATE admcategorias SET admcategorias.Descricao01 = '" & sValor & "'
 loadBancos
 
 '' ATUALIZAÇÃO
-admCadastroAtualizacao banco(0), controleAtualizacao, getIdSubCategoria(banco(0), "UPDATESYSTEM"), ListarUsuariosAtivos(banco(0))
+admCadastroAtualizacao Banco(0), controleAtualizacao, getIdSubCategoria(Banco(0), "UPDATESYSTEM"), ListarUsuariosAtivos(Banco(0))
 
 '' CADASTRAR
-admCadastroAtualizacaoScript banco(0), getIdSubCategoria(banco(0), controleAtualizacao), sDescricao, sScript
+admCadastroAtualizacaoScript Banco(0), getIdSubCategoria(Banco(0), controleAtualizacao), sDescricao, sScript
 
 '' MSGBOX
 MsgBox "Valor do Dolar Atualizado com sucesso.", vbInformation + vbOKOnly, "Atualização de moeda"
@@ -285,7 +285,7 @@ Dim controleAtualizacao As String: controleAtualizacao = Controle
 '' CARREGAR BANCO
 loadBancos
 
-admCadastroAtualizacao banco(0), controleAtualizacao, getIdSubCategoria(banco(0), "UPDATESYSTEM"), ListarUsuariosAtivos(banco(0))
+admCadastroAtualizacao Banco(0), controleAtualizacao, getIdSubCategoria(Banco(0), "UPDATESYSTEM"), ListarUsuariosAtivos(Banco(0))
 
 For intCurrentRow = 0 To lstNovosClientes.ListCount - 1
     If Not IsNull(lstNovosClientes.Column(0, intCurrentRow)) Then
@@ -293,7 +293,7 @@ For intCurrentRow = 0 To lstNovosClientes.ListCount - 1
         sScript = "INSERT INTO admCategorias ( codRelacao, Categoria ) SELECT TOP 1 (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao, '" & sValor & "' AS strDescricao FROM admCategorias"
 
         '' CADASTRAR
-        admCadastroAtualizacaoScript banco(0), getIdSubCategoria(banco(0), controleAtualizacao), sDescricao, sScript
+        admCadastroAtualizacaoScript Banco(0), getIdSubCategoria(Banco(0), controleAtualizacao), sDescricao, sScript
 
     End If
 Next intCurrentRow

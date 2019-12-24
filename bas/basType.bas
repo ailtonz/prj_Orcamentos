@@ -1,5 +1,5 @@
 Attribute VB_Name = "basType"
-Public banco(2) As infBanco
+Public Banco(2) As infBanco
 Public proposta(8) As infProposta
 Public orcamento As infOrcamento
 

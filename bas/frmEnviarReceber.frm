@@ -29,7 +29,7 @@ Dim strUsuario As String: strUsuario = Range(NomeUsuario)
         strSql = "Select * from qryOrcamentosEnviar WHERE qryOrcamentosEnviar.Pesquisa Like '%" & strPesquisar & "%' and STATUS = '" & Me.cboEtapas.value & "' "
         strSql = strSql & " AND ((qryOrcamentosEnviar.VENDEDOR) In (SELECT  qryUsuariosUsuarios.Usuarios From qryUsuariosUsuarios WHERE (((qryUsuariosUsuarios.Usuario)='" & strUsuario & "')))) limit " & Me.txtLimiteRegistros.value & ""
         
-        ListBoxCarregarADO banco(0), Me, Me.lstSelecao.Name, "Pesquisa", strSql
+        ListBoxCarregarADO Banco(0), Me, Me.lstSelecao.Name, "Pesquisa", strSql
     ElseIf Me.cboOperacao.value = "ENVIAR" Then
         MontarPesquisa
         carregarLista
@@ -56,9 +56,9 @@ loadBancos
             loadOrcamento CStr(Matriz(2)), CStr(Matriz(0)), Sheets(ActiveSheet.Name).Range(NomeUsuario)
             
             If Me.cboOperacao.value = "RECEBER" Then
-                Transferencia Me.cboOperacao.value, Departamento(banco(1), orcamento), orcamento, banco(0), banco(1)
+                Transferencia Me.cboOperacao.value, Departamento(Banco(1), orcamento), orcamento, Banco(0), Banco(1)
             ElseIf Me.cboOperacao.value = "ENVIAR" Then
-                Transferencia Me.cboOperacao.value, Departamento(banco(1), orcamento), orcamento, banco(1), banco(0)
+                Transferencia Me.cboOperacao.value, Departamento(Banco(1), orcamento), orcamento, Banco(1), Banco(0)
             End If
             
             ''' DESMARCAR ITEM SELECIONADO
