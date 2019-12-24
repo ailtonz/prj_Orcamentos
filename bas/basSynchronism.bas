@@ -369,20 +369,25 @@ Dim rst As New ADODB.Recordset
 Dim rstLocal As New ADODB.Recordset
 Dim cmdLocal As New ADODB.Command
 
-    Set cnnServidor = OpenConnection(strBanco)
+    Set cnnServidor = OpenConnection(strServidor)
     If cnnServidor.State = 1 Then
         Call rst.Open("SELECT * FROM qryUpdateSystem WHERE ID = '" & idAtualizacao & "'", cnnServidor, adOpenStatic, adLockOptimistic)
-        If Not rst.EOF Then
-            Set cnnLocal = OpenConnection(strOrcamento)
+        rst.MoveLast
+        rst.MoveFirst
+        
+        Do While Not rst.EOF
+            Set cnnLocal = OpenConnection(strLocal)
             If cnnLocal.State = 1 Then
                 cmdLocal.ActiveConnection = cnnLocal
                 cmdLocal.CommandType = adCmdText
                 cmdLocal.CommandText = rst.Fields("SCRIPT").value
+'                Saida rst.Fields("SCRIPT").value, "admUpdateSystem.log"
                 Set rstLocal = cmdLocal.Execute
+                rst.MoveNext
 '            Else
 '                MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "ERROR DE FUNÇÃO: admUpdateSystem"
             End If
-        End If
+        Loop
 '    Else
 '        MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "ERROR DE FUNÇÃO: admUpdateSystem"
     End If
