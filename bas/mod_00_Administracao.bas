@@ -1857,7 +1857,7 @@ Next x
 
 Application.ScreenUpdating = True
 
-'MsgBox "Atualização da guia de apoio concluida!", vbOKOnly + vbInformation, "Atualização da guia de apoio "
+MsgBox "Atualização da guia de apoio concluida!", vbOKOnly + vbInformation, "Atualização da guia de apoio "
 
 End Sub
 
