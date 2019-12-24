@@ -361,7 +361,7 @@ Sub UpdateSystem()
 
 End Sub
 
-Function admUpdateSystem(strBanco As infBanco, strOrcamento As infBanco, idAtualizacao As Integer)
+Function admUpdateSystem(strServidor As infBanco, strLocal As infBanco, idAtualizacao As Integer)
 On Error GoTo admUpdateSystem_err
 Dim cnnServidor As New ADODB.connection
 Dim cnnLocal As New ADODB.connection

@@ -277,7 +277,9 @@ admNovoCliente_LIMPAR banco(0)
 For intCurrentRow = 0 To lstNovosClientes.ListCount - 1
     If Not IsNull(lstNovosClientes.Column(0, intCurrentRow)) Then
         sValor = lstNovosClientes.Column(0, intCurrentRow)
-        sScript = "INSERT INTO admCategorias (admCategorias.codRelacao, admCategorias.Categoria) SELECT (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao ,'" & sValor & "'"
+        'sScript = "INSERT INTO admCategorias (admCategorias.codRelacao, admCategorias.Categoria) SELECT (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao ,'" & sValor & "'"
+        
+        sScript = "INSERT INTO admCategorias ( codRelacao, Categoria ) SELECT TOP 1 (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao, '" & sValor & "' AS strDescricao FROM admCategorias"
         
         '' CADASTRAR
         admNovoCliente_CADASTRAR banco(0), sID, sDescricao, sScript
