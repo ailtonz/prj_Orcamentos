@@ -1,5 +1,9 @@
 Attribute VB_Name = "basSynchronism"
 Sub loadBancos()
+        
+Sheets("BANCOS").Range("F4").value = ActiveWorkbook.Path & "\db\"
+Sheets("BANCOS").Range("F5").value = NomeDoBanco
+
 
     '' SERVER
     With Banco(0)
