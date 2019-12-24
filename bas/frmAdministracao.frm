@@ -116,7 +116,7 @@ End Sub
 Private Sub cmdAtualizarMoeda_Click()
 Dim sScript As String
 Dim sValor As String: sValor = Me.txtValorMoeda.value
-Dim sMoeda As String: sMoeda = "Dolar"
+Dim sMoeda As String: sMoeda = Me.cboMoeda.value
 Dim sID As String: sID = "1"
 
 Dim controleAtualizacao As String: controleAtualizacao = Controle
@@ -434,6 +434,8 @@ Private Sub lstNovosClientes_Click()
 End Sub
 
 
+
+
 Private Sub txtNovoCliente_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Me.txtNovoCliente.value = UCase(Me.txtNovoCliente.value)
 End Sub
@@ -451,6 +453,9 @@ EntryCount = 0
     
     ''' CARREGAR COMBO BOX DE DEPARTAMENTOS
     ComboBoxCarregar strBanco, Me.cboDepartamento, "Departamento", "qryDepartamentos"
+    
+    ''' CARREGAR COMBO BOX DE MOEDA
+    ComboBoxCarregar strBanco, Me.cboMoeda, "Descricao", "qryIndices_Moedas"
 
     ''' CARREGAR LIST BOX DE USUÁRIOS
     ListBoxCarregar strBanco, Me, Me.lstUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
