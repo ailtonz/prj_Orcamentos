@@ -4,7 +4,7 @@ Option Explicit
 Sub UpdateSystem(sUserName As String)
 
 loadBancos
-listarAtualizacoes Banco(0), sUserName
+listarAtualizacoes Banco(0), Trim(sUserName)
 
  End Sub
 
