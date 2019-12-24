@@ -259,6 +259,42 @@ admUpdateMoeda_err:
 
 End Function
 
+Function admUpDateClientes(strBanco As infBanco, sID As String, sDescricao As String, sScript As String) As Boolean: admUpDateClientes = True
+On Error GoTo admUpDateClientes_err
+Dim cnn As New ADODB.connection
+Set cnn = OpenConnection(strBanco)
+Dim rst As ADODB.Recordset
+Dim cmd As ADODB.Command
+
+Set cmd = New ADODB.Command
+With cmd
+    .ActiveConnection = cnn
+    .CommandText = "admUpDateClientes"
+    .CommandType = adCmdStoredProc
+    .Parameters.Append .CreateParameter("@NM_CATEGORIA", adVarChar, adParamInput, 100, "UPDATESYSTEM")
+    .Parameters.Append .CreateParameter("@ATUALIZACAO_ID", adVarChar, adParamInput, 10, sID)
+    .Parameters.Append .CreateParameter("@ATUALIZACAO_DESCRICAO", adVarChar, adParamInput, 100, sDescricao)
+    .Parameters.Append .CreateParameter("@ATUALIZACAO_SCRIPT", adVarChar, adParamInput, 2000, sScript)
+        
+    Set rst = .Execute
+End With
+cnn.Close
+
+admUpDateClientes_Fim:
+    Set cnn = Nothing
+    Set rst = Nothing
+    Set cmd = Nothing
+    
+    Exit Function
+admUpDateClientes_err:
+    admUpDateClientes = False
+    MsgBox Err.Description
+    Resume admUpDateClientes_Fim
+
+End Function
+
+
+
 Sub UpdateSystem()
 
     loadBancos

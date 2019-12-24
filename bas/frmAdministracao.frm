@@ -261,6 +261,23 @@ Dim strCaminhoDoBancoServer As String: strCaminhoDoBancoServer = Me.txtCaminhoDo
 
 End Sub
 
+Private Sub cmdNovoClienteAtualizar_Click()
+'Dim sScript As String
+'Dim sValor As String: sValor = "AILTON.OK.10-04-15_19-21"
+'Dim sDescricao As String: sDescricao = "CADASTRO DE CLIENTE"
+'Dim sID As String: sID = "2"
+'
+'sScript = "INSERT INTO admCategorias (admCategorias.codRelacao, admCategorias.Categoria) SELECT (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao ,'" & sValor & "',"
+'
+'loadBancos
+'If admUpDateClientes(banco(0), sID, sDescricao, sScript) Then
+'    MsgBox "Valor do Dolar Atualizado com sucesso.", vbInformation + vbOKOnly, "Atualização de moeda"
+'Else
+'    MsgBox "ERROR AO: Valor do Dolar Atualizado com sucesso.", vbCritical + vbOKOnly, "Atualização de moeda"
+'End If
+
+End Sub
+
 Private Sub cmdNovoClienteExcluir_Click()
     'Ensure ListBox contains list items
     If lstNovosClientes.ListCount >= 1 Then
