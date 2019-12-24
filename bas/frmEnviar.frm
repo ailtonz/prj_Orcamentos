@@ -202,6 +202,19 @@ Set rstOrigem = Nothing
 Set dbOrigem = Nothing
 
 End Sub
+
+
+Private Sub cmdNenhum_Click()
+Dim intCurrentRow As Integer
+            
+For intCurrentRow = 0 To Me.lstOrigem.ListCount - 1
+    If Not IsNull(Me.lstOrigem.Column(0, intCurrentRow)) Then
+        Me.lstOrigem.Selected(intCurrentRow) = False
+    End If
+Next intCurrentRow
+
+End Sub
+
 Private Sub cmdPesquisar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 
@@ -226,16 +239,6 @@ For intCurrentRow = 0 To Me.lstOrigem.ListCount - 1
     End If
 Next intCurrentRow
 
-End Sub
-
-Private Sub cmdNenhum_Click()
-Dim intCurrentRow As Integer
-            
-For intCurrentRow = 0 To Me.lstOrigem.ListCount - 1
-    If Not IsNull(Me.lstOrigem.Column(0, intCurrentRow)) Then
-        Me.lstOrigem.Selected(intCurrentRow) = False
-    End If
-Next intCurrentRow
 
 End Sub
 

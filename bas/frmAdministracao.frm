@@ -17,9 +17,6 @@ Option Base 1
 Option Explicit
 Dim sqlPermissoes As String
 Dim sqlSelecao As String
-Dim EntryCount As Single
-
-
 
 Private Sub cboApoio_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
@@ -109,42 +106,8 @@ Me.txtArquivoDeAtualizacao.Text = getFileNameAndExt(CriarArquivoDeAtualizacaoDoS
 
 End Sub
 
-Private Sub cmdAtualizarApoio_Click()
-    admAtualizarGuiaDeApoio
-End Sub
-
-Private Sub cmdAtualizarMoeda_Click()
-Dim sScript As String
-Dim sValor As String: sValor = Me.txtValorMoeda.value
-Dim sMoeda As String: sMoeda = Me.cboMoeda.value
-Dim sID As String: sID = "1"
-
-Dim controleAtualizacao As String: controleAtualizacao = Controle
-Dim sDescricao As String: sDescricao = "Atualização do dolar"
-
-sScript = "UPDATE admcategorias SET admcategorias.Descricao01 = '" & sValor & "' WHERE (((admcategorias.categoria)='" & sMoeda & "') AND ((admcategorias.codRelacao)=(SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='MOEDA' and codRelacao = 0)))"
-
-loadBancos
-
-'' ATUALIZAÇÃO
-admCadastroAtualizacao Banco(0), controleAtualizacao, getIdSubCategoria(Banco(0), "UPDATESYSTEM"), ListarUsuariosAtivos(Banco(0))
-
-'' CADASTRAR
-admCadastroAtualizacaoScript Banco(0), getIdSubCategoria(Banco(0), controleAtualizacao), sDescricao, sScript
-
-'' MSGBOX
-MsgBox "Valor do Dolar Atualizado com sucesso.", vbInformation + vbOKOnly, "Atualização de moeda"
-
-'If admUpdateMoeda(banco(0), sID, sMoeda, sScript) Then
-'    MsgBox "Valor do Dolar Atualizado com sucesso.", vbInformation + vbOKOnly, "Atualização de moeda"
-'Else
-'    MsgBox "ERROR AO: Valor do Dolar Atualizado com sucesso.", vbCritical + vbOKOnly, "Atualização de moeda"
-'End If
-
-End Sub
-
 Private Sub cmdAtualizarOperacional_Click()
-'    AtualizarOperacional
+    AtualizarOperacional
 End Sub
 
 Private Sub cmdCopiar_Click()
@@ -155,7 +118,7 @@ Dim strTitulo As String
 Dim strSelecao As String
 
 
-    If Me.lstUsuarios.value = "" Or IsNull(Me.lstUsuarios.value) Then
+    If Me.lstUsuarios.Value = "" Or IsNull(Me.lstUsuarios.Value) Then
         strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "COPIAR!"
         
@@ -163,7 +126,7 @@ Dim strSelecao As String
     Else
       
         Matriz = Array()
-        Matriz = Split(Me.lstUsuarios.value, " - ")
+        Matriz = Split(Me.lstUsuarios.Value, " - ")
         
         admUsuarioCopiar Range(BancoLocal), CStr(Matriz(0)), CStr(Matriz(1))
         
@@ -217,7 +180,7 @@ Dim retResposta As String
     retResposta = MsgBox(strMensagem, vbQuestion + vbYesNo, strTitulo)
     
     If (retResposta) = vbYes Then
-        admGerenciarApoioExcluir strBanco, Me.cboApoio.Text, Me.lstApoio.value
+        admGerenciarApoioExcluir strBanco, Me.cboApoio.Text, Me.lstApoio.Value
         Me.txtApoio.Text = ""
     End If
     
@@ -234,7 +197,7 @@ Dim retResposta As String
     retResposta = MsgBox(strMensagem, vbQuestion + vbYesNo, strTitulo)
 
     If (retResposta) = vbYes Then
-        admGerenciarIndiceExcluir strBanco, Me.cboIndice.Text, DivisorDeTexto(Me.lstIndices.value, "|", 0)
+        admGerenciarIndiceExcluir strBanco, Me.cboIndice.Text, DivisorDeTexto(Me.lstIndices.Value, "|", 0)
         Me.txtIndice.Text = ""
         Me.txtIndiceValor01.Text = ""
         Me.txtIndiceValor02.Text = ""
@@ -274,68 +237,17 @@ Dim strCaminhoDoBancoServer As String: strCaminhoDoBancoServer = Me.txtCaminhoDo
 
 End Sub
 
-Private Sub cmdNovoClienteAtualizar_Click()
-Dim sScript As String
-Dim sValor As String
-Dim sDescricao As String: sDescricao = "CADASTRO DE CLIENTE"
-Dim sID As String: sID = "2"
-Dim intCurrentRow As Long
-Dim controleAtualizacao As String: controleAtualizacao = Controle
-
-'' CARREGAR BANCO
-loadBancos
-
-admCadastroAtualizacao Banco(0), controleAtualizacao, getIdSubCategoria(Banco(0), "UPDATESYSTEM"), ListarUsuariosAtivos(Banco(0))
-
-For intCurrentRow = 0 To lstNovosClientes.ListCount - 1
-    If Not IsNull(lstNovosClientes.Column(0, intCurrentRow)) Then
-        sValor = lstNovosClientes.Column(0, intCurrentRow)
-        sScript = "INSERT INTO admCategorias ( codRelacao, Categoria ) SELECT TOP 1 (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao, '" & sValor & "' AS strDescricao FROM admCategorias"
-
-        '' CADASTRAR
-        admCadastroAtualizacaoScript Banco(0), getIdSubCategoria(Banco(0), controleAtualizacao), sDescricao, sScript
-
-    End If
-Next intCurrentRow
-
-MsgBox "OK!", vbInformation + vbOKOnly, "CADASTRO DE CLIENTES"
-
-End Sub
-
-Private Sub cmdNovoClienteExcluir_Click()
-    'Ensure ListBox contains list items
-    If lstNovosClientes.ListCount >= 1 Then
-        'If no selection, choose last list item.
-        If lstNovosClientes.ListIndex = -1 Then
-            lstNovosClientes.ListIndex = _
-                    lstNovosClientes.ListCount - 1
-        End If
-        lstNovosClientes.RemoveItem (lstNovosClientes.ListIndex)
-    End If
-    Me.txtNovoCliente.value = ""
-    
-End Sub
-
-Private Sub cmdNovoClienteSalvar_Click()
-    If Len(Me.txtNovoCliente.value) > 0 Then
-        EntryCount = EntryCount + 1
-        Me.lstNovosClientes.AddItem (Me.txtNovoCliente.value)
-        Me.txtNovoCliente.SetFocus
-        Me.txtNovoCliente.value = ""
-    End If
-End Sub
-
 Private Sub cmdSalvarApoio_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim strApoio As String: strApoio = Me.cboApoio.Text
-Dim strAntigo As String: strAntigo = IIf(IsNull(Me.lstApoio.value), "", Me.lstApoio.value)
+Dim strAntigo As String: strAntigo = IIf(IsNull(Me.lstApoio.Value), "", Me.lstApoio.Value)
 Dim strNovo As String: strNovo = Me.txtApoio
 
-    If Len(Me.lstApoio.value) > 0 Then
+    If Len(Me.lstApoio.Value) > 0 Then
         admGerenciarApoioAterar strBanco, strApoio, strAntigo, strNovo
     Else
         ''' NÃO INCLUI APOIO SEM DESCRIÇÃO
-        If Len(Me.txtApoio.value) > 0 Then
+        If Len(Me.txtApoio.Value) > 0 Then
             admGerenciarApoioIncluir strBanco, strApoio, strNovo
         End If
     End If
@@ -354,10 +266,10 @@ Dim strValor_01 As String: strValor_01 = Me.txtIndiceValor01
 Dim strValor_02 As String: strValor_02 = Me.txtIndiceValor02
 
 
-    If IsNull(Me.lstIndices.value) Then
+    If IsNull(Me.lstIndices.Value) Then
         strAntigo = ""
     Else
-        strAntigo = DivisorDeTexto(Me.lstIndices.value, "|", 0)
+        strAntigo = DivisorDeTexto(Me.lstIndices.Value, "|", 0)
     End If
 
 
@@ -365,7 +277,7 @@ Dim strValor_02 As String: strValor_02 = Me.txtIndiceValor02
         admGerenciarIndiceAterar strBanco, strIndice, strAntigo, strNovo, strValor_01, strValor_02
     Else
         ''' NÃO INCLUI INDICES SEM DESCRIÇÃO
-        If Len(Me.txtIndice.value) > 0 Then
+        If Len(Me.txtIndice.Value) > 0 Then
             admGerenciarIndiceIncluir strBanco, strIndice, strNovo, strValor_01, strValor_02
         End If
     End If
@@ -378,14 +290,14 @@ Dim strValor_02 As String: strValor_02 = Me.txtIndiceValor02
 End Sub
 
 Private Sub lstApoio_Click()
-    Me.txtApoio = Me.lstApoio.value
+    Me.txtApoio = Me.lstApoio.Value
 End Sub
 
 Private Sub lstIndices_Click()
 
-    Me.txtIndice = Trim(DivisorDeTexto(Me.lstIndices.value, "|", 0))
-    Me.txtIndiceValor01 = Trim(DivisorDeTexto(Me.lstIndices.value, "|", 1))
-    Me.txtIndiceValor02 = Trim(DivisorDeTexto(Me.lstIndices.value, "|", 2))
+    Me.txtIndice = Trim(DivisorDeTexto(Me.lstIndices.Value, "|", 0))
+    Me.txtIndiceValor01 = Trim(DivisorDeTexto(Me.lstIndices.Value, "|", 1))
+    Me.txtIndiceValor02 = Trim(DivisorDeTexto(Me.lstIndices.Value, "|", 2))
     
 End Sub
 
@@ -394,7 +306,7 @@ Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim strMSG As String
 Dim strTitulo As String
 
-    If IsNull(Me.lstItensDisponiveis.value) Then
+    If IsNull(Me.lstItensDisponiveis.Value) Then
         strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Seleção de Item disponivel"
         
@@ -413,7 +325,7 @@ Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim strMSG As String
 Dim strTitulo As String
 
-    If IsNull(Me.lstItensEmUso.value) Then
+    If IsNull(Me.lstItensEmUso.Value) Then
         strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Remoção de Item em uso"
         
@@ -428,34 +340,18 @@ Dim strTitulo As String
     
 End Sub
 
-
-Private Sub lstNovosClientes_Click()
-    Me.txtNovoCliente.value = Me.lstNovosClientes.value
-End Sub
-
-
-
-
-Private Sub txtNovoCliente_Exit(ByVal Cancel As MSForms.ReturnBoolean)
-    Me.txtNovoCliente.value = UCase(Me.txtNovoCliente.value)
-End Sub
-
 ''#########################################
 ''  FORMULARIO
 ''#########################################
 
 Private Sub UserForm_Initialize()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-EntryCount = 0
 
     ''' ADICIONAR O "ADM" EM DEPARTAMENTOS
     Me.cboDepartamento.AddItem "ADM"
     
     ''' CARREGAR COMBO BOX DE DEPARTAMENTOS
     ComboBoxCarregar strBanco, Me.cboDepartamento, "Departamento", "qryDepartamentos"
-    
-    ''' CARREGAR COMBO BOX DE MOEDA
-    ComboBoxCarregar strBanco, Me.cboMoeda, "Descricao", "qryIndices_Moedas"
 
     ''' CARREGAR LIST BOX DE USUÁRIOS
     ListBoxCarregar strBanco, Me, Me.lstUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
@@ -473,7 +369,7 @@ EntryCount = 0
     ListBoxCarregar strBanco, Me, Me.lstAtulizacaoDeUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
     
     ''' CARREGAR CAMINHO DO BANCO SERVIDOR
-'    Me.txtCaminhoDoBancoServer = Sheets("cfg").Range("B2")
+    Me.txtCaminhoDoBancoServer = Sheets("cfg").Range("B2")
     
 
 End Sub
@@ -490,9 +386,9 @@ Private Sub cmdSalvar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 
     If ExistenciaUsuario(Range(BancoLocal), Me.txtCodigo, Me.txtNome) Then
-        admUsuarioSalvar Range(BancoLocal), Me.cboDepartamento, Me.txtCodigo, Me.txtNome, Me.txtEmail, Me.txtGerenteContas, Me.txtTelefone, Me.txtCelular01, Me.txtCelular02, Me.txtIdNextel
+        admUsuarioSalvar Range(BancoLocal), Me.cboDepartamento, Me.txtCodigo, Me.txtNome, Me.txtEmail
     Else
-        admUsuarioNovo Range(BancoLocal), Me.cboDepartamento, Me.txtCodigo, Me.txtNome, Me.txtEmail, Me.txtGerenteContas, Me.txtTelefone, Me.txtCelular01, Me.txtCelular02, Me.txtIdNextel
+        admUsuarioNovo Range(BancoLocal), Me.cboDepartamento, Me.txtCodigo, Me.txtNome, Me.txtEmail
     End If
     
     LimparCampos
@@ -513,7 +409,7 @@ Dim strTitulo As String
 Dim strSelecao As String
 
 
-    If Me.lstUsuarios.value = "" Or IsNull(Me.lstUsuarios.value) Then
+    If Me.lstUsuarios.Value = "" Or IsNull(Me.lstUsuarios.Value) Then
         strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "EXCLUIR!"
         
@@ -521,7 +417,7 @@ Dim strSelecao As String
     Else
       
         Matriz = Array()
-        Matriz = Split(Me.lstUsuarios.value, " - ")
+        Matriz = Split(Me.lstUsuarios.Value, " - ")
         
         admUsuarioExcluir Range(BancoLocal), CStr(Matriz(1)), True
         
@@ -541,7 +437,7 @@ Dim strMSG As String
 Dim strTitulo As String
 Dim strSelecao As String
 
-    If Me.lstUsuariosExcluidos.value = "" Or IsNull(Me.lstUsuariosExcluidos.value) Then
+    If Me.lstUsuariosExcluidos.Value = "" Or IsNull(Me.lstUsuariosExcluidos.Value) Then
         strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "RESTAURAR!"
         
@@ -549,7 +445,7 @@ Dim strSelecao As String
     Else
 
         Matriz = Array()
-        Matriz = Split(Me.lstUsuariosExcluidos.value, " - ")
+        Matriz = Split(Me.lstUsuariosExcluidos.Value, " - ")
         
         admUsuarioExcluir strBanco, CStr(Matriz(1)), False
         
@@ -586,19 +482,13 @@ Private Sub lstUsuarios_Click()
 Dim Matriz As Variant
 
     Matriz = Array()
-    Matriz = Split(Me.lstUsuarios.value, " - ")
+    Matriz = Split(Me.lstUsuarios.Value, " - ")
     
     Me.cboDepartamento.Text = CStr(Matriz(0))
     Me.txtNome = CStr(Matriz(1))
     Me.txtEmail = CStr(Matriz(2))
     Me.txtCodigo = CStr(Matriz(3))
-    
-    Me.txtGerenteContas = CStr(Matriz(4))
-    Me.txtTelefone = CStr(Matriz(5))
-    Me.txtCelular01 = CStr(Matriz(6))
-    Me.txtCelular02 = CStr(Matriz(7))
-    Me.txtIdNextel = CStr(Matriz(8))
-    
+
     Me.cmdSalvar.Enabled = True
 
 End Sub
@@ -611,18 +501,12 @@ Private Sub lstUsuariosExcluidos_Click()
 Dim Matriz As Variant
 
     Matriz = Array()
-    Matriz = Split(Me.lstUsuariosExcluidos.value, " - ")
+    Matriz = Split(Me.lstUsuariosExcluidos.Value, " - ")
     
     Me.cboDepartamento.Text = CStr(Matriz(0))
     Me.txtNome = CStr(Matriz(1))
     Me.txtEmail = CStr(Matriz(2))
     Me.txtCodigo = CStr(Matriz(3))
-    
-    Me.txtGerenteContas = CStr(Matriz(4))
-    Me.txtTelefone = CStr(Matriz(5))
-    Me.txtCelular01 = CStr(Matriz(6))
-    Me.txtCelular02 = CStr(Matriz(7))
-    Me.txtIdNextel = CStr(Matriz(8))
     
     Me.cmdSalvar.Enabled = False
 End Sub
@@ -641,11 +525,6 @@ Private Sub LimparCampos()
     Me.txtCodigo.Text = "CODIGO"
     Me.txtNome.Text = "NOME"
     Me.txtEmail.Text = "E-MAIL"
-    Me.txtGerenteContas.Text = "GERENTE DE CONTAS"
-    Me.txtTelefone.Text = "TELEFONE"
-    Me.txtCelular01.Text = "CELULAR - 01"
-    Me.txtCelular02.Text = "CELULAR - 02"
-    Me.txtIdNextel.Text = "ID NEXTEL"
     
 End Sub
 

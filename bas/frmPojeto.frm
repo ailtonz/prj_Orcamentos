@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmPojeto 
    Caption         =   "Projeto"
-   ClientHeight    =   6750
+   ClientHeight    =   5625
    ClientLeft      =   45
    ClientTop       =   375
-   ClientWidth     =   5190
+   ClientWidth     =   5055
    OleObjectBlob   =   "frmPojeto.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -14,6 +14,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+
 
 Private Sub cmdCadastrar_Click()
 On Error GoTo cmdCadastrar_err
@@ -25,25 +27,6 @@ Dim strSheet As String: strSheet = ActiveSheet.Name
 Dim strGerente As String: strGerente = Range(GerenteDeContas)
 Dim Cadastro As Boolean: Cadastro = False
 
-''' LINHA
-If Me.cboLinha <> "" Then
-    
-    Cadastro = True
-Else
-    MsgBox strMSG, vbCritical + vbOKOnly, strTitulo
-    Me.cboLinha.SetFocus
-    Exit Sub
-End If
-
-''' FASCICULOS
-If Me.txtFasciculos <> "" Then
-    
-    Cadastro = True
-Else
-    MsgBox strMSG, vbCritical + vbOKOnly, strTitulo
-    Me.txtFasciculos.SetFocus
-    Exit Sub
-End If
 
 ''' VENDAS
 If Me.cboVendas <> "" Then
@@ -126,23 +109,31 @@ Else
 End If
 
 If Cadastro Then
-        
-    If ProjetoAtual = "G" Or ProjetoAtual = "H" Or ProjetoAtual = "I" Or ProjetoAtual = "J" Then
     
-    Else
-        Range(ProjetoAtual & "13") = Me.cboLinha
-        Range(ProjetoAtual & "14") = Me.txtFasciculos
-    End If
+    Application.ScreenUpdating = False
     
-    Range(ProjetoAtual & "15") = Me.cboVendas
-    Range(ProjetoAtual & "17") = Me.cboIdiomas
-    Range(ProjetoAtual & "18") = Me.txtTiragem
-    Range(ProjetoAtual & "19") = Me.txtEspecificacao
-    Range(ProjetoAtual & "20") = Me.cboMoeda
-    Range(ProjetoAtual & "21") = Me.txtRoyalty_Percentual
-    Range(ProjetoAtual & "22") = Me.txtRoyalty_Valor
-    Range(ProjetoAtual & "23") = Me.txtReImpressao
-        
+    admIntervalosDeEdicaoControle strBanco, strSheet, strGerente
+    
+    DesbloqueioDeGuia SenhaBloqueio
+    
+    '' CRIAR INTERVALO DE EDIÇÃO MAS Ñ DESMARCAR TEXTO
+    IntervaloEditacaoCriar "ORÇAMENTO", "C4:E5,G3:H5,C6,C8:J10,C12:J13,C15:J21,C60:J60", True
+    
+    Range(ProjetoAtual & "13") = Me.cboVendas
+    Range(ProjetoAtual & "15") = Me.cboIdiomas
+    Range(ProjetoAtual & "16") = Me.txtTiragem
+    Range(ProjetoAtual & "17") = Me.txtEspecificacao
+    Range(ProjetoAtual & "18") = Me.cboMoeda
+    Range(ProjetoAtual & "19") = Me.txtRoyalty_Percentual
+    Range(ProjetoAtual & "20") = Me.txtRoyalty_Valor
+    Range(ProjetoAtual & "21") = Me.txtReImpressao
+    
+    IntervaloEditacaoRemover "ORÇAMENTO", "C4:E5,G3:H5,C6,C8:J10,C12:J13,C15:J21,C60:J60"
+    
+    BloqueioDeGuia SenhaBloqueio
+    
+    Application.ScreenUpdating = True
+    
 End If
 
 
@@ -162,7 +153,6 @@ Private Sub cmdFechar_Click()
     Unload Me
 End Sub
 
-
 Private Sub UserForm_Initialize()
 Dim cPart As Range
 Dim cLoc As Range
@@ -181,36 +171,26 @@ Set wsPrincipal = Worksheets(ActiveSheet.Name)
         
     Else
     
-        ' LINHA
-        For Each cLoc In wsPrincipal.Range("LINHA")
-          With Me.cboLinha
-            .AddItem cLoc.value
-          End With
-        Next cLoc
-        
-        Me.cboLinha = Range(ProjetoAtual & "13")
-        
-        Me.txtFasciculos = Range(ProjetoAtual & "14")
-        
         ''' CARREGAR COMBO BOX DE VENDAS
         ComboBoxUpdate wsPrincipal.Name, "VENDAS", Me.cboVendas
-        Me.cboVendas = Range(ProjetoAtual & "15")
+        
+        Me.cboVendas = Range(ProjetoAtual & "13")
         
         ''' CARREGAR COMBO BOX DE IDIOMAS
         ComboBoxUpdate wsApoio.Name, "IDIOMAS", Me.cboIdiomas
         
-        Me.cboIdiomas = Range(ProjetoAtual & "17")
-        Me.txtTiragem = Range(ProjetoAtual & "18")
-        Me.txtEspecificacao = Range(ProjetoAtual & "19")
+        Me.cboIdiomas = Range(ProjetoAtual & "15")
+        Me.txtTiragem = Range(ProjetoAtual & "16")
+        Me.txtEspecificacao = Range(ProjetoAtual & "17")
         Me.cboVendas.SetFocus
         
         ''' CARREGAR COMBO BOX DE MOEDA
         ComboBoxUpdate wsPrincipal.Name, "MOEDA", Me.cboMoeda
-        Me.cboMoeda = Range(ProjetoAtual & "20")
+        Me.cboMoeda = Range(ProjetoAtual & "18")
         
-        Me.txtRoyalty_Percentual = Range(ProjetoAtual & "21")
-        Me.txtRoyalty_Valor = Range(ProjetoAtual & "22")
-        Me.txtReImpressao = Range(ProjetoAtual & "23")
+        Me.txtRoyalty_Percentual = Range(ProjetoAtual & "19")
+        Me.txtRoyalty_Valor = Range(ProjetoAtual & "20")
+        Me.txtReImpressao = Range(ProjetoAtual & "21")
 
     End If
     

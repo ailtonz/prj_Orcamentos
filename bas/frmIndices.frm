@@ -31,7 +31,7 @@ Else
     Dim strUsuario As String: strUsuario = Range(GerenteDeContas)
     Dim strControle As String: strControle = ActiveSheet.Name
     Dim strPropriedade As String: strPropriedade = "LINHA"
-    Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstLinha.value, "|", 0))
+    Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstLinha.Value, "|", 0))
     Dim strValor_01 As String: strValor_01 = IIf((Me.txtLinhaValor01) = "", 0, Me.txtLinhaValor01)
     Dim strValor_02 As String: strValor_02 = IIf((Me.txtLinhaValor02) = "", 0, Me.txtLinhaValor02)
     Dim strSQL As String
@@ -89,7 +89,7 @@ Else
     Dim strUsuario As String: strUsuario = Range(GerenteDeContas)
     Dim strControle As String: strControle = ActiveSheet.Name
     Dim strPropriedade As String: strPropriedade = "MOEDA"
-    Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstMoeda.value, "|", 0))
+    Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstMoeda.Value, "|", 0))
     Dim strValor_01 As String: strValor_01 = IIf((Me.txtMoedaValor01) = "", 0, Me.txtMoedaValor01)
     Dim strValor_02 As String: strValor_02 = ""
     Dim strSQL As String
@@ -148,7 +148,7 @@ Else
     Dim strUsuario As String: strUsuario = Range(GerenteDeContas)
     Dim strControle As String: strControle = ActiveSheet.Name
     Dim strPropriedade As String: strPropriedade = "VENDA"
-    Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstVenda.value, "|", 0))
+    Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstVenda.Value, "|", 0))
     Dim strValor_01 As String: strValor_01 = IIf((Me.txtVendaValor01) = "", 0, Me.txtVendaValor01)
     Dim strValor_02 As String: strValor_02 = ""
     Dim strSQL As String
@@ -208,7 +208,7 @@ Else
     Dim strUsuario As String: strUsuario = Range(GerenteDeContas)
     Dim strControle As String: strControle = ActiveSheet.Name
     Dim strPropriedade As String: strPropriedade = "DESCONTO"
-    Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstDescontos.value, "|", 0))
+    Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstDescontos.Value, "|", 0))
     Dim strValor_01 As String: strValor_01 = IIf((Me.txtDescontoValor01) = "", 0, Me.txtDescontoValor01)
     Dim strValor_02 As String: strValor_02 = ""
     Dim strSQL As String
@@ -252,20 +252,20 @@ End If
 End Sub
 
 Private Sub lstLinha_Click()
-    Me.txtLinhaValor01 = Trim(DivisorDeTexto(Me.lstLinha.value, "|", 1))
-    Me.txtLinhaValor02 = Trim(DivisorDeTexto(Me.lstLinha.value, "|", 2))
+    Me.txtLinhaValor01 = Trim(DivisorDeTexto(Me.lstLinha.Value, "|", 1))
+    Me.txtLinhaValor02 = Trim(DivisorDeTexto(Me.lstLinha.Value, "|", 2))
 End Sub
 
 Private Sub lstMoeda_Click()
-    Me.txtMoedaValor01 = Trim(DivisorDeTexto(Me.lstMoeda.value, "|", 1))
+    Me.txtMoedaValor01 = Trim(DivisorDeTexto(Me.lstMoeda.Value, "|", 1))
 End Sub
 
 Private Sub lstVenda_Click()
-    Me.txtVendaValor01 = Trim(DivisorDeTexto(Me.lstVenda.value, "|", 1))
+    Me.txtVendaValor01 = Trim(DivisorDeTexto(Me.lstVenda.Value, "|", 1))
 End Sub
 
 Private Sub lstDescontos_Click()
-    Me.txtDescontoValor01 = Trim(DivisorDeTexto(Me.lstDescontos.value, "|", 1))
+    Me.txtDescontoValor01 = Trim(DivisorDeTexto(Me.lstDescontos.Value, "|", 1))
 End Sub
 
 Private Sub UserForm_Initialize()

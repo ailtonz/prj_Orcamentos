@@ -73,11 +73,11 @@ On Error GoTo cmdImportar_err
 
 Dim strBancoLocal As String: strBancoLocal = Range(BancoLocal)
 
-Dim dbORIGEM As dao.Database
-Dim rstOrcamentoORIGEM As dao.Recordset
+Dim dbOrigem As DAO.Database
+Dim rstOrcamentoORIGEM As DAO.Recordset
 
-Set dbORIGEM = DBEngine.OpenDatabase(strBancoEmTransito, False, False, "MS Access;PWD=" & SenhaBanco)
-Set rstOrcamentoORIGEM = dbORIGEM.OpenRecordset("Select * from Orcamentos Order by Vendedor,Controle")
+Set dbOrigem = DBEngine.OpenDatabase(strBancoEmTransito, False, False, "MS Access;PWD=" & SenhaBanco)
+Set rstOrcamentoORIGEM = dbOrigem.OpenRecordset("Select * from Orcamentos Order by Vendedor,Controle")
 
     While Not rstOrcamentoORIGEM.EOF
         ''' IMPORTAR ORÇAMENTOS EM TRANSITO

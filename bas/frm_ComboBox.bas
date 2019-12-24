@@ -18,8 +18,8 @@ End Function
 
 Public Function ComboBoxCarregar(BaseDeDados As String, cbo As ComboBox, strCampo As String, strSQL As String) As Boolean: ComboBoxCarregar = True
 On Error GoTo ComboBoxCarregar_err
-Dim dbOrcamento As dao.Database
-Dim rstComboBoxCarregar As dao.Recordset
+Dim dbOrcamento As DAO.Database
+Dim rstComboBoxCarregar As DAO.Recordset
 Dim RetVal As Variant
 
 RetVal = Dir(BaseDeDados)

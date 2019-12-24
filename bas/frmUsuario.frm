@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmUsuario 
    Caption         =   "Cadastro de Usuário"
-   ClientHeight    =   3990
+   ClientHeight    =   1620
    ClientLeft      =   45
    ClientTop       =   375
    ClientWidth     =   7815
@@ -19,9 +19,9 @@ Private Sub cmdSalvar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 
     If ExistenciaUsuario(Range(BancoLocal), "", Me.txtNome) Then
-        admUsuarioSalvar Range(BancoLocal), "Vendas", "", Me.txtNome, Me.txtEmail, Me.txtGerenteContas, Me.txtTelefone, Me.txtCelular01, Me.txtCelular02, Me.txtIdNextel
+        admUsuarioSalvar Range(BancoLocal), "Vendas", "", Me.txtNome, Me.txtEmail
     Else
-        admUsuarioNovo Range(BancoLocal), "Vendas", "", Me.txtNome, Me.txtEmail, Me.txtGerenteContas, Me.txtTelefone, Me.txtCelular01, Me.txtCelular02, Me.txtIdNextel
+        admUsuarioNovo Range(BancoLocal), "Vendas", "", Me.txtNome, Me.txtEmail
     End If
 
     

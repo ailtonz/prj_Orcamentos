@@ -19,13 +19,22 @@ Public Function OcultarLinhas(LinhaInicio As Integer, LinhaFinal As Integer, ocu
     Selection.EntireRow.Hidden = ocultar
 End Function
 
-Public Function IntervaloEditacaoCriar(Titulo As String, Selecao As String)
+Public Function IntervaloEditacaoCriar(Titulo As String, Selecao As String, Optional MarcarSelecao As Boolean)
 On Error GoTo IntervaloEditacaoCriar_err
+'MarcarSelecao = False
 'On Error Resume Next
     
-    ActiveSheet.Protection.AllowEditRanges.Add Title:=Titulo, Range:=Range(Selecao)
+    If Not IntervaloEditacaoExiste(Titulo) Then
+       
+        ActiveSheet.Protection.AllowEditRanges.Add Title:=Titulo, Range:=Range(Selecao)
+        
+        If Not MarcarSelecao Then
+            DesmarcaTexto Selecao
+        Else
+            MarcaTexto Selecao
+        End If
     
-    DesmarcaTexto Selecao
+    End If
     
 IntervaloEditacaoCriar_Fim:
 Exit Function
@@ -40,8 +49,11 @@ Public Function IntervaloEditacaoRemover(IntervaloDeEdicao As String, Optional M
     
     For Each AER In ActiveSheet.Protection.AllowEditRanges
         If AER.Title = IntervaloDeEdicao Then
-            AER.DELETE
-            MarcaTexto MarcarSelecao
+            AER.Delete
+            If MarcarSelecao <> "" Then
+                MarcaTexto MarcarSelecao
+            End If
+            
         End If
     Next AER
 
@@ -55,13 +67,51 @@ Dim x As Integer
         
     For Each AER In ActiveSheet.Protection.AllowEditRanges
         If x > 0 Then
-            AER.DELETE
+            AER.Delete
         End If
     Next AER
         
     Set AER = Nothing
 
 End Function
+
+Public Function IntervaloEditacaoExiste(strTitulo As String) As Boolean: IntervaloEditacaoExiste = False
+Dim AER As AllowEditRange
+Dim x As Integer
+
+    x = ActiveSheet.Protection.AllowEditRanges.count
+        
+    For Each AER In ActiveSheet.Protection.AllowEditRanges
+        If AER.Title = strTitulo Then
+            IntervaloEditacaoExiste = True
+        End If
+    Next AER
+        
+    Set AER = Nothing
+
+End Function
+
+
+Sub test()
+    Dim i As Integer
+    Dim strBanco As String: strBanco = Range(BancoLocal)
+    
+    IntervaloEditacaoRemoverTodos
+    
+    admIntervalosDeEdicaoControle strBanco, "031-14", "FABIANA"
+    
+    
+    For i = 1 To ActiveSheet.Protection.AllowEditRanges.count
+        If ActiveSheet.Protection.AllowEditRanges.Item("NOME").Exists Then
+            MsgBox ActiveSheet.Protection.AllowEditRanges.Name
+        Else
+            Exit Sub
+        End If
+    Next i
+    
+End Sub
+
+
 
 Public Function MarcaTexto(Selecao As String)
     
@@ -108,44 +158,7 @@ Public Function DesmarcaTexto(Selecao As String)
     
 End Function
 
-Public Function MarcarObrigatorio(Selecao As String)
 
-    Range(Selecao).Select
-    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
-    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-    With Selection.Borders(xlEdgeLeft)
-        .LineStyle = xlContinuous
-        .Color = -16776961
-        .TintAndShade = 0
-        .Weight = xlThick
-    End With
-    With Selection.Borders(xlEdgeTop)
-        .LineStyle = xlContinuous
-        .Color = -16776961
-        .TintAndShade = 0
-        .Weight = xlThick
-    End With
-    With Selection.Borders(xlEdgeBottom)
-        .LineStyle = xlContinuous
-        .Color = -16776961
-        .TintAndShade = 0
-        .Weight = xlThick
-    End With
-    With Selection.Borders(xlEdgeRight)
-        .LineStyle = xlContinuous
-        .Color = -16776961
-        .TintAndShade = 0
-        .Weight = xlThick
-    End With
-    With Selection.Borders(xlInsideVertical)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlThin
-    End With
-    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
-    
-End Function
 
 Public Sub InserirConteudo(Linha As Long, Coluna As Long, Conteudo As String)
     Cells(Linha, Coluna).Select
@@ -166,27 +179,75 @@ Dim s As Integer
 End Function
 
 Public Function ContarAreaPreechida(area As Range) As Long
-    Dim celula As Range, Contador As Long
-    Contador = 0
+    Dim celula As Range, contador As Long
+    contador = 0
     For Each celula In area
         If celula <> "" Then
-            Contador = Contador + 1
+            contador = contador + 1
         End If
     Next
-    ContarAreaPreechida = Contador
+    ContarAreaPreechida = contador
 End Function
 
 
-Public Sub OcultarSheets()
-  Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-  Dim sht As Worksheet
-  
-  For Each sht In Sheets
-   
-    If sht.Name <> strUsuario Then
-        sht.Visible = xlSheetHidden
+Function MarcarObrigatorio(ByVal strCelula As String, Marcar As Boolean)
+'' Marcar celula obrigatoria quando estiver vasia
+    If Range(strCelula) = "" Or Range(strCelula) = 0 Then
+        Range(strCelula).Select
+        If Marcar Then
+            With Selection.Interior
+                .Pattern = xlSolid
+                .PatternColorIndex = xlAutomatic
+                .Color = 255
+                .TintAndShade = 0
+                .PatternTintAndShade = 0
+            End With
+        Else
+            With Selection.Interior
+                .Pattern = xlNone
+                .TintAndShade = 0
+                .PatternTintAndShade = 0
+            End With
+        End If
     End If
-    
-  Next sht
-  
-End Sub
+End Function
+
+
+'Public Function MarcarObrigatorio(Selecao As String)
+'
+'    Range(Selecao).Select
+'    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+'    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+'    With Selection.Borders(xlEdgeLeft)
+'        .LineStyle = xlContinuous
+'        .Color = -16776961
+'        .TintAndShade = 0
+'        .Weight = xlThick
+'    End With
+'    With Selection.Borders(xlEdgeTop)
+'        .LineStyle = xlContinuous
+'        .Color = -16776961
+'        .TintAndShade = 0
+'        .Weight = xlThick
+'    End With
+'    With Selection.Borders(xlEdgeBottom)
+'        .LineStyle = xlContinuous
+'        .Color = -16776961
+'        .TintAndShade = 0
+'        .Weight = xlThick
+'    End With
+'    With Selection.Borders(xlEdgeRight)
+'        .LineStyle = xlContinuous
+'        .Color = -16776961
+'        .TintAndShade = 0
+'        .Weight = xlThick
+'    End With
+'    With Selection.Borders(xlInsideVertical)
+'        .LineStyle = xlContinuous
+'        .ColorIndex = 0
+'        .TintAndShade = 0
+'        .Weight = xlThin
+'    End With
+'    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+'
+'End Function

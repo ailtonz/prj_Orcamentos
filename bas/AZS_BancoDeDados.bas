@@ -3,7 +3,7 @@ Option Explicit
 
 Sub CriarBancoParaExportacao(strBancoDestino As String)
 Dim oAccess As Access.Application
-Dim dbDestino As dao.Database
+Dim dbDestino As DAO.Database
 
 Set oAccess = New Access.Application
 Set dbDestino = DBEngine.CreateDatabase(strBancoDestino, dbLangGeneral & ";pwd=" & SenhaBanco, dbVersion40)
@@ -16,24 +16,24 @@ Set oAccess = Nothing
 End Sub
 
 Sub CriarTabelaEmBancoParaExportacao(strOrigem As String, strDestino As String, strTabela As String)
-Dim dbORIGEM As dao.Database
-Dim tbORIGEM As dao.TableDef
-Dim dbDestino As dao.Database
-Dim tdfNew As dao.TableDef
+Dim dbOrigem As DAO.Database
+Dim tbORIGEM As DAO.TableDef
+Dim dbDestino As DAO.Database
+Dim tdfNew As DAO.TableDef
     
     
-Set dbORIGEM = DBEngine.OpenDatabase(strOrigem, False, False, "MS Access;PWD=" & SenhaBanco)
-Set tbORIGEM = dbORIGEM.TableDefs(strTabela)
+Set dbOrigem = DBEngine.OpenDatabase(strOrigem, False, False, "MS Access;PWD=" & SenhaBanco)
+Set tbORIGEM = dbOrigem.TableDefs(strTabela)
 Set dbDestino = DBEngine.OpenDatabase(strDestino, False, False, "MS Access;PWD=" & SenhaBanco)
 Set tdfNew = dbDestino.CreateTableDef(strTabela)
 
 Dim x As Integer
     
-    For x = 0 To dbORIGEM.TableDefs(strTabela).Fields.count - 1
+    For x = 0 To dbOrigem.TableDefs(strTabela).Fields.count - 1
     
         With tdfNew
     
-            .Fields.Append .CreateField(dbORIGEM.TableDefs(strTabela).Fields(x).Properties("name"), dbORIGEM.TableDefs(strTabela).Fields(x).Properties("type"), dbORIGEM.TableDefs(strTabela).Fields(x).Properties("size"))
+            .Fields.Append .CreateField(dbOrigem.TableDefs(strTabela).Fields(x).Properties("name"), dbOrigem.TableDefs(strTabela).Fields(x).Properties("type"), dbOrigem.TableDefs(strTabela).Fields(x).Properties("size"))
     
         End With
     
@@ -45,7 +45,7 @@ Dim x As Integer
 '''dbDESTINO.TableDefs.Delete tdfNew.Name
    
    dbDestino.Close
-   dbORIGEM.Close
+   dbOrigem.Close
 
 End Sub
 
@@ -56,16 +56,16 @@ Sub ExportarDadosTabelaOrigemParaTabelaDestino(ByVal strOrigem As String, ByVal 
 ''==============================''
 
 '' POSICIONA O BANCO DE ORIGEM
-Dim dbORIGEM As dao.Database
-Set dbORIGEM = DBEngine.OpenDatabase(strOrigem, False, False, "MS Access;PWD=" & SenhaBanco)
+Dim dbOrigem As DAO.Database
+Set dbOrigem = DBEngine.OpenDatabase(strOrigem, False, False, "MS Access;PWD=" & SenhaBanco)
 
 '' SELECIONA A TABELA DE ORIGEM
-Dim tbORIGEM As dao.TableDef
-Set tbORIGEM = dbORIGEM.TableDefs(strTabela)
+Dim tbORIGEM As DAO.TableDef
+Set tbORIGEM = dbOrigem.TableDefs(strTabela)
 
 '' SELECIONA OS REGISTROS DA ORIGEM
-Dim rstORIGEM As dao.Recordset
-Set rstORIGEM = dbORIGEM.OpenRecordset("Select * from " & strTabela & "")
+Dim rstOrigem As DAO.Recordset
+Set rstOrigem = dbOrigem.OpenRecordset("Select * from " & strTabela & "")
 
 
 ''==============================''
@@ -73,49 +73,49 @@ Set rstORIGEM = dbORIGEM.OpenRecordset("Select * from " & strTabela & "")
 ''==============================''
 
 '' POSICIONA O BANCO DE DESTINO
-Dim dbDestino As dao.Database
+Dim dbDestino As DAO.Database
 Set dbDestino = OpenDatabase(strDestino, False, False, "MS Access;PWD=" & SenhaBanco)
 
 '' SELECIONA A TABELA DE DESTINO
-Dim tdfNew As dao.TableDef
+Dim tdfNew As DAO.TableDef
 Set tdfNew = dbDestino.CreateTableDef(strTabela)
 
 '' SELECIONA OS REGISTROS DA ORIGEM
-Dim rstDESTINO As dao.Recordset
-Set rstDESTINO = dbDestino.OpenRecordset("Select * from " & strTabela & "")
+Dim rstDestino As DAO.Recordset
+Set rstDestino = dbDestino.OpenRecordset("Select * from " & strTabela & "")
 
 Dim x As Integer
 
 'Saida Now(), "ExportarDadosTabelaOrigemParaTabelaDestino.log"
 
-While Not rstORIGEM.EOF
+While Not rstOrigem.EOF
 
-    rstDESTINO.AddNew
+    rstDestino.AddNew
 
-    For x = 0 To dbORIGEM.TableDefs(strTabela).Fields.count - 1
+    For x = 0 To dbOrigem.TableDefs(strTabela).Fields.count - 1
 
         With tdfNew
-             rstDESTINO.Fields(dbDestino.TableDefs(strTabela).Fields(x).Properties("name")) = rstORIGEM.Fields(dbORIGEM.TableDefs(strTabela).Fields(x).Properties("name"))
+             rstDestino.Fields(dbDestino.TableDefs(strTabela).Fields(x).Properties("name")) = rstOrigem.Fields(dbOrigem.TableDefs(strTabela).Fields(x).Properties("name"))
         End With
 
     Next x
     
-    rstDESTINO.Update
-    rstORIGEM.MoveNext
+    rstDestino.Update
+    rstOrigem.MoveNext
 
 Wend
    
 'Saida Now(), "ExportarDadosTabelaOrigemParaTabelaDestino.log"
    
-rstDESTINO.Close
-rstORIGEM.Close
+rstDestino.Close
+rstOrigem.Close
 dbDestino.Close
-dbORIGEM.Close
+dbOrigem.Close
 
-Set rstDESTINO = Nothing
-Set rstORIGEM = Nothing
+Set rstDestino = Nothing
+Set rstOrigem = Nothing
 Set dbDestino = Nothing
-Set dbORIGEM = Nothing
+Set dbOrigem = Nothing
 
 End Sub
 

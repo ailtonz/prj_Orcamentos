@@ -9,7 +9,7 @@ On Error GoTo EnviarOrcamentos_err
     Dim OutApp As Object
     Dim OutMail As Object
     
-    Dim l As Integer, c As Integer ' L = LINHA | C = COLUNA
+    Dim L As Integer, c As Integer ' L = LINHA | C = COLUNA
     Dim x As Integer ' contador de linhas
     
 
@@ -72,11 +72,11 @@ On Error GoTo EnviarEmail_err
         If Anexo = True Then
         
             '   BASE DE DADOS
-            Dim dbOrcamento As dao.Database
+            Dim dbOrcamento As DAO.Database
             Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
             
             '   CONSULTA
-            Dim rstOrcamentosAnexos As dao.Recordset
+            Dim rstOrcamentosAnexos As DAO.Recordset
             Set rstOrcamentosAnexos = dbOrcamento.OpenRecordset(strConsulta)
             
             While Not rstOrcamentosAnexos.EOF

@@ -22,13 +22,13 @@ Dim strVendedor As String: strVendedor = Range(GerenteDeContas)
 Dim strMSG As String
 Dim strTitulo As String
 
-    If IsNull(Me.lstEtapas.value) Then
+    If IsNull(Me.lstEtapas.Value) Then
         strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Proxima Etapa"
         
         MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
-        admOrcamentoAtualizarEtapa BaseDeDados, strControle, strVendedor, CodigoEtapa(BaseDeDados, Me.lstEtapas.value)
+        admOrcamentoAtualizarEtapa BaseDeDados, strControle, strVendedor, CodigoEtapa(BaseDeDados, Me.lstEtapas.Value)
         Me.Hide
     End If
     

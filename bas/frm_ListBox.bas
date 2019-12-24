@@ -50,8 +50,8 @@ End Function
 Public Function ListBoxCarregar(BaseDeDados As String, frm As UserForm, NomeLista As String, strCampo As String, strSQL As String)
 On Error GoTo ListBoxCarregar_err
 
-Dim dbOrcamento         As dao.Database
-Dim rstListBoxCarregar   As dao.Recordset
+Dim dbOrcamento         As DAO.Database
+Dim rstListBoxCarregar   As DAO.Recordset
 Dim RetVal              As Variant
 
 Dim Ctrl                As Control

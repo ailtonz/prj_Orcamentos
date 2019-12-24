@@ -4,8 +4,8 @@ Option Explicit
 Public Function UserFormDesbloqueioDeFuncoes(BaseDeDados As String, frm As UserForm, strSQL As String, strCampo As String)
 On Error GoTo UserFormDesbloqueioDeFuncoes_err
 
-Dim dbOrcamento         As dao.Database
-Dim rstUserFormDesbloqueioDeFuncoes   As dao.Recordset
+Dim dbOrcamento         As DAO.Database
+Dim rstUserFormDesbloqueioDeFuncoes   As DAO.Recordset
 Dim RetVal              As Variant
 Dim Ctrl                As Control
 
@@ -51,3 +51,21 @@ UserFormDesbloqueioDeFuncoes_err:
     MsgBox Err.Description
     Resume UserFormDesbloqueioDeFuncoes_Fim
 End Function
+
+
+Sub AtualizarProcesso(Percentual As Single, frm As UserForm) 'variável reservada para ser %
+
+    With frm 'With usa o frmprocesso para as ações abaixo
+    'sem ter que repetir o nome do objeto frmprocesso
+
+        ' Atualiza o Título do Quadro que comporta a barra para %
+'        .FrameProcesso.Caption = Format(Percentual, "0%")
+
+        ' Atualza o tamanho da Barra (label)
+        .lblProcesso.Width = Percentual * (100 - 10)
+    End With 'final do uso de frmprocesso diretamente
+    
+    'Habilita o userform para ser atualizado
+    DoEvents
+End Sub
+
