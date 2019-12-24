@@ -19,16 +19,16 @@ Dim BaseDeDados As String: BaseDeDados = Range(BancoLocal)
 Dim strControle As String: strControle = ActiveSheet.Name
 Dim strVendedor As String: strVendedor = Range(GerenteDeContas)
 
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 
-    If IsNull(Me.lstEtapas.Value) Then
-        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    If IsNull(Me.lstEtapas.value) Then
+        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Proxima Etapa"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
-        admOrcamentoAtualizarEtapa BaseDeDados, strControle, strVendedor, CodigoEtapa(BaseDeDados, Me.lstEtapas.Value)
+        admOrcamentoAtualizarEtapa BaseDeDados, strControle, strVendedor, CodigoEtapa(BaseDeDados, Me.lstEtapas.value)
         Me.Hide
     End If
     

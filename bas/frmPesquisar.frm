@@ -4,8 +4,9 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmPesquisar
    ClientHeight    =   6945
    ClientLeft      =   45
    ClientTop       =   375
-   ClientWidth     =   11280
+   ClientWidth     =   11325
    OleObjectBlob   =   "frmPesquisar.frx":0000
+   ShowModal       =   0   'False
    StartUpPosition =   2  'CenterScreen
 End
 Attribute VB_Name = "frmPesquisar"
@@ -17,93 +18,22 @@ Option Base 1
 Option Explicit
 
 Public strPesquisar As String
-Public strSQL As String
+Public strSql As String
 Public strUsuarios As String
-
-Private Sub cboAmbienteDeTrabalho_Click()
-Dim strBancoServidor As String: strBancoServidor = Sheets(cfgGuiaConfiguracao).Range(cfgBancoServidor)
-Dim strBancoLocal As String: strBancoLocal = pathWorkSheetAddress & "bin\" & Controle & "_db" & "HOME" & ".mdb"
-Dim strAmbiente As String: strAmbiente = Me.cboAmbienteDeTrabalho.Text
-
-'''DESATIVAR AS MSGS DE ALERTAS!
-Application.DisplayAlerts = False
-
-
-''' VERIFICAR EXISTENCIA (BANCO_SERVER)
-If Not Dir$(strBancoServidor, vbArchive) <> "" Then
-
-    ''' MENSAGEM DE ERRO DE PROCEDIMENTO
-    MsgBox "Troca de Ambiente INTERROMPIDA!", vbCritical + vbOKOnly, "Troca de Ambiente"
-    
-Else
-
-    ''' DESBLOQUEIO DE PLANILHA
-    DesbloqueioDeGuia SenhaBloqueio
-    Application.ScreenUpdating = False
-
-    Select Case strAmbiente
-    
-        Case "CASA"
-        
-            If Dir$(strBancoServidor, vbArchive) <> "" Then
-            
-                ''' COPIAR BASE DE DADOS (SERVER) PARA PASTA LOCAL
-                FileCopy strBancoServidor, strBancoLocal
-                
-                ''' EXCLUIR ORCAMENTOS SEM VINCULOS COM USUARIO
-                admExcluirOrcamentosSemVinculosComUsuario strBancoLocal, Range(NomeUsuario)
-                
-                ''' ARMAZENAR BANCO SELECIONADO EM CONFIGIRAÇÕES DO SISTEMA (BANCO LOCAL)
-                Sheets(cfgGuiaConfiguracao).Range(cfgBancoLocal) = strBancoLocal
-                
-                ''' SETA AMBIENTE DE TRABALHO COMO: CASA
-                Range(AmbienteDeTrabalho) = strAmbiente
-                
-                ''' CADASTRA CAMINHO DO BANCO
-                Range(BancoLocal) = strBancoLocal
-            
-            End If
-        
-        Case "ESCRITORIO"
-        
-            ''' SETA AMBIENTE DE TRABALHO COMO: ESCRITORIO
-            Range(AmbienteDeTrabalho) = strAmbiente
-        
-            ''' CADASTRA CAMINHO DO BANCO
-            Range(BancoLocal) = strBancoServidor
-        
-        
-    End Select
-    
-    ''' BLOQUEIO DE PLANILHA
-    BloqueioDeGuia SenhaBloqueio
-    
-    ''' SALVAR PLANILHA
-    ActiveWorkbook.Save
-    
-    Application.ScreenUpdating = True
-    
-    ''' ATUALIZAR TITULO DA TELA
-    Me.Caption = UCase(strAmbiente & " - " & " Pesquisa de Orçamentos " & " - ver: " & VersaoDoSistema)
-    
-    ''' MENSAGEM DE CONCLUSÃO DE PROCEDIMENTO
-    MsgBox "Troca de Ambiente Concluida!", vbInformation + vbOKOnly, "Troca de Ambiente"
-    
-End If
-    
-End Sub
 
 Private Sub spbEtapas_Change()
 Dim strBanco As String: strBanco = Range(BancoLocal)
     
-    Me.txtEtapa = DescricaoEtapa(strBanco, Me.spbEtapas.Value)
+    Me.txtEtapa = DescricaoEtapa(strBanco, Me.spbEtapas.value)
     
     MontarPesquisa
     
-    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
+    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
     
+    '' DISPOSIÇÃO DE ETAPA
     Me.lstPesquisa.Enabled = EtapaUsuario(strBanco, Me.txtEtapa, Range(NomeUsuario))
     
+    '' BLOQUEIO DE ETAPA
     Me.lstPesquisa.Enabled = BloqueioEtapaUsuario(strBanco, Me.txtEtapa, Range(NomeUsuario))
     
     ''' DESBLOQUEIO DE FUNÇÕES
@@ -120,11 +50,12 @@ Private Sub UserForm_Activate()
 '    AmbienteDeTrabalhoCarregar
 
     admOrcamentoFormulariosLimpar
-    admOrcamentoFormulariosLiberar Range(NomeUsuario)
+'    admOrcamentoFormulariosLiberar Range(NomeUsuario)
     ActiveSheet.Name = IIf(IsNull(Range(NomeUsuario)), "SEM_USUARIO", Range(NomeUsuario))
     Range(InicioCursor).Select
     spbEtapas_Change
 
+       
     UserForm_Initialize
         
 End Sub
@@ -137,24 +68,30 @@ Private Sub UserForm_Initialize()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim sqlUsuarios As String: strUsuarios = Range(NomeUsuario)
 Dim strAmbiente As String: strAmbiente = Range(AmbienteDeTrabalho)
+Dim strPendentes As String: strPendentes = "SELECT [controle] & ' ' & [usuario] AS strControle " & _
+            " From OrcamentosAtualizacoes ORDER BY [controle] & '' & [usuario]"
+    
+    admAtualizarUsuario
     
     ''' ATUALIZAR TITULO DA TELA
-    Me.Caption = UCase(strAmbiente & " - " & " Pesquisa de Orçamentos " & " - ver: " & VersaoDoSistema)
+    Me.Caption = UCase("Pesquisa de Orçamentos ")
     
     ''' VERIFICAR EXISTENCIA DA BASE DE DADOS
-    admVerificarBaseDeDados
+'    admVerificarBaseDeDados
+        
+    Me.txtTop.Text = TopPesquisa
     
     ''' MONTA PESQUISA
     MontarPesquisa
     
     ''' CARREGA VARIAVEL DE USUÁRIOS
     sqlUsuarios = "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No)) Order By Usuario"
-    
-'    Saida strSQL, "Pesquisa.log"
-    
+       
     ''' CARREGAR LIST BOX DE PESQUISA
-    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
+    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
     
+'    ListBoxCarregar strBanco, Me, Me.lstPendentes.Name, "strControle", strPendentes
+     
     ''' CARREGAR LIST BOX DE USUÁRIOS
     ComboBoxCarregar strBanco, Me.cboUsuario, "Usuario", sqlUsuarios
     
@@ -165,37 +102,9 @@ Dim strAmbiente As String: strAmbiente = Range(AmbienteDeTrabalho)
 ''    UserFormDesbloqueioDeFuncoes strBanco, Me, "Select * from qryUsuariosFuncoes Where Usuario = '" & strUsuarios & "'", "Funcao"
     
     ''' CARREGAR COMBO BOX DE AMBIENTE DE TRABALHO
-    ComboBoxUpdate "cfg", "BANCOS", Me.cboAmbienteDeTrabalho
-    
-    ''' DESATIVA ATUALIZAÇÃO DA TELA
-    Application.ScreenUpdating = False
-    ''' DESBLOQUEIA GUIA
-    DesbloqueioDeGuia SenhaBloqueio
-    
-    ''' LIMPAR LINHA DE PRODUTOS
-    Range("L3:N3").Select
-    Range(Selection, Selection.End(xlDown)).Select
-    Selection.ClearContents
-    
-    ''' LIMPAR MOEDA
-    Range("P3:Q3").Select
-    Range(Selection, Selection.End(xlDown)).Select
-    Selection.ClearContents
-    
-    ''' LIMPAR VENDA
-    Range("S3:T3").Select
-    Range(Selection, Selection.End(xlDown)).Select
-    Selection.ClearContents
-    
-    ''' LIMPAR DESCONTOS
-    Range("V3:W3").Select
-    Range(Selection, Selection.End(xlDown)).Select
-    Selection.ClearContents
-    
-    ''' BLOQUEIA GUIA
-    BloqueioDeGuia SenhaBloqueio
-    ''' ATIVA ATUALIZAÇÃO DA TELA
-    Application.ScreenUpdating = True
+'    ComboBoxUpdate "cfg", "BANCOS", Me.cboAmbienteDeTrabalho
+            
+    admLimparAnexos
     
     '''POSICIONA CURSOR
     Range(InicioCursor).Select
@@ -216,7 +125,7 @@ Dim retValor As Variant
     
     MontarPesquisa
     
-    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
+    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
     Me.Repaint
 
 End Sub
@@ -226,36 +135,40 @@ Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim sqlUsuario As String: strUsuarios = Range(NomeUsuario)
 
     admOrcamentoNovo strBanco, Me.cboUsuario
-    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
+    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
     
 End Sub
 
 Private Sub cmdAlterar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim Matriz As Variant
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 
-    If IsNull(lstPesquisa.Value) Then
-        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    If IsNull(lstPesquisa.value) Then
+        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "ALTERAR ORÇAMENTO!"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
         Matriz = Array()
-        Matriz = Split(lstPesquisa.Value, " - ")
+        Matriz = Split(lstPesquisa.value, " - ")
 
         Application.ScreenUpdating = False
-
+    
         admOrcamentoFormulariosLimpar
         
-        CarregarOrcamento strBanco, CStr(Matriz(0)), CStr(Matriz(2))
+        carregarOrcamento strBanco, CStr(Matriz(0)), CStr(Matriz(2))
         
         admIntervalosDeEdicaoControle strBanco, CStr(Matriz(0)), CStr(Matriz(2))
-                        
+        
+'        admOrcamentoFormulariosLiberar Range(NomeUsuario)
+                                
         Range(InicioCursor).Select
         
         ActiveSheet.Name = CStr(Matriz(0))
+            
+        listarGrandsGuia
             
         Application.ScreenUpdating = True
         
@@ -265,49 +178,88 @@ Dim strTitulo As String
 
 End Sub
 
+Private Sub listarGrandsGuia()
+Dim Prf As clsGrands
+Dim col As clsGrands
+Dim orc As clsOrcamentos
+
+carregarBanco
+
+Set orc = New clsOrcamentos
+Set Prf = New clsGrands
+
+With orc
+    .Controle = ActiveSheet.Name
+    .Vendedor = Range(GerenteDeContas)
+    .add orc
+End With
+
+Set col = Prf.getGrands(Bnc, orc)
+
+Dim lRow As Long, x As Long
+Dim ws As Worksheet
+Set ws = Worksheets(orc.Controle)
+
+''find  first empty row in database
+lRow = ws.Cells(Rows.count, 29).End(xlUp).Offset(1, 0).Row
+    
+DesbloqueioDeGuia SenhaBloqueio
+    
+For Each Prf In col.Itens
+    ws.Range("AC" & lRow).value = Prf.Profissao
+    ws.Range("AD" & lRow).value = Prf.Nome
+    ws.Range("AE" & lRow).value = Prf.ValorLiquido
+    lRow = lRow + 1
+Next Prf
+
+BloqueioDeGuia SenhaBloqueio
+
+End Sub
+
+
 Private Sub cmdCopiar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim strUsuario As String: strUsuario = Range(NomeUsuario)
 Dim Matriz As Variant
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 
-    If IsNull(lstPesquisa.Value) Then
-        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    If IsNull(lstPesquisa.value) Then
+        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "CÓPIA!"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
         Matriz = Array()
-        Matriz = Split(lstPesquisa.Value, " - ")
+        Matriz = Split(lstPesquisa.value, " - ")
         
         admOrcamentoCopiar strBanco, CStr(Matriz(0)), CStr(Matriz(2)), strUsuario
-        ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
+        ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
     End If
 End Sub
 
 Private Sub cmdExcluir_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim Matriz As Variant
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 Dim varResposta As Variant
 
 
-    If IsNull(Me.lstPesquisa.Value) Then
-        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    If IsNull(Me.lstPesquisa.value) Then
+        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "EXCLUIR!"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
-        strMSG = "ATENÇÃO: Você deseja realmente EXCLUIR este registro?. " & Chr(10) & Chr(13) & Chr(13)
+        strMsg = "ATENÇÃO: Você deseja realmente EXCLUIR este registro?. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "EXCLUIR!"
         
-        varResposta = MsgBox(strMSG, vbInformation + vbYesNo, strTitulo)
+        varResposta = MsgBox(strMsg, vbInformation + vbYesNo, strTitulo)
     
         If varResposta = vbYes Then
             Matriz = Array()
-            Matriz = Split(lstPesquisa.Value, " - ")
+            Matriz = Split(lstPesquisa.value, " - ")
     
     
             varResposta = InputBox("Informe o motivo pelo qual o Orçamento foi Excluido.", "Motivo da exclusão")
@@ -315,26 +267,29 @@ Dim varResposta As Variant
             If varResposta <> "" Then
             
                 If admOrcamentoExcluirVirtual(strBanco, CStr(Matriz(0)), CStr(Matriz(2)), CStr(varResposta)) Then
-                    strMSG = "Exclusão concluida com sucesso!" & Chr(10) & Chr(13) & Chr(13)
+                    
+                    admOrcamentoAtualizarEtapa Range(BancoLocal), CStr(Matriz(0)), CStr(Matriz(2)), -1
+                    
+                    strMsg = "Exclusão concluida com sucesso!" & Chr(10) & Chr(13) & Chr(13)
                     strTitulo = "EXCLUIR!"
                     
-                    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
+                    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
                 Else
-                    strMSG = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
+                    strMsg = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
                     strTitulo = "EXCLUIR!"
                 End If
             
             Else
-                strMSG = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
+                strMsg = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
                 strTitulo = "EXCLUIR!"
             End If
             
-            MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+            MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
         Else
-            strMSG = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
+            strMsg = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
             strTitulo = "EXCLUIR!"
             
-            MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+            MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
         End If
         
     End If
@@ -344,7 +299,7 @@ End Sub
 Private Sub cmdBanco_Click()
 ' VINCULAR BANCO DE DADOS
 
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 Dim strBanco As String
 
@@ -353,14 +308,14 @@ strBanco = SelecionarBanco
     If strBanco <> "" Then
     
         DesbloqueioDeGuia SenhaBloqueio
-        Range(BancoLocal).Value = strBanco
+        Range(BancoLocal).value = strBanco
         BloqueioDeGuia SenhaBloqueio
         
     Else
-        strMSG = "Por favor Selecione a Base de dados para uso da planilha "
+        strMsg = "Por favor Selecione a Base de dados para uso da planilha "
         strTitulo = "Seleção de Base de dados"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     End If
     
 
@@ -378,9 +333,9 @@ Dim strBanco As String: strBanco = Range(BancoLocal)
     
     Range(NomeUsuario) = Me.cboUsuario
     
-    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
+    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
     
-    admOrcamentoFormulariosLiberar Range(NomeUsuario)
+'    admOrcamentoFormulariosLiberar Range(NomeUsuario)
     
     ActiveSheet.Name = Me.cboUsuario
     
@@ -398,28 +353,28 @@ End Sub
 
 Private Sub cmdVoltarEtapa_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
-Dim RetVal As Variant
+Dim retVal As Variant
 Dim Matriz As Variant
 
 
-    If IsNull(lstPesquisa.Value) Then
-        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    If IsNull(lstPesquisa.value) Then
+        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Voltar Etapa"
 
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
 
 
         Matriz = Array()
-        Matriz = Split(lstPesquisa.Value, " - ")
+        Matriz = Split(lstPesquisa.value, " - ")
 
         Application.ScreenUpdating = False
 
         admOrcamentoFormulariosLimpar
         
-        CarregarOrcamento strBanco, CStr(Matriz(0)), CStr(Matriz(2))
+        carregarOrcamento strBanco, CStr(Matriz(0)), CStr(Matriz(2))
 
         admIntervalosDeEdicaoControle strBanco, CStr(Matriz(0)), CStr(Matriz(2))
         
@@ -439,17 +394,17 @@ End Sub
 ''#########################################
 
 Private Sub lstPesquisa_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
     
     
     If Me.cmdAlterar.Enabled Then
         cmdAlterar_Click
     Else
-        strMSG = "Função Bloqueada! " & Chr(10) & Chr(13) & Chr(13)
+        strMsg = "Função Bloqueada! " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Alterar!"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     
     End If
     
@@ -462,51 +417,11 @@ End Sub
 
 Private Sub MontarPesquisa()
 
-''''
-'''' ORIGINAL
-''''
-
-'strSQL = "SELECT qryOrcamentosListar.Pesquisa FROM qryOrcamentosListar WHERE ((qryOrcamentosListar.Pesquisa) Like '*" & strPesquisar & "*')"
-'strSQL = strSQL + " AND ((qryOrcamentosListar.VENDEDOR) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Usuarios'))"
-'strSQL = strSQL + " AND ((qryOrcamentosListar.DEPARTAMENTO) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Departamentos')) "
-'strSQL = strSQL + " AND ((qryOrcamentosListar.STATUS) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE admCategorias.Categoria = '" & strUsuarios & "') and Categoria = 'Status')) "
-'strSQL = strSQL + "ORDER BY qryOrcamentosListar.CONTROLE DESC , qryOrcamentosListar.VENDEDOR"
-
-strSQL = "SELECT qryOrcamentosListar.Pesquisa FROM qryOrcamentosListar WHERE ((qryOrcamentosListar.Pesquisa) Like '*" & strPesquisar & "*')"
-strSQL = strSQL + " AND ((qryOrcamentosListar.VENDEDOR) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Usuarios'))"
-strSQL = strSQL + " AND ((qryOrcamentosListar.DEPARTAMENTO) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Departamentos')) "
-strSQL = strSQL + " AND ((qryOrcamentosListar.STATUS) In ('" & Me.txtEtapa & "')) "
-strSQL = strSQL + "ORDER BY qryOrcamentosListar.Codigo DESC"
-
-
-
-
-
+strSql = "SELECT top " & txtTop.Text & " qryOrcamentosListar.Pesquisa FROM qryOrcamentosListar WHERE ((qryOrcamentosListar.Pesquisa) Like '*" & strPesquisar & "*')"
+strSql = strSql + " AND ((qryOrcamentosListar.VENDEDOR) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Usuarios'))"
+strSql = strSql + " AND ((qryOrcamentosListar.DEPARTAMENTO) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Departamentos')) "
+strSql = strSql + " AND ((qryOrcamentosListar.STATUS) In ('" & Me.txtEtapa & "')) "
+strSql = strSql + "ORDER BY Right([controle],2) DESC , Left([CONTROLE],3) DESC"
 
 End Sub
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

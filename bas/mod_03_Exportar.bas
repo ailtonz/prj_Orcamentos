@@ -1,8 +1,8 @@
 Attribute VB_Name = "mod_03_Exportar"
 Option Explicit
 
-Public Sub ExportarOrcamento(ORIGEM As String, _
-                            DESTINO As String, _
+Public Sub ExportarOrcamento(Origem As String, _
+                            Destino As String, _
                             strControle As String, _
                             strVendedor As String)
                             
@@ -12,16 +12,16 @@ On Error GoTo ExportarOrcamento_err
 'Dim DESTINO As String: DESTINO = pathWorkSheetAddress & "dbVendedor.mdb"
 
 '   BANCO DE DADOS
-Dim dbORIGEM As dao.Database
-Set dbORIGEM = DBEngine.OpenDatabase(ORIGEM, False, False, "MS Access;PWD=" & SenhaBanco)
+Dim dbOrigem As DAO.Database
+Set dbOrigem = DBEngine.OpenDatabase(Origem, False, False, "MS Access;PWD=" & SenhaBanco)
 
-Dim dbDestino As dao.Database
-Set dbDestino = DBEngine.OpenDatabase(DESTINO, False, False, "MS Access;PWD=" & SenhaBanco)
+Dim dbDestino As DAO.Database
+Set dbDestino = DBEngine.OpenDatabase(Destino, False, False, "MS Access;PWD=" & SenhaBanco)
 
-Dim rstOrcamentoORIGEM As dao.Recordset
-Set rstOrcamentoORIGEM = dbORIGEM.OpenRecordset("Select * from Orcamentos where controle = '" & strControle & "' and Vendedor = '" & strVendedor & "'")
+Dim rstOrcamentoORIGEM As DAO.Recordset
+Set rstOrcamentoORIGEM = dbOrigem.OpenRecordset("Select * from Orcamentos where controle = '" & strControle & "' and Vendedor = '" & strVendedor & "'")
 
-Dim rstOrcamentoDESTINO As dao.Recordset
+Dim rstOrcamentoDESTINO As DAO.Recordset
 Set rstOrcamentoDESTINO = dbDestino.OpenRecordset("Select * from Orcamentos where controle = '" & strControle & "' and Vendedor = '" & strVendedor & "'")
 
 Dim x As Integer
@@ -139,15 +139,15 @@ While Not rstOrcamentoORIGEM.EOF
         
 Wend
     
-ExportarCusto ORIGEM, DESTINO, strControle, strVendedor
+ExportarCusto Origem, Destino, strControle, strVendedor
     
 ExportarOrcamento_Fim:
     rstOrcamentoORIGEM.Close
     rstOrcamentoDESTINO.Close
-    dbORIGEM.Close
+    dbOrigem.Close
     dbDestino.Close
     
-    Set dbORIGEM = Nothing
+    Set dbOrigem = Nothing
     Set rstOrcamentoORIGEM = Nothing
     Set rstOrcamentoDESTINO = Nothing
     
@@ -161,8 +161,8 @@ ExportarOrcamento_err:
 
 End Sub
 
-Private Sub ExportarCusto(ORIGEM As String, _
-                            DESTINO As String, _
+Private Sub ExportarCusto(Origem As String, _
+                            Destino As String, _
                             strControle As String, _
                             strVendedor As String)
                             
@@ -172,16 +172,16 @@ On Error GoTo ExportarCusto_err
 'Dim DESTINO As String: DESTINO = pathWorkSheetAddress & "dbVendedor.mdb"
 
 '   BANCO DE DADOS
-Dim dbORIGEM As dao.Database
-Set dbORIGEM = DBEngine.OpenDatabase(ORIGEM, False, False, "MS Access;PWD=" & SenhaBanco)
+Dim dbOrigem As DAO.Database
+Set dbOrigem = DBEngine.OpenDatabase(Origem, False, False, "MS Access;PWD=" & SenhaBanco)
 
-Dim dbDestino As dao.Database
-Set dbDestino = DBEngine.OpenDatabase(DESTINO, False, False, "MS Access;PWD=" & SenhaBanco)
+Dim dbDestino As DAO.Database
+Set dbDestino = DBEngine.OpenDatabase(Destino, False, False, "MS Access;PWD=" & SenhaBanco)
 
-Dim rstCustosORIGEM As dao.Recordset
-Set rstCustosORIGEM = dbORIGEM.OpenRecordset("Select * from OrcamentosCustos where controle = '" & strControle & "' and Vendedor = '" & strVendedor & "'")
+Dim rstCustosORIGEM As DAO.Recordset
+Set rstCustosORIGEM = dbOrigem.OpenRecordset("Select * from OrcamentosCustos where controle = '" & strControle & "' and Vendedor = '" & strVendedor & "'")
 
-Dim rstCustosDESTINO As dao.Recordset
+Dim rstCustosDESTINO As DAO.Recordset
 Set rstCustosDESTINO = dbDestino.OpenRecordset("Select * from OrcamentosCustos where controle = '" & strControle & "' and Vendedor = '" & strVendedor & "'")
 
 Dim x As Integer
@@ -307,15 +307,15 @@ While Not rstCustosORIGEM.EOF
         
 Wend
 
-ExportarAnexos ORIGEM, DESTINO, strControle, strVendedor
+ExportarAnexos Origem, Destino, strControle, strVendedor
     
 ExportarCusto_Fim:
     rstCustosORIGEM.Close
     rstCustosDESTINO.Close
-    dbORIGEM.Close
+    dbOrigem.Close
     dbDestino.Close
     
-    Set dbORIGEM = Nothing
+    Set dbOrigem = Nothing
     Set rstCustosORIGEM = Nothing
     Set rstCustosDESTINO = Nothing
     
@@ -329,24 +329,24 @@ ExportarCusto_err:
 
 End Sub
 
-Private Sub ExportarAnexos(ORIGEM As String, _
-                            DESTINO As String, _
+Private Sub ExportarAnexos(Origem As String, _
+                            Destino As String, _
                             strControle As String, _
                             strVendedor As String)
 
 On Error GoTo ExportarAnexos_err
 
 '   BANCO DE DADOS
-Dim dbORIGEM As dao.Database
-Set dbORIGEM = DBEngine.OpenDatabase(ORIGEM, False, False, "MS Access;PWD=" & SenhaBanco)
+Dim dbOrigem As DAO.Database
+Set dbOrigem = DBEngine.OpenDatabase(Origem, False, False, "MS Access;PWD=" & SenhaBanco)
 
-Dim dbDestino As dao.Database
-Set dbDestino = DBEngine.OpenDatabase(DESTINO, False, False, "MS Access;PWD=" & SenhaBanco)
+Dim dbDestino As DAO.Database
+Set dbDestino = DBEngine.OpenDatabase(Destino, False, False, "MS Access;PWD=" & SenhaBanco)
 
-Dim rstAnexosORIGEM As dao.Recordset
-Set rstAnexosORIGEM = dbORIGEM.OpenRecordset("Select * from OrcamentosAnexos where controle = '" & strControle & "' and Vendedor = '" & strVendedor & "'")
+Dim rstAnexosORIGEM As DAO.Recordset
+Set rstAnexosORIGEM = dbOrigem.OpenRecordset("Select * from OrcamentosAnexos where controle = '" & strControle & "' and Vendedor = '" & strVendedor & "'")
 
-Dim rstAnexosDESTINO As dao.Recordset
+Dim rstAnexosDESTINO As DAO.Recordset
 Set rstAnexosDESTINO = dbDestino.OpenRecordset("Select * from OrcamentosAnexos where controle = '" & strControle & "' and Vendedor = '" & strVendedor & "'")
 
 Dim x As Integer
@@ -379,10 +379,10 @@ Wend
 ExportarAnexos_Fim:
     rstAnexosORIGEM.Close
     rstAnexosDESTINO.Close
-    dbORIGEM.Close
+    dbOrigem.Close
     dbDestino.Close
     
-    Set dbORIGEM = Nothing
+    Set dbOrigem = Nothing
     Set rstAnexosORIGEM = Nothing
     Set rstAnexosDESTINO = Nothing
     

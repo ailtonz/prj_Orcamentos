@@ -16,7 +16,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Public strPesquisar As String
-Public strSQL As String
+Public strSql As String
 Public strUsuarios As String
 
 
@@ -35,24 +35,24 @@ Dim strArquivo As String
 Dim strConteudo As String
 Dim strSelecao As String
 
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 
 Matriz = Array()
 
     If ListBoxChecarSelecao(Me, Me.lstOrigem.Name) = False Then
-        strMSG = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
-        strMSG = strMSG & "Você esqueceu de selecionar um ORÇAMENTO da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMsg = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
+        strMsg = strMsg & "Você esqueceu de selecionar um ORÇAMENTO da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "SELEÇÃO DE ORÇAMENTO(S)!"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     ElseIf ListBoxChecarSelecao(Me, Me.lstEmails.Name) = False Then
     
-        strMSG = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
-        strMSG = strMSG & "Você esqueceu de selecionar um E-MAIL da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMsg = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
+        strMsg = strMsg & "Você esqueceu de selecionar um E-MAIL da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "SELEÇÃO DE E-MAIL!"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
     
         ''' BANCO DE TRANSITO
@@ -151,26 +151,26 @@ Private Sub EnviarPorDePartamento(ByVal strDepartamento As String, strAssunto As
 Dim strBancoOrigem As String: strBancoOrigem = Range(BancoLocal)
 
 '' POSICIONA O BANCO DE ORIGEM
-Dim dbORIGEM As dao.Database
-Set dbORIGEM = DBEngine.OpenDatabase(strBancoOrigem, False, False, "MS Access;PWD=" & SenhaBanco)
+Dim dbOrigem As DAO.Database
+Set dbOrigem = DBEngine.OpenDatabase(strBancoOrigem, False, False, "MS Access;PWD=" & SenhaBanco)
 
 '' SELECIONA OS REGISTROS DA ORIGEM
-Dim rstORIGEM As dao.Recordset
-Set rstORIGEM = dbORIGEM.OpenRecordset("Select * from qryUsuarios where DPTO = '" & strDepartamento & "'")
+Dim rstOrigem As DAO.Recordset
+Set rstOrigem = dbOrigem.OpenRecordset("Select * from qryUsuarios where DPTO = '" & strDepartamento & "'")
 
-While Not rstORIGEM.EOF
+While Not rstOrigem.EOF
 
-    EnviarOrcamentos rstORIGEM.Fields("eMail"), strAssunto, strArquivo, strConteudo
-    rstORIGEM.MoveNext
+    EnviarOrcamentos rstOrigem.Fields("eMail"), strAssunto, strArquivo, strConteudo
+    rstOrigem.MoveNext
 
 Wend
 
-rstORIGEM.Close
-dbORIGEM.Close
+rstOrigem.Close
+dbOrigem.Close
 
 
-Set rstORIGEM = Nothing
-Set dbORIGEM = Nothing
+Set rstOrigem = Nothing
+Set dbOrigem = Nothing
 
 End Sub
 
@@ -180,41 +180,28 @@ Private Sub EnviarPorDeVendedores(ByVal strSelecao As String, strAssunto As Stri
 Dim strBancoOrigem As String: strBancoOrigem = Range(BancoLocal)
 
 '' POSICIONA O BANCO DE ORIGEM
-Dim dbORIGEM As dao.Database
-Set dbORIGEM = DBEngine.OpenDatabase(strBancoOrigem, False, False, "MS Access;PWD=" & SenhaBanco)
+Dim dbOrigem As DAO.Database
+Set dbOrigem = DBEngine.OpenDatabase(strBancoOrigem, False, False, "MS Access;PWD=" & SenhaBanco)
 
 '' SELECIONA OS REGISTROS DA ORIGEM
-Dim rstORIGEM As dao.Recordset
-Set rstORIGEM = dbORIGEM.OpenRecordset("SELECT qryUsuarios.eMail FROM qryUsuarios WHERE qryUsuarios.Usuario In (" & strSelecao & ") AND (qryUsuarios.ExclusaoVirtual)=False")
+Dim rstOrigem As DAO.Recordset
+Set rstOrigem = dbOrigem.OpenRecordset("SELECT qryUsuarios.eMail FROM qryUsuarios WHERE qryUsuarios.Usuario In (" & strSelecao & ") AND (qryUsuarios.ExclusaoVirtual)=False")
 
-While Not rstORIGEM.EOF
+While Not rstOrigem.EOF
 
-    EnviarOrcamentos rstORIGEM.Fields("eMail"), strAssunto, strArquivo, strConteudo
-    rstORIGEM.MoveNext
+    EnviarOrcamentos rstOrigem.Fields("eMail"), strAssunto, strArquivo, strConteudo
+    rstOrigem.MoveNext
 
 Wend
 
-rstORIGEM.Close
-dbORIGEM.Close
+rstOrigem.Close
+dbOrigem.Close
 
 
-Set rstORIGEM = Nothing
-Set dbORIGEM = Nothing
-
-End Sub
-
-
-Private Sub cmdNenhum_Click()
-Dim intCurrentRow As Integer
-            
-For intCurrentRow = 0 To Me.lstOrigem.ListCount - 1
-    If Not IsNull(Me.lstOrigem.Column(0, intCurrentRow)) Then
-        Me.lstOrigem.Selected(intCurrentRow) = False
-    End If
-Next intCurrentRow
+Set rstOrigem = Nothing
+Set dbOrigem = Nothing
 
 End Sub
-
 Private Sub cmdPesquisar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 
@@ -225,7 +212,7 @@ Dim retValor As Variant
     
     MontarPesquisa
     
-    ListBoxCarregar strBanco, Me, Me.lstOrigem.Name, "Pesquisa", strSQL
+    ListBoxCarregar strBanco, Me, Me.lstOrigem.Name, "Pesquisa", strSql
     Me.Repaint
 
 End Sub
@@ -239,6 +226,16 @@ For intCurrentRow = 0 To Me.lstOrigem.ListCount - 1
     End If
 Next intCurrentRow
 
+End Sub
+
+Private Sub cmdNenhum_Click()
+Dim intCurrentRow As Integer
+            
+For intCurrentRow = 0 To Me.lstOrigem.ListCount - 1
+    If Not IsNull(Me.lstOrigem.Column(0, intCurrentRow)) Then
+        Me.lstOrigem.Selected(intCurrentRow) = False
+    End If
+Next intCurrentRow
 
 End Sub
 
@@ -253,7 +250,7 @@ sqlUsuarios = "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=N
 
 sqlEnvio = "SELECT * From qryUsuarios WHERE (((qryUsuarios.Usuario) In (Select Usuarios from qryUsuariosUsuarios where Usuario = '" & strUsuarios & "')) AND ((qryUsuarios.ExclusaoVirtual)=No)) ORDER BY qryUsuarios.Usuario Union SELECT * FROM qryUsuarios WHERE (((qryUsuarios.DPTO) In ('Produção','FINANCEIRO')))"
 
-ListBoxCarregar strBanco, Me, Me.lstOrigem.Name, "Pesquisa", strSQL
+ListBoxCarregar strBanco, Me, Me.lstOrigem.Name, "Pesquisa", strSql
 ListBoxCarregar strBanco, Me, Me.lstEmails.Name, "email", sqlEnvio
 
 
@@ -262,10 +259,10 @@ End Sub
 
 Private Sub MontarPesquisa()
 
-strSQL = "SELECT qryOrcamentosEnviar.Pesquisa FROM qryOrcamentosEnviar WHERE ((qryOrcamentosEnviar.Pesquisa) Like '*" & strPesquisar & "*')"
-strSQL = strSQL + " AND ((qryOrcamentosEnviar.VENDEDOR) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Usuarios'))"
-strSQL = strSQL + " AND ((qryOrcamentosEnviar.DEPARTAMENTO) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Departamentos')) "
-strSQL = strSQL + "ORDER BY qryOrcamentosEnviar.CONTROLE DESC , qryOrcamentosEnviar.VENDEDOR"
+strSql = "SELECT qryOrcamentosEnviar.Pesquisa FROM qryOrcamentosEnviar WHERE ((qryOrcamentosEnviar.Pesquisa) Like '*" & strPesquisar & "*')"
+strSql = strSql + " AND ((qryOrcamentosEnviar.VENDEDOR) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Usuarios'))"
+strSql = strSql + " AND ((qryOrcamentosEnviar.DEPARTAMENTO) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Departamentos')) "
+strSql = strSql + "ORDER BY qryOrcamentosEnviar.CONTROLE DESC , qryOrcamentosEnviar.VENDEDOR"
 
 
 End Sub

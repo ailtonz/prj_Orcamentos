@@ -1,506 +1,435 @@
 Attribute VB_Name = "Módulo2"
-Option Explicit
+Sub Macro3()
+Attribute Macro3.VB_ProcData.VB_Invoke_Func = " \n14"
+'
+' Macro3 Macro
+'
 
-'Declare API
-#If VBA7 Then
-    Declare PtrSafe Function GetKeyState Lib "USER32" (ByVal vKey As Long) As Integer
-#Else
-    Declare Function GetKeyState Lib "USER32" (ByVal vKey As Long) As Integer
-#End If
-
-
-#If VBA7 Then
-
-    Declare PtrSafe Function OpenProcess Lib "kernel32" (ByVal dwDesiredAccess As LongPtr, ByVal bInheritHandle As LongPtr, ByVal dwProcessId As LongPtr) As LongPtr
-    
-    Declare PtrSafe Function GetTickCount64 Lib "kernel32" () As LongPtr
-
-    Declare PtrSafe Function GetExitCodeProcess Lib "kernel32" (ByVal hProcess As LongPtr, lpExitCode As LongPtr) As LongPtr
-
-#Else
-
-    Declare Function OpenProcess Lib "kernel32" (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Long, ByVal dwProcessId As Long) As Long
-
-    Declare Function GetExitCodeProcess Lib "kernel32" (ByVal hProcess As Long, lpExitCode As Long) As Long
-
-
-#End If
-
-Public Const PROCESS_QUERY_INFORMATION = &H400
-Public Const STILL_ACTIVE = &H103
-
-
-Public Sub ShellAndWait(ByVal PathName As String, Optional WindowState)
-
-#If VBA7 Then
-    Dim hProg As LongPtr
-    Dim hProcess As LongPtr, ExitCode As LongPtr
-#Else
-    Dim hProg As Long
-    Dim hProcess As Long, ExitCode As Long
-#End If
-
-    'fill in the missing parameter and execute the program
-    If IsMissing(WindowState) Then WindowState = 1
-        hProg = Shell(PathName, WindowState)
-        'hProg is a "process ID under Win32. To get the process handle:
-        hProcess = OpenProcess(PROCESS_QUERY_INFORMATION, False, hProg)
-    Do
-        'populate Exitcode variable
-        GetExitCodeProcess hProcess, ExitCode
-        DoEvents
-    Loop While ExitCode = STILL_ACTIVE
-    
+'
+    Range("C65").Select
+    ActiveCell.FormulaR1C1 = "22345.21"
+    Range("C66").Select
+    Application.CutCopyMode = False
+    Range("C65").Select
+    ActiveCell.FormulaR1C1 = "24380.21"
+    Range("C66").Select
+    ActiveWorkbook.Save
+    ChDir "C:\Users\AILTON\Desktop\WORK\__SPRINGER\SPRINGER"
+    ActiveWorkbook.SaveAs Filename:= _
+        "C:\Users\AILTON\Desktop\WORK\__SPRINGER\SPRINGER\Orcamentos_140825-1509.xlsm" _
+        , FileFormat:=xlOpenXMLWorkbookMacroEnabled, CreateBackup:=False
+    ActiveWindow.SmallScroll Down:=9
+    Range("C65").Select
+    ActiveWindow.SmallScroll Down:=-3
+    ActiveCell.FormulaR1C1 = "15000"
+    Range("C66").Select
+    ActiveWindow.SmallScroll Down:=15
+    Range("C80").Select
+    ActiveCell.FormulaR1C1 = "12300"
+    Range("C81").Select
+    ActiveWindow.SmallScroll Down:=-3
+    Range("C78").Select
+    ActiveCell.FormulaR1C1 = "3%"
+    Range("D78").Select
+    Selection.Copy
+    Range("B78").Select
+    ActiveSheet.Paste
+    Range("C78").Select
+    ActiveSheet.Paste
+    Application.CutCopyMode = False
+    Range("C78").Select
+    ActiveCell.FormulaR1C1 = "3%"
+    Range("C80").Select
+    ActiveCell.FormulaR1C1 = "14600"
+    Range("C78").Select
+    ActiveCell.FormulaR1C1 = "1%"
+    Range("C80").Select
+    ActiveCell.FormulaR1C1 = "14900"
+    Range("C78").Select
+    ActiveCell.FormulaR1C1 = "5%"
+    Range("C80").Select
+    ActiveCell.FormulaR1C1 = "14300"
+    Range("C86").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(R[-63]C=""PRODUTO"",IF(ISERROR(+PrecoDeCompras_01/PRODUTO),"""",+PrecoDeCompras_01/PRODUTO),IF(ISERROR(+PrecoDeCompras_01/SERVICO),"""",+PrecoDeCompras_01/SERVICO))"
+    Range("C86").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(R[-63]C=""PRODUTO"",IF(ISERROR(+PrecoDeCompras_01/PRODUTO),"""",+PrecoDeCompras_01/PRODUTO),IF(ISERROR(+PrecoDeCompras_01/SERVICO),"""",+PrecoDeCompras_01/SERVICO))"
+    Range("D86").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(R[-63]C=""PRODUTO"",IF(ISERROR(+PrecoDeCompras_02/PRODUTO),"""",+PrecoDeCompras_02/PRODUTO),IF(ISERROR(+PrecoDeCompras_02/SERVICO),"""",+PrecoDeCompras_02/SERVICO))"
+    Range("E86").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(R[-63]C=""PRODUTO"",IF(ISERROR(+PrecoDeCompras_03/PRODUTO),"""",+PrecoDeCompras_03/PRODUTO),IF(ISERROR(+PrecoDeCompras_03/SERVICO),"""",+PrecoDeCompras_03/SERVICO))"
+    Range("F86").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(R[-63]C=""PRODUTO"",IF(ISERROR(+PrecoDeCompras_04/PRODUTO),"""",+PrecoDeCompras_04/PRODUTO),IF(ISERROR(+PrecoDeCompras_04/SERVICO),"""",+PrecoDeCompras_04/SERVICO))"
+    Range("G86").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(R[-63]C=""PRODUTO"",IF(ISERROR(+PrecoDeCompras_05/PRODUTO),"""",+PrecoDeCompras_05/PRODUTO),IF(ISERROR(+PrecoDeCompras_05/SERVICO),"""",+PrecoDeCompras_05/SERVICO))"
+    Range("H86").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(R[-63]C=""PRODUTO"",IF(ISERROR(+PrecoDeCompras_06/PRODUTO),"""",+PrecoDeCompras_06/PRODUTO),IF(ISERROR(+PrecoDeCompras_06/SERVICO),"""",+PrecoDeCompras_06/SERVICO))"
+    Range("I86").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(R[-63]C=""PRODUTO"",IF(ISERROR(+PrecoDeCompras_07/PRODUTO),"""",+PrecoDeCompras_07/PRODUTO),IF(ISERROR(+PrecoDeCompras_07/SERVICO),"""",+PrecoDeCompras_07/SERVICO))"
+    Range("J86").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(R[-63]C=""PRODUTO"",IF(ISERROR(+PrecoDeCompras_08/PRODUTO),"""",+PrecoDeCompras_08/PRODUTO),IF(ISERROR(+PrecoDeCompras_08/SERVICO),"""",+PrecoDeCompras_08/SERVICO))"
+    Range("J86").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(R[-63]C=""PRODUTO"",IF(ISERROR(+PrecoDeCompras_08/PRODUTO),"""",+PrecoDeCompras_08/PRODUTO),IF(ISERROR(+PrecoDeCompras_08/SERVICO),"""",+PrecoDeCompras_08/SERVICO))"
+    Range("C87").Select
+    ActiveWindow.SmallScroll Down:=-9
+    Range("C72").Select
+    ActiveWindow.SmallScroll Down:=15
+    Range("D87").Select
+    Selection.Copy
+    Range("C87").Select
+    ActiveSheet.Paste
+    Application.CutCopyMode = False
+    ActiveWorkbook.Names.add Name:="ARREDONDAMENTO_COMPRAS_01", RefersToR1C1:= _
+        "='140823-1230'!R87C3"
+    ActiveWorkbook.Names("ARREDONDAMENTO_COMPRAS_01").Comment = ""
+    Range("D87").Select
+    ActiveWorkbook.Names.add Name:="ARREDONDAMENTO_COMPRAS_02", RefersToR1C1:= _
+        "='140823-1230'!R87C4"
+    ActiveWorkbook.Names("ARREDONDAMENTO_COMPRAS_02").Comment = ""
+    Range("E87").Select
+    ActiveWorkbook.Names.add Name:="ARREDONDAMENTO_COMPRAS_03", RefersToR1C1:= _
+        "='140823-1230'!R87C5"
+    ActiveWorkbook.Names("ARREDONDAMENTO_COMPRAS_03").Comment = ""
+    Range("F87").Select
+    ActiveWorkbook.Names.add Name:="ARREDONDAMENTO_COMPRAS_04", RefersToR1C1:= _
+        "='140823-1230'!R87C6"
+    ActiveWorkbook.Names("ARREDONDAMENTO_COMPRAS_04").Comment = ""
+    Range("G87").Select
+    ActiveWorkbook.Names.add Name:="ARREDONDAMENTO_COMPRAS_05", RefersToR1C1:= _
+        "='140823-1230'!R87C7"
+    ActiveWorkbook.Names("ARREDONDAMENTO_COMPRAS_05").Comment = ""
+    Range("H87").Select
+    ActiveWorkbook.Names.add Name:="ARREDONDAMENTO_COMPRAS_06", RefersToR1C1:= _
+        "='140823-1230'!R87C8"
+    ActiveWorkbook.Names("ARREDONDAMENTO_COMPRAS_06").Comment = ""
+    Range("I87").Select
+    ActiveWorkbook.Names.add Name:="ARREDONDAMENTO_COMPRAS_07", RefersToR1C1:= _
+        "='140823-1230'!R87C9"
+    ActiveWorkbook.Names("ARREDONDAMENTO_COMPRAS_07").Comment = ""
+    Range("J87").Select
+    ActiveWorkbook.Names.add Name:="ARREDONDAMENTO_COMPRAS_08", RefersToR1C1:= _
+        "='140823-1230'!R87C10"
+    ActiveWorkbook.Names("ARREDONDAMENTO_COMPRAS_08").Comment = ""
+    Range("C88").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(+ARREDONDAMENTO_COMPRAS_01/TIRAGEM_01),""0"",+ARREDONDAMENTO_COMPRAS_01/TIRAGEM_01)"
+    Range("C80").Select
+    ActiveCell.FormulaR1C1 = "14300"
+    Range("C88").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(+ARREDONDAMENTO_COMPRAS_01/TIRAGEM_01),""0"",+ARREDONDAMENTO_COMPRAS_01/TIRAGEM_01)"
+    Range("D88").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(+ARREDONDAMENTO_COMPRAS_02/TIRAGEM_02),""0"",+ARREDONDAMENTO_COMPRAS_02/TIRAGEM_02)"
+    Range("E88").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(+ARREDONDAMENTO_COMPRAS_03/TIRAGEM_03),""0"",+ARREDONDAMENTO_COMPRAS_03/TIRAGEM_03)"
+    Range("F88").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(+ARREDONDAMENTO_COMPRAS_04/TIRAGEM_04),""0"",+ARREDONDAMENTO_COMPRAS_04/TIRAGEM_04)"
+    Range("G88").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(+ARREDONDAMENTO_COMPRAS_05/TIRAGEM_05),""0"",+ARREDONDAMENTO_COMPRAS_05/TIRAGEM_05)"
+    Range("H88").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(+ARREDONDAMENTO_COMPRAS_06/TIRAGEM_06),""0"",+ARREDONDAMENTO_COMPRAS_06/TIRAGEM_06)"
+    Range("I88").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(+ARREDONDAMENTO_COMPRAS_07/TIRAGEM_07),""0"",+ARREDONDAMENTO_COMPRAS_07/TIRAGEM_07)"
+    Range("J88").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(+ARREDONDAMENTO_COMPRAS_08/TIRAGEM_08),""0"",+ARREDONDAMENTO_COMPRAS_08/TIRAGEM_08)"
+    Range("C90").Select
+    ActiveWindow.SmallScroll Down:=-6
+    Range("C86").Select
+    ActiveWorkbook.Names.add Name:="PRECO_VENDA_COMPRAS_01", RefersToR1C1:= _
+        "='140823-1230'!R86C3"
+    ActiveWorkbook.Names("PRECO_VENDA_COMPRAS_01").Comment = ""
+    Range("D86").Select
+    ActiveWorkbook.Names.add Name:="PRECO_VENDA_COMPRAS_02", RefersToR1C1:= _
+        "='140823-1230'!R86C4"
+    Range("E86").Select
+    ActiveWorkbook.Names.add Name:="PRECO_VENDA_COMPRAS_03", RefersToR1C1:= _
+        "='140823-1230'!R86C5"
+    Range("F86").Select
+    ActiveWorkbook.Names.add Name:="PRECO_VENDA_COMPRAS_04", RefersToR1C1:= _
+        "='140823-1230'!R86C6"
+    Range("G86").Select
+    ActiveWorkbook.Names.add Name:="PRECO_VENDA_COMPRAS_05", RefersToR1C1:= _
+        "='140823-1230'!R86C7"
+    Range("H86").Select
+    ActiveWorkbook.Names.add Name:="PRECO_VENDA_COMPRAS_06", RefersToR1C1:= _
+        "='140823-1230'!R86C8"
+    Range("I86").Select
+    ActiveWorkbook.Names.add Name:="PRECO_VENDA_COMPRAS_07", RefersToR1C1:= _
+        "='140823-1230'!R86C9"
+    Range("J86").Select
+    ActiveWorkbook.Names.add Name:="PRECO_VENDA_COMPRAS_08", RefersToR1C1:= _
+        "='140823-1230'!R86C10"
+    Range("C90").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(PRECO_VENDA_COMPRAS_01*FASCICULOS_01),"""",PRECO_VENDA_COMPRAS_01*FASCICULOS_01)"
+    Range("D90").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(PRECO_VENDA_COMPRAS_02*FASCICULOS_02),"""",PRECO_VENDA_COMPRAS_02*FASCICULOS_02)"
+    Range("E90").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(PRECO_VENDA_COMPRAS_03*FASCICULOS_03),"""",PRECO_VENDA_COMPRAS_03*FASCICULOS_03)"
+    Range("F90").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(PRECO_VENDA_COMPRAS_04*FASCICULOS_04),"""",PRECO_VENDA_COMPRAS_04*FASCICULOS_04)"
+    Range("G90").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(PRECO_VENDA_COMPRAS_05*FASCICULOS_05),"""",PRECO_VENDA_COMPRAS_05*FASCICULOS_05)"
+    Range("H90").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(PRECO_VENDA_COMPRAS_06*FASCICULOS_06),"""",PRECO_VENDA_COMPRAS_06*FASCICULOS_06)"
+    Range("I90").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(PRECO_VENDA_COMPRAS_07*FASCICULOS_07),"""",PRECO_VENDA_COMPRAS_07*FASCICULOS_07)"
+    Range("J90").Select
+    ActiveCell.FormulaR1C1 = _
+        "=IF(ISERROR(PRECO_VENDA_COMPRAS_08*FASCICULOS_08),"""",PRECO_VENDA_COMPRAS_08*FASCICULOS_08)"
+    Range("J90").Select
+    ActiveWindow.SmallScroll Down:=-180
+    ActiveWindow.SelectedSheets.PrintPreview
+    ActiveWindow.SelectedSheets.PrintOut Copies:=1
+    ActiveWindow.ScrollColumn = 3
+    ActiveWindow.ScrollColumn = 4
+    ActiveWindow.ScrollColumn = 5
+    ActiveWindow.ScrollColumn = 6
+    ActiveWindow.ScrollColumn = 11
+    ActiveWindow.ScrollColumn = 12
+    ActiveWindow.ScrollColumn = 13
+    ActiveWindow.ScrollColumn = 14
+    ActiveWindow.ScrollColumn = 15
+    ActiveWindow.ScrollColumn = 16
+    ActiveWindow.ScrollColumn = 17
+    ActiveWindow.ScrollColumn = 18
+    ActiveWindow.ScrollColumn = 19
+    ActiveWindow.ScrollColumn = 20
+    ActiveWindow.ScrollColumn = 21
+    ActiveWindow.ScrollColumn = 22
+    ActiveWindow.ScrollColumn = 23
+    ActiveWindow.ScrollColumn = 27
+    ActiveWindow.ScrollColumn = 28
+    ActiveWindow.ScrollColumn = 29
+    ActiveWindow.ScrollColumn = 30
+    ActiveWindow.ScrollColumn = 31
+    ActiveWindow.ScrollColumn = 30
+    ActiveWindow.ScrollColumn = 29
+    ActiveWindow.SmallScroll ToRight:=-2
+    Range("AB1:AP4").Select
+    ActiveWindow.ScrollColumn = 28
+    ActiveWindow.ScrollColumn = 29
+    ActiveWindow.ScrollColumn = 30
+    ActiveWindow.ScrollColumn = 31
+    ActiveWindow.ScrollColumn = 32
+    ActiveWindow.ScrollColumn = 33
+    ActiveWindow.ScrollColumn = 34
+    ActiveWindow.ScrollColumn = 33
+    ActiveWindow.SmallScroll Down:=21
+    Range("AB1:AP32").Select
+    ActiveWindow.SmallScroll Down:=-27
+    ActiveSheet.PageSetup.PrintArea = "$AB$1:$AP$32"
+    With ActiveSheet.PageSetup
+        .LeftHeader = "Orçamento Nº &A"
+        .CenterHeader = ""
+        .RightHeader = "&F"
+        .LeftFooter = ""
+        .CenterFooter = ""
+        .RightFooter = "&D"
+        .LeftMargin = Application.InchesToPoints(0)
+        .RightMargin = Application.InchesToPoints(0)
+        .TopMargin = Application.InchesToPoints(0.393700787401575)
+        .BottomMargin = Application.InchesToPoints(0.354330708661417)
+        .HeaderMargin = Application.InchesToPoints(0.236220472440945)
+        .FooterMargin = Application.InchesToPoints(0.15748031496063)
+        .PrintHeadings = False
+        .PrintGridlines = False
+        .PrintComments = xlPrintNoComments
+        .PrintQuality = 600
+        .CenterHorizontally = True
+        .CenterVertically = False
+        .Orientation = xlLandscape
+        .Draft = False
+        .PaperSize = xlPaperA4
+        .FirstPageNumber = xlAutomatic
+        .Order = xlDownThenOver
+        .BlackAndWhite = False
+        .Zoom = False
+        .FitToPagesWide = 1
+        .FitToPagesTall = 1
+        .PrintErrors = xlPrintErrorsDisplayed
+        .OddAndEvenPagesHeaderFooter = False
+        .DifferentFirstPageHeaderFooter = False
+        .ScaleWithDocHeaderFooter = True
+        .AlignMarginsHeaderFooter = False
+        .EvenPage.LeftHeader.Text = ""
+        .EvenPage.CenterHeader.Text = ""
+        .EvenPage.RightHeader.Text = ""
+        .EvenPage.LeftFooter.Text = ""
+        .EvenPage.CenterFooter.Text = ""
+        .EvenPage.RightFooter.Text = ""
+        .FirstPage.LeftHeader.Text = ""
+        .FirstPage.CenterHeader.Text = ""
+        .FirstPage.RightHeader.Text = ""
+        .FirstPage.LeftFooter.Text = ""
+        .FirstPage.CenterFooter.Text = ""
+        .FirstPage.RightFooter.Text = ""
+    End With
+    With ActiveSheet.PageSetup
+        .LeftMargin = Application.InchesToPoints(0.14)
+        .RightMargin = Application.InchesToPoints()
+        .TopMargin = Application.InchesToPoints()
+        .BottomMargin = Application.InchesToPoints()
+        .HeaderMargin = Application.InchesToPoints()
+        .FooterMargin = Application.InchesToPoints()
+        .Zoom = False
+        .FitToPagesWide = 1
+        .FitToPagesTall = 1
+    End With
+    With ActiveSheet.PageSetup
+        .LeftMargin = Application.InchesToPoints()
+        .RightMargin = Application.InchesToPoints(0.18)
+        .TopMargin = Application.InchesToPoints()
+        .BottomMargin = Application.InchesToPoints()
+        .HeaderMargin = Application.InchesToPoints()
+        .FooterMargin = Application.InchesToPoints()
+        .Zoom = False
+        .FitToPagesWide = 1
+        .FitToPagesTall = 1
+    End With
+    ActiveWindow.SelectedSheets.PrintPreview
+    ActiveWindow.SelectedSheets.PrintOut Copies:=1
+    ActiveWindow.SmallScroll ToRight:=14
+    Range("AP10").Select
+    ActiveCell.FormulaR1C1 = "5171.55"
+    Range("AG5").Select
+    Selection.Copy
+    Range("AP11").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Range("AC7").Select
+    Application.CutCopyMode = False
+    Selection.Copy
+    Range("AC6").Select
+    Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, _
+        SkipBlanks:=False, Transpose:=False
+    Application.CutCopyMode = False
+    Range("AG6").Select
+    Selection.Copy
+    Range("AP16").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Range("AG7").Select
+    Application.CutCopyMode = False
+    Selection.Copy
+    Range("AP17").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Application.CutCopyMode = False
+    ActiveWindow.SelectedSheets.PrintPreview
+    ActiveWindow.SelectedSheets.PrintOut Copies:=1
+    ActiveWindow.ScrollColumn = 28
+    ActiveWindow.ScrollColumn = 27
+    ActiveWindow.ScrollColumn = 25
+    ActiveWindow.ScrollColumn = 24
+    ActiveWindow.ScrollColumn = 22
+    ActiveWindow.ScrollColumn = 21
+    ActiveWindow.ScrollColumn = 20
+    ActiveWindow.ScrollColumn = 19
+    ActiveWindow.ScrollColumn = 18
+    ActiveWindow.ScrollColumn = 16
+    ActiveWindow.ScrollColumn = 15
+    ActiveWindow.ScrollColumn = 14
+    ActiveWindow.ScrollColumn = 13
+    ActiveWindow.ScrollColumn = 12
+    ActiveWindow.ScrollColumn = 11
+    ActiveWindow.ScrollColumn = 10
+    ActiveWindow.ScrollColumn = 9
+    ActiveWindow.ScrollColumn = 8
+    ActiveWindow.ScrollColumn = 6
+    ActiveWindow.ScrollColumn = 5
+    ActiveWindow.ScrollColumn = 4
+    ActiveWindow.ScrollColumn = 3
+    ActiveWindow.ScrollColumn = 1
+    ActiveWindow.SmallScroll Down:=30
+    ActiveWindow.ScrollColumn = 2
+    ActiveWindow.ScrollColumn = 3
+    ActiveWindow.ScrollColumn = 4
+    ActiveWindow.ScrollColumn = 5
+    ActiveWindow.ScrollColumn = 6
+    ActiveWindow.ScrollColumn = 9
+    ActiveWindow.ScrollColumn = 10
+    ActiveWindow.ScrollColumn = 11
+    ActiveWindow.ScrollColumn = 12
+    ActiveWindow.ScrollColumn = 13
+    ActiveWindow.ScrollColumn = 14
+    ActiveWindow.ScrollColumn = 15
+    ActiveWindow.ScrollColumn = 16
+    ActiveWindow.ScrollColumn = 17
+    ActiveWindow.ScrollColumn = 18
+    ActiveWindow.ScrollColumn = 19
+    ActiveWindow.ScrollColumn = 20
+    ActiveWindow.ScrollColumn = 21
+    ActiveWindow.ScrollColumn = 22
+    ActiveWindow.ScrollColumn = 23
+    ActiveWindow.ScrollColumn = 24
+    ActiveWindow.ScrollColumn = 25
+    ActiveWindow.ScrollColumn = 26
+    ActiveWindow.ScrollColumn = 27
+    ActiveWindow.ScrollColumn = 28
+    ActiveWindow.ScrollColumn = 29
+    ActiveWindow.ScrollColumn = 30
+    ActiveWindow.ScrollColumn = 31
+    ActiveWindow.ScrollColumn = 32
+    ActiveWindow.ScrollColumn = 33
+    ActiveWindow.ScrollColumn = 34
+    ActiveWindow.ScrollColumn = 35
+    ActiveWindow.ScrollColumn = 36
+    ActiveWindow.ScrollColumn = 37
+    ActiveWindow.SmallScroll Down:=-24
+    ActiveWindow.ScrollColumn = 36
+    ActiveWindow.ScrollColumn = 35
+    ActiveWindow.ScrollColumn = 34
+    ActiveWindow.ScrollColumn = 33
+    ActiveWindow.ScrollColumn = 32
+    ActiveWindow.ScrollColumn = 31
+    ActiveWindow.ScrollColumn = 30
+    ActiveWindow.ScrollColumn = 29
+    ActiveWindow.ScrollColumn = 28
+    ActiveWindow.ScrollColumn = 27
+    ActiveWindow.ScrollColumn = 26
+    ActiveWindow.ScrollColumn = 25
+    ActiveWindow.ScrollColumn = 24
+    ActiveWindow.ScrollColumn = 23
+    ActiveWindow.ScrollColumn = 22
+    ActiveWindow.ScrollColumn = 21
+    ActiveWindow.ScrollColumn = 19
+    ActiveWindow.ScrollColumn = 18
+    ActiveWindow.ScrollColumn = 17
+    ActiveWindow.ScrollColumn = 15
+    ActiveWindow.ScrollColumn = 14
+    ActiveWindow.ScrollColumn = 13
+    ActiveWindow.ScrollColumn = 12
+    ActiveWindow.ScrollColumn = 11
+    ActiveWindow.ScrollColumn = 10
+    ActiveWindow.ScrollColumn = 9
+    ActiveWindow.ScrollColumn = 8
+    ActiveWindow.ScrollColumn = 6
+    ActiveWindow.ScrollColumn = 5
+    ActiveWindow.ScrollColumn = 3
+    ActiveWindow.ScrollColumn = 1
+    Windows("Pasta1").Activate
+    ActiveWindow.Close
 End Sub
-
-
-Function bIsBookOpen(ByRef szBookName As String) As Boolean
-' Rob Bovey
-    On Error Resume Next
-    bIsBookOpen = Not (Application.Workbooks(szBookName) Is Nothing)
-End Function
-
-
-
-'With this example you browse to the folder you want to zip
-'The zip file will be saved in: DefPath = Application.DefaultFilePath
-'Normal if you have not change it this will be your Documents folder
-'You can change this folder to this if you want to use another folder
-'DefPath = "C:\Users\Ron\ZipFolder"
-'There is no need to change the code before you test it
-
-Sub A_Zip_Folder_And_SubFolders_Browse()
-    Dim PathZipProgram As String, NameZipFile As String, FolderName As String
-    Dim ShellStr As String, strDate As String, DefPath As String
-    Dim Fld As Object
-
-    'Path of the Zip program
-    PathZipProgram = "C:\program files\7-Zip\"
-    If Right(PathZipProgram, 1) <> "\" Then
-        PathZipProgram = PathZipProgram & "\"
-    End If
-
-    'Check if this is the path where 7z is installed.
-    If Dir(PathZipProgram & "7z.exe") = "" Then
-        MsgBox "Please find your copy of 7z.exe and try again"
-        Exit Sub
-    End If
-
-    'Create Path and name of the new zip file
-    'The zip file will be saved in: DefPath = Application.DefaultFilePath
-    'Normal if you have not change it this will be your Documents folder
-    'You can change the folder if you want to another folder like this
-    'DefPath = "C:\Users\Ron\ZipFolder"
-    DefPath = Application.DefaultFilePath
-    If Right(DefPath, 1) <> "\" Then
-        DefPath = DefPath & "\"
-    End If
-
-    'Create date/Time string, also the name of the Zip in this example
-    strDate = Format(Now, "yyyy-mm-dd h-mm-ss")
-
-    'Set NameZipFile to the full path/name of the Zip file
-    'If you want to add the word "MyZip" before the date/time use
-    'NameZipFile = DefPath & "MyZip " & strDate & ".zip"
-    NameZipFile = DefPath & strDate & ".zip"
-
-    'Browse to the folder with the files that you want to Zip
-    Set Fld = CreateObject("Shell.Application").BrowseForFolder(0, "Select folder to Zip", 512)
-    If Not Fld Is Nothing Then
-        FolderName = Fld.Self.Path
-        If Right(FolderName, 1) <> "\" Then
-            FolderName = FolderName & "\"
-        End If
-
-        'Zip all the files in the folder and subfolders, -r is Include subfolders
-        ShellStr = PathZipProgram & "7z.exe a -r" _
-                 & " " & Chr(34) & NameZipFile & Chr(34) _
-                 & " " & Chr(34) & FolderName & "*.*" & Chr(34)
-
-        'Note: you can replace the ShellStr with one of the example ShellStrings
-        'below to test one of the examples
-
-
-        'Zip the txt files in the folder and subfolders, use "*.xl*" for all excel files
-        '        ShellStr = PathZipProgram & "7z.exe a -r" _
-                 '                 & " " & Chr(34) & NameZipFile & Chr(34) _
-                 '                 & " " & Chr(34) & FolderName & "*.txt" & Chr(34)
-
-        'Zip all files in the folder and subfolders with a name that start with Week
-        '        ShellStr = PathZipProgram & "7z.exe a -r" _
-                 '                 & " " & Chr(34) & NameZipFile & Chr(34) _
-                 '                 & " " & Chr(34) & FolderName & "Week*.*" & Chr(34)
-
-        'Zip every file with the name ron.xlsx in the folder and subfolders
-        '        ShellStr = PathZipProgram & "7z.exe a -r" _
-                 '                 & " " & Chr(34) & NameZipFile & Chr(34) _
-                 '                 & " " & Chr(34) & FolderName & "ron.xlsx" & Chr(34)
-
-        'Add -ppassword -mhe of you want to add a password to the zip file(only .7z files)
-        '                ShellStr = PathZipProgram & "7z.exe a -r -ppassword -mhe" _
-                         '                                  & " " & Chr(34) & NameZipFile & Chr(34) _
-                         '                                  & " " & Chr(34) & FolderName & "*.*" & Chr(34)
-
-        'Add -seml if you want to open a mail with the zip attached
-        '                ShellStr = PathZipProgram & "7z.exe a -r -seml" _
-                         '                                  & " " & Chr(34) & NameZipFile & Chr(34) _
-                         '                                  & " " & Chr(34) & FolderName & "*.*" & Chr(34)
-
-        ShellAndWait ShellStr, vbHide
-
-        MsgBox "You will find the zip file here: " & NameZipFile
-    End If
-End Sub
-
-
-
-'With this example you zip a fixed folder: FolderName = "C:\Users\Ron\Desktop\TestFolder"
-'Note this folder must exist, this is the only thing that you must change before you test it
-'The zip file will be saved in: DefPath = Application.DefaultFilePath
-'Normal if you have not change it this will be your Documents folder
-'You can change this folder to this if you want to use another folder
-'DefPath = "C:\Users\Ron\ZipFolder"
-
-Sub B_Zip_Fixed_Folder_And_SubFolders()
-    Dim PathZipProgram As String, NameZipFile As String, FolderName As String
-    Dim ShellStr As String, strDate As String, DefPath As String
-
-    'Path of the Zip program
-    PathZipProgram = "C:\program files\7-Zip\"
-    If Right(PathZipProgram, 1) <> "\" Then
-        PathZipProgram = PathZipProgram & "\"
-    End If
-
-    'Check if this is the path where 7z is installed.
-    If Dir(PathZipProgram & "7z.exe") = "" Then
-        MsgBox "Please find your copy of 7z.exe and try again"
-        Exit Sub
-    End If
-
-    'Create Path and name of the new zip file
-    'The zip file will be saved in: DefPath = Application.DefaultFilePath
-    'Normal if you have not change it this will be your Documents folder
-    'You can change the folder if you want to another folder like this
-    'DefPath = "C:\Users\Ron\ZipFolder"
-    DefPath = Application.DefaultFilePath
-    If Right(DefPath, 1) <> "\" Then
-        DefPath = DefPath & "\"
-    End If
-
-    'Create date/Time string, also the name of the Zip in this example
-    strDate = Format(Now, "yyyy-mm-dd h-mm-ss")
-
-    'Set NameZipFile to the full path/name of the Zip file
-    'If you want to add the word "MyZip" before the date/time use
-    'NameZipFile = DefPath & "MyZip " & strDate & ".zip"
-    NameZipFile = DefPath & strDate & ".zip"
-
-    'Fill in the folder name
-    FolderName = "C:\Users\Ron\Desktop\TestFolder"
-    If Right(FolderName, 1) <> "\" Then
-        FolderName = FolderName & "\"
-    End If
-
-    'Zip all the files in the folder and subfolders, -r is Include subfolders
-    ShellStr = PathZipProgram & "7z.exe a -r" _
-             & " " & Chr(34) & NameZipFile & Chr(34) _
-             & " " & Chr(34) & FolderName & "*.*" & Chr(34)
-
-    'Note: you can replace the ShellStr with one of the example ShellStrings
-    'in the first macro example on this page
-
-    ShellAndWait ShellStr, vbHide
-
-    MsgBox "You will find the zip file here: " & NameZipFile
-End Sub
-
-
-
-'With this example you browse to the folder you want and select the files that you want to zip
-'Use the Ctrl key to select more then one file or select blocks of files with the shift key pressed.
-'With Ctrl a you select all files in the dialog.
-'The name of the zip file will be the Date/Time, you can change the NameZipFile string
-'If you want to add the word "MyZip" before the date/time use
-'NameZipFile = DefPath & "MyZip " & strDate & ".zip"
-'The zip file will be saved in: DefPath = Application.DefaultFilePath
-'Normal if you have not change it this will be your Documents folder
-'You can change this folder to this if you want to use another folder
-'DefPath = "C:\Users\Ron\ZipFolder"
-'No need to change the code before you test it
-
-Sub C_Zip_File_Or_Files_Browse()
-    Dim PathZipProgram As String, NameZipFile As String, FolderName As String
-    Dim ShellStr As String, strDate As String, DefPath As String
-    Dim NameList As String, sFileNameXls As String
-    Dim vArr As Variant, FileNameXls As Variant, iCtr As Long
-
-    'Path of the Zip program
-    PathZipProgram = "C:\program files\7-Zip\"
-    If Right(PathZipProgram, 1) <> "\" Then
-        PathZipProgram = PathZipProgram & "\"
-    End If
-
-    'Check if this is the path where 7z is installed.
-    If Dir(PathZipProgram & "7z.exe") = "" Then
-        MsgBox "Please find your copy of 7z.exe and try again"
-        Exit Sub
-    End If
-
-    'Create Path and name of the new zip file
-    'The zip file will be saved in: DefPath = Application.DefaultFilePath
-    'Normal if you have not change it this will be your Documents folder
-    'You can change the folder if you want to another folder like this
-    'DefPath = "C:\Users\Ron\ZipFolder"
-    DefPath = Application.DefaultFilePath
-    If Right(DefPath, 1) <> "\" Then
-        DefPath = DefPath & "\"
-    End If
-
-    'Create date/Time string, also the name of the Zip in this example
-    strDate = Format(Now, "yyyy-mm-dd h-mm-ss")
-
-    'Set NameZipFile to the full path/name of the Zip file
-    'If you want to add the word "MyZip" before the date/time use
-    'NameZipFile = DefPath & "MyZip " & strDate & ".zip"
-    NameZipFile = DefPath & strDate & ".zip"
-
-    FileNameXls = Application.GetOpenFilename(filefilter:="Excel Files, *.xl*", _
-                                              MultiSelect:=True, Title:="Select the files that you want to add to the new zip file")
-
-    If IsArray(FileNameXls) = False Then
-        'do nothing
-    Else
-        NameList = ""
-        For iCtr = LBound(FileNameXls) To UBound(FileNameXls)
-            NameList = NameList & " " & Chr(34) & FileNameXls(iCtr) & Chr(34)
-            vArr = Split(FileNameXls(iCtr), "\")
-            sFileNameXls = vArr(UBound(vArr))
-
-            If bIsBookOpen(sFileNameXls) Then
-                MsgBox "You can't zip a file that is open!" & vbLf & _
-                       "Please close: " & FileNameXls(iCtr)
-                Exit Sub
-            End If
-        Next iCtr
-
-        'Zip every file you have selected with GetOpenFilename
-        ShellStr = PathZipProgram & "7z.exe a" _
-                 & " " & Chr(34) & NameZipFile & Chr(34) _
-                 & " " & NameList
-
-        ShellAndWait ShellStr, vbHide
-
-        MsgBox "You will find the zip file here: " & NameZipFile
-    End If
-
-End Sub
-
-
-
-'With this example you browse to the folder you want and select the files that you want to
-'add or update to/in a existing zip file, if the zip file not exist it will be created for you.
-'Use the Ctrl key to select more then one file or select blocks of files with the shift key pressed.
-'With Ctrl a you select all files in the dialog.
-'The zip file will be saved in: DefPath = Application.DefaultFilePath
-'Normal if you have not change it this will be your Documents folder
-'You can change the folder if you want to another folder like this :
-'DefPath = "C:\Users\Ron\ZipFolder"
-'Change this code line if you want to change the name of the zip file :
-'NameZipFile = DefPath & "ron.zip
-'There is no need to change the code before you test it
-
-Sub D_Zip_File_Or_Files_Browse_Add_Update()
-'Update older files in the archive and add files that are not in the archive
-'Change NameZipFile in the code to your zip file before you run the code
-    Dim PathZipProgram As String, NameZipFile As String, FolderName As String
-    Dim ShellStr As String, DefPath As String
-    Dim NameList As String, sFileNameXls As String
-    Dim vArr As Variant, FileNameXls As Variant, iCtr As Long
-
-    'Path of the Zip program
-    PathZipProgram = "C:\program files\7-Zip\"
-    If Right(PathZipProgram, 1) <> "\" Then
-        PathZipProgram = PathZipProgram & "\"
-    End If
-
-    'Check if this is the path where 7z is installed.
-    If Dir(PathZipProgram & "7z.exe") = "" Then
-        MsgBox "Please find your copy of 7z.exe and try again"
-        Exit Sub
-    End If
-
-    'Create Path and name of the existing/new zip file
-    'If the zip file not exist the code create it for you
-    'The zip file will be saved in: DefPath = Application.DefaultFilePath
-    'Normal if you have not change it this will be your Documents folder
-    'You can change the folder if you want to another folder like this
-    'DefPath = "C:\Users\Ron\ZipFolder"
-    DefPath = Application.DefaultFilePath
-    If Right(DefPath, 1) <> "\" Then
-        DefPath = DefPath & "\"
-    End If
-    'Set NameZipFile to the full path/name of the Zip file
-    'Change this code line if you want to change the name of the zip file
-    NameZipFile = DefPath & "ron.zip"
-
-    FileNameXls = Application.GetOpenFilename(filefilter:="Excel Files, *.xl*", _
-                                              MultiSelect:=True, Title:="Select the files that you want to update or add to the zip file")
-
-    If IsArray(FileNameXls) = False Then
-        'do nothing
-    Else
-        NameList = ""
-        For iCtr = LBound(FileNameXls) To UBound(FileNameXls)
-            NameList = NameList & " " & Chr(34) & FileNameXls(iCtr) & Chr(34)
-            vArr = Split(FileNameXls(iCtr), "\")
-            sFileNameXls = vArr(UBound(vArr))
-
-            If bIsBookOpen(sFileNameXls) Then
-                MsgBox "You can't zip a file that is open!" & vbLf & _
-                       "Please close: " & FileNameXls(iCtr)
-                Exit Sub
-            End If
-        Next iCtr
-
-        'Zip every file you have selected with GetOpenFilename
-        ShellStr = PathZipProgram & "7z.exe u" _
-                 & " " & Chr(34) & NameZipFile & Chr(34) _
-                 & " " & NameList
-
-        ShellAndWait ShellStr, vbHide
-
-        MsgBox "You will find the zip file here: " & NameZipFile
-    End If
-
-End Sub
-
-
-
-'With this example you zip the ActiveWorkbook
-'The name of the zip file will be the name of the workbook + Date/Time
-'The zip file will be saved in: DefPath = Application.DefaultFilePath
-'Normal if you have not change it this will be your Documents folder
-'You can change this folder to this if you want to use another folder
-'DefPath = "C:\Users\Ron\ZipFolder"
-'There is no need to change the code before you test it
-
-Sub E_Zip_ActiveWorkbook()
-    Dim PathZipProgram As String, NameZipFile As String
-    Dim ShellStr As String, strDate As String, DefPath As String
-    Dim FileNameXls As String, TempFilePath As String, TempFileName As String
-    Dim MyWb As Workbook, FileExtStr As String
-
-    'Path of the Zip program
-    PathZipProgram = "C:\program files\7-Zip\"
-    If Right(PathZipProgram, 1) <> "\" Then
-        PathZipProgram = PathZipProgram & "\"
-    End If
-    'Check if this is the path where 7z is installed.
-    If Dir(PathZipProgram & "7z.exe") = "" Then
-        MsgBox "Please find your copy of 7z.exe and try again"
-        Exit Sub
-    End If
-
-    'Build the path and name for the new xls? file
-    Set MyWb = ActiveWorkbook
-    If ActiveWorkbook.Path = "" Then Exit Sub
-
-    TempFilePath = Environ$("temp") & "\"
-    FileExtStr = "." & LCase(Right(MyWb.Name, _
-                                   Len(MyWb.Name) - InStrRev(MyWb.Name, ".", , 1)))
-    TempFileName = Left(MyWb.Name, Len(MyWb.Name) - Len(FileExtStr))
-
-    'Use SaveCopyAs to make a copy of the file
-    FileNameXls = TempFilePath & TempFileName & FileExtStr
-    MyWb.SaveCopyAs FileNameXls
-
-    'Build the path and name for the new zip file
-    'The name of the zip file will be the name of the workbook + Date/Time
-    'The zip file will be saved in: DefPath = Application.DefaultFilePath
-    'Normal if you have not change it this will be your Documents folder.
-    'You can change this folder to this if you want to use another folder
-    'DefPath = "C:\Users\Ron\ZipFolder"
-    DefPath = Application.DefaultFilePath
-    If Right(DefPath, 1) <> "\" Then
-        DefPath = DefPath & "\"
-    End If
-    strDate = Format(Now, "yyyy-mm-dd h-mm-ss")
-    NameZipFile = DefPath & TempFileName & " " & strDate & ".zip"
-
-    'Zip FileNameXls (copy of the ActiveWorkbook)
-    ShellStr = PathZipProgram & "7z.exe a" _
-             & " " & Chr(34) & NameZipFile & Chr(34) _
-             & " " & Chr(34) & FileNameXls & Chr(34)
-    ShellAndWait ShellStr, vbHide
-
-    'Delete the file that you saved with SaveCopyAs and add to the zip file
-    Kill TempFilePath & TempFileName & FileExtStr
-
-    MsgBox "You will find the zip file here: " & NameZipFile
-End Sub
-
-
-
-'With this example you browse to the zip or 7z file you want to unzip
-'The zip file will be unzipped in a new folder in: Application.DefaultFilePath
-'Normal if you have not change it this will be your Documents folder
-'The name of the folder that the code create in this folder is the Date/Time
-'You can change this folder to this if you want to use a fixed folder:
-'NameUnZipFolder = "C:\Users\Ron\TestFolder\"
-'Read the comments in the code about the commands/Switches in the ShellStr
-'There is no need to change the code before you test it
-
-Sub A_UnZip_Zip_File_Browse()
-    Dim PathZipProgram As String, NameUnZipFolder As String
-    Dim FileNameZip As Variant, ShellStr As String
-
-    'Path of the Zip program
-    PathZipProgram = "C:\program files\7-Zip\"
-    If Right(PathZipProgram, 1) <> "\" Then
-        PathZipProgram = PathZipProgram & "\"
-    End If
-
-    'Check if this is the path where 7z is installed.
-    If Dir(PathZipProgram & "7z.exe") = "" Then
-        MsgBox "Please find your copy of 7z.exe and try again"
-        Exit Sub
-    End If
-
-    'Create path and name of the normal folder to unzip the files in
-    'In this example we use: Application.DefaultFilePath
-    'Normal if you have not change it this will be your Documents folder
-    'The name of the folder that the code create in this folder is the Date/Time
-    NameUnZipFolder = Application.DefaultFilePath & "\" & Format(Now, "yyyy-mm-dd h-mm-ss")
-    'You can also use a fixed path like
-    'NameUnZipFolder = "C:\Users\Ron\TestFolder"
-
-    'Select the zip file (.zip or .7z files)
-    FileNameZip = Application.GetOpenFilename(filefilter:="Zip Files, *.zip, 7z Files, *.7z", _
-                                              MultiSelect:=False, Title:="Select the file that you want to unzip")
-
-    'Unzip the files/folders from the zip file in the NameUnZipFolder folder
-    If FileNameZip = False Then
-        'do nothing
-    Else
-        'There are a few commands/Switches that you can change in the ShellStr
-        'We use x command now to keep the folder stucture, replace it with e if you want only the files
-        '-aoa Overwrite All existing files without prompt.
-        '-aos Skip extracting of existing files.
-        '-aou aUto rename extracting file (for example, name.txt will be renamed to name_1.txt).
-        '-aot auto rename existing file (for example, name.txt will be renamed to name_1.txt).
-        'Use -r if you also want to unzip the subfolders from the zip file
-        'You can add -ppassword if you want to unzip a zip file with password (only 7zip files)
-        'Change "*.*" to for example "*.txt" if you only want to unzip the txt files
-        'Use "*.xl*" for all Excel files: xls, xlsx, xlsm, xlsb
-        ShellStr = PathZipProgram & "7z.exe x -aoa -r" _
-                 & " " & Chr(34) & FileNameZip & Chr(34) _
-                 & " -o" & Chr(34) & NameUnZipFolder & Chr(34) & " " & "*.*"
-
-        ShellAndWait ShellStr, vbHide
-        MsgBox "Look in " & NameUnZipFolder & " for extracted files"
-
-    End If
-End Sub
-
-
-

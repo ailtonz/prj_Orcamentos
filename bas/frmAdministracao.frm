@@ -18,19 +18,63 @@ Option Explicit
 Dim sqlPermissoes As String
 Dim sqlSelecao As String
 
+Private Sub mensagemAtualizacao()
+    MsgBox "Atualização concluida", vbOKOnly + vbInformation, "Atualização do sistema."
+End Sub
+
+Private Sub btnCustos_ATUALIZACAO_Click()
+    mensagemAtualizacao
+End Sub
+
+Private Sub btnCustos_Click()
+    frmCustos.Show
+End Sub
+
+Private Sub btnEstilos_ATUALIZACAO_Click()
+    mensagemAtualizacao
+End Sub
+
+Private Sub btnEstilos_Click()
+    frmEstilos.Show
+End Sub
+
+Private Sub btnIR_ATUALIZACAO_Click()
+    mensagemAtualizacao
+End Sub
+
+Private Sub btnIR_Click()
+    frmIR.Show
+End Sub
+
+Private Sub btnLinhas_ATUALIZACAO_Click()
+    mensagemAtualizacao
+End Sub
+
+Private Sub btnLinhas_Click()
+    frmLinhaProduto.Show
+End Sub
+
+Private Sub btnProfissoes_ATUALIZACAO_Click()
+    mensagemAtualizacao
+End Sub
+
+Private Sub btnProfissoes_Click()
+    frmProfissoes.Show
+End Sub
+
 Private Sub cboApoio_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strSQL As String
+Dim strSql As String
 Dim strParemetro As String: strParemetro = Me.cboApoio.Text
 
 If Len(Me.cboApoio.Text) > 0 Then
 
-    strSQL = "SELECT admCategorias.Categoria AS DESCRICAO From admCategorias WHERE " & _
+    strSql = "SELECT admCategorias.Categoria AS DESCRICAO From admCategorias WHERE " & _
              " (((admCategorias.codRelacao)= " & _
              " (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria = '" & strParemetro & "' and codRelacao = 0))) ORDER BY admCategorias.Categoria"
         
     Me.lstApoio.Clear
-    ListBoxCarregar strBanco, Me, Me.lstApoio.Name, "DESCRICAO", strSQL
+    ListBoxCarregar strBanco, Me, Me.lstApoio.Name, "DESCRICAO", strSql
         
 End If
 
@@ -38,7 +82,7 @@ End Sub
 
 Private Sub cboIndice_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strSQL As String
+Dim strSql As String
 Dim strParemetro As String: strParemetro = Me.cboIndice.Text
 
 If Len(Me.cboIndice.Text) > 0 Then
@@ -48,14 +92,14 @@ If Len(Me.cboIndice.Text) > 0 Then
 '             " (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria = '" & strParemetro & "' and codRelacao = 0))) ORDER BY admCategorias.Categoria"
 
 
-    strSQL = "SELECT IIf(([DESCRICAO02])<>'',[CATEGORIA] & ' | ' & [DESCRICAO01] & ' | ' & [DESCRICAO02],[CATEGORIA] & ' | ' & [DESCRICAO01]) AS DESCRICAO " & _
+    strSql = "SELECT IIf(([DESCRICAO02])<>'',[CATEGORIA] & ' | ' & [DESCRICAO01] & ' | ' & [DESCRICAO02],[CATEGORIA] & ' | ' & [DESCRICAO01]) AS DESCRICAO " & _
                 " From admCategorias " & _
                 " WHERE (((admCategorias.codRelacao)=(SELECT admCategorias.codCategoria FROM admCategorias Where Categoria = '" & strParemetro & "' and codRelacao = 0))) " & _
                 "ORDER BY IIf(([DESCRICAO02])<>'',[CATEGORIA] & ' | ' & [DESCRICAO01] & ' | ' & [DESCRICAO02],[CATEGORIA] & ' | ' & [DESCRICAO01])"
 
 
     Me.lstIndices.Clear
-    ListBoxCarregar strBanco, Me, Me.lstIndices.Name, "DESCRICAO", strSQL
+    ListBoxCarregar strBanco, Me, Me.lstIndices.Name, "DESCRICAO", strSql
 End If
 
 End Sub
@@ -75,21 +119,21 @@ End Sub
 
 Private Sub cboPermissoes_Enter()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strSQL As String
+Dim strSql As String
 
-    strSQL = "qryPermissoesGrupos"
+    strSql = "qryPermissoesGrupos"
     
-    ComboBoxCarregar strBanco, Me.cboPermissoes, "Grupo", strSQL
+    ComboBoxCarregar strBanco, Me.cboPermissoes, "Grupo", strSql
 
 End Sub
 
 Private Sub cboUsuario_Enter()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strSQL As String
+Dim strSql As String
 
-    strSQL = "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No)) Order By Usuario"
+    strSql = "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No)) Order By Usuario"
 
-    ComboBoxCarregar strBanco, Me.cboUsuario, "Usuario", strSQL
+    ComboBoxCarregar strBanco, Me.cboUsuario, "Usuario", strSql
     
     Me.cboPermissoes.Clear
 
@@ -106,30 +150,38 @@ Me.txtArquivoDeAtualizacao.Text = getFileNameAndExt(CriarArquivoDeAtualizacaoDoS
 
 End Sub
 
+Private Sub cmdAtualizarApoio_Click()
+    admAtualizarGuiaDeApoio
+End Sub
+
+Private Sub cmdAtualizarOperacional_Click()
+'    AtualizarOperacional
+End Sub
+
 Private Sub cmdCopiar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim Matriz As Variant
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 Dim strSelecao As String
 
 
-    If Me.lstUsuarios.Value = "" Or IsNull(Me.lstUsuarios.Value) Then
-        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    If Me.lstUsuarios.value = "" Or IsNull(Me.lstUsuarios.value) Then
+        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "COPIAR!"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
       
         Matriz = Array()
-        Matriz = Split(Me.lstUsuarios.Value, " - ")
+        Matriz = Split(Me.lstUsuarios.value, " - ")
         
         admUsuarioCopiar Range(BancoLocal), CStr(Matriz(0)), CStr(Matriz(1))
         
         ListBoxCarregar strBanco, Me, Me.lstUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
         ListBoxCarregar strBanco, Me, Me.lstUsuariosExcluidos.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=yes))"
                 
-        LimparCampos
+        limparCampos
         
     End If
 End Sub
@@ -176,7 +228,7 @@ Dim retResposta As String
     retResposta = MsgBox(strMensagem, vbQuestion + vbYesNo, strTitulo)
     
     If (retResposta) = vbYes Then
-        admGerenciarApoioExcluir strBanco, Me.cboApoio.Text, Me.lstApoio.Value
+        admGerenciarApoioExcluir strBanco, Me.cboApoio.Text, Me.lstApoio.value
         Me.txtApoio.Text = ""
     End If
     
@@ -193,7 +245,7 @@ Dim retResposta As String
     retResposta = MsgBox(strMensagem, vbQuestion + vbYesNo, strTitulo)
 
     If (retResposta) = vbYes Then
-        admGerenciarIndiceExcluir strBanco, Me.cboIndice.Text, DivisorDeTexto(Me.lstIndices.Value, "|", 0)
+        admGerenciarIndiceExcluir strBanco, Me.cboIndice.Text, DivisorDeTexto(Me.lstIndices.value, "|", 0)
         Me.txtIndice.Text = ""
         Me.txtIndiceValor01.Text = ""
         Me.txtIndiceValor02.Text = ""
@@ -212,7 +264,7 @@ Dim strCaminhoDoBancoServer As String: strCaminhoDoBancoServer = Me.txtCaminhoDo
 
     Set fd = Application.FileDialog(msoFileDialogFilePicker)
     fd.Filters.Clear
-    fd.Filters.Add "BDs do Access", "*.MDB"
+    fd.Filters.add "BDs do Access", "*.MDB"
     fd.Title = "Selecionar Banco Servidor"
     fd.AllowMultiSelect = False
     
@@ -236,14 +288,14 @@ End Sub
 Private Sub cmdSalvarApoio_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim strApoio As String: strApoio = Me.cboApoio.Text
-Dim strAntigo As String: strAntigo = IIf(IsNull(Me.lstApoio.Value), "", Me.lstApoio.Value)
+Dim strAntigo As String: strAntigo = IIf(IsNull(Me.lstApoio.value), "", Me.lstApoio.value)
 Dim strNovo As String: strNovo = Me.txtApoio
 
-    If Len(Me.lstApoio.Value) > 0 Then
+    If Len(Me.lstApoio.value) > 0 Then
         admGerenciarApoioAterar strBanco, strApoio, strAntigo, strNovo
     Else
         ''' NÃO INCLUI APOIO SEM DESCRIÇÃO
-        If Len(Me.txtApoio.Value) > 0 Then
+        If Len(Me.txtApoio.value) > 0 Then
             admGerenciarApoioIncluir strBanco, strApoio, strNovo
         End If
     End If
@@ -262,10 +314,10 @@ Dim strValor_01 As String: strValor_01 = Me.txtIndiceValor01
 Dim strValor_02 As String: strValor_02 = Me.txtIndiceValor02
 
 
-    If IsNull(Me.lstIndices.Value) Then
+    If IsNull(Me.lstIndices.value) Then
         strAntigo = ""
     Else
-        strAntigo = DivisorDeTexto(Me.lstIndices.Value, "|", 0)
+        strAntigo = DivisorDeTexto(Me.lstIndices.value, "|", 0)
     End If
 
 
@@ -273,7 +325,7 @@ Dim strValor_02 As String: strValor_02 = Me.txtIndiceValor02
         admGerenciarIndiceAterar strBanco, strIndice, strAntigo, strNovo, strValor_01, strValor_02
     Else
         ''' NÃO INCLUI INDICES SEM DESCRIÇÃO
-        If Len(Me.txtIndice.Value) > 0 Then
+        If Len(Me.txtIndice.value) > 0 Then
             admGerenciarIndiceIncluir strBanco, strIndice, strNovo, strValor_01, strValor_02
         End If
     End If
@@ -286,27 +338,27 @@ Dim strValor_02 As String: strValor_02 = Me.txtIndiceValor02
 End Sub
 
 Private Sub lstApoio_Click()
-    Me.txtApoio = Me.lstApoio.Value
+    Me.txtApoio = Me.lstApoio.value
 End Sub
 
 Private Sub lstIndices_Click()
 
-    Me.txtIndice = Trim(DivisorDeTexto(Me.lstIndices.Value, "|", 0))
-    Me.txtIndiceValor01 = Trim(DivisorDeTexto(Me.lstIndices.Value, "|", 1))
-    Me.txtIndiceValor02 = Trim(DivisorDeTexto(Me.lstIndices.Value, "|", 2))
+    Me.txtIndice = Trim(DivisorDeTexto(Me.lstIndices.value, "|", 0))
+    Me.txtIndiceValor01 = Trim(DivisorDeTexto(Me.lstIndices.value, "|", 1))
+    Me.txtIndiceValor02 = Trim(DivisorDeTexto(Me.lstIndices.value, "|", 2))
     
 End Sub
 
 Private Sub lstItensDisponiveis_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 
-    If IsNull(Me.lstItensDisponiveis.Value) Then
-        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    If IsNull(Me.lstItensDisponiveis.value) Then
+        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Seleção de Item disponivel"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
     
         admUsuariosPermissoes strBanco, Me.cboUsuario, Me.lstItensDisponiveis, Me.cboPermissoes
@@ -318,14 +370,14 @@ End Sub
 
 Private Sub lstItensEmUso_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 
-    If IsNull(Me.lstItensEmUso.Value) Then
-        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    If IsNull(Me.lstItensEmUso.value) Then
+        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Remoção de Item em uso"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
 
         admUsuariosPermissoesExcluir strBanco, Me.cboUsuario, Me.lstItensEmUso, Me.cboPermissoes
@@ -365,7 +417,7 @@ Dim strBanco As String: strBanco = Range(BancoLocal)
     ListBoxCarregar strBanco, Me, Me.lstAtulizacaoDeUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
     
     ''' CARREGAR CAMINHO DO BANCO SERVIDOR
-    Me.txtCaminhoDoBancoServer = Sheets("cfg").Range("B2")
+'    Me.txtCaminhoDoBancoServer = Sheets("cfg").Range("B2")
     
 
 End Sub
@@ -382,45 +434,45 @@ Private Sub cmdSalvar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 
     If ExistenciaUsuario(Range(BancoLocal), Me.txtCodigo, Me.txtNome) Then
-        admUsuarioSalvar Range(BancoLocal), Me.cboDepartamento, Me.txtCodigo, Me.txtNome, Me.txtEmail
+        admUsuarioSalvar Range(BancoLocal), Me.cboDepartamento, Me.txtCodigo, Me.txtNome, Me.txtEmail, Me.txtGerenteContas, Me.txtTelefone, Me.txtCelular01, Me.txtCelular02, Me.txtIdNextel
     Else
-        admUsuarioNovo Range(BancoLocal), Me.cboDepartamento, Me.txtCodigo, Me.txtNome, Me.txtEmail
+        admUsuarioNovo Range(BancoLocal), Me.cboDepartamento, Me.txtCodigo, Me.txtNome, Me.txtEmail, Me.txtGerenteContas, Me.txtTelefone, Me.txtCelular01, Me.txtCelular02, Me.txtIdNextel
     End If
     
-    LimparCampos
+    limparCampos
     
     ListBoxCarregar strBanco, Me, Me.lstUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
     
 End Sub
 
 Private Sub cmdCancelar_Click()
-    LimparCampos
+    limparCampos
 End Sub
 
 Private Sub cmdExcluir_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim Matriz As Variant
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 Dim strSelecao As String
 
 
-    If Me.lstUsuarios.Value = "" Or IsNull(Me.lstUsuarios.Value) Then
-        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    If Me.lstUsuarios.value = "" Or IsNull(Me.lstUsuarios.value) Then
+        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "EXCLUIR!"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
       
         Matriz = Array()
-        Matriz = Split(Me.lstUsuarios.Value, " - ")
+        Matriz = Split(Me.lstUsuarios.value, " - ")
         
         admUsuarioExcluir Range(BancoLocal), CStr(Matriz(1)), True
         
         ListBoxCarregar strBanco, Me, Me.lstUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
         ListBoxCarregar strBanco, Me, Me.lstUsuariosExcluidos.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=yes))"
                 
-        LimparCampos
+        limparCampos
         
     End If
 
@@ -429,26 +481,26 @@ End Sub
 Private Sub cmdRestaurar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim Matriz As Variant
-Dim strMSG As String
+Dim strMsg As String
 Dim strTitulo As String
 Dim strSelecao As String
 
-    If Me.lstUsuariosExcluidos.Value = "" Or IsNull(Me.lstUsuariosExcluidos.Value) Then
-        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    If Me.lstUsuariosExcluidos.value = "" Or IsNull(Me.lstUsuariosExcluidos.value) Then
+        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "RESTAURAR!"
         
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
     Else
 
         Matriz = Array()
-        Matriz = Split(Me.lstUsuariosExcluidos.Value, " - ")
+        Matriz = Split(Me.lstUsuariosExcluidos.value, " - ")
         
         admUsuarioExcluir strBanco, CStr(Matriz(1)), False
         
         ListBoxCarregar strBanco, Me, Me.lstUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
         ListBoxCarregar strBanco, Me, Me.lstUsuariosExcluidos.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=yes))"
         
-        LimparCampos
+        limparCampos
 
     End If
 
@@ -478,13 +530,19 @@ Private Sub lstUsuarios_Click()
 Dim Matriz As Variant
 
     Matriz = Array()
-    Matriz = Split(Me.lstUsuarios.Value, " - ")
+    Matriz = Split(Me.lstUsuarios.value, " - ")
     
     Me.cboDepartamento.Text = CStr(Matriz(0))
     Me.txtNome = CStr(Matriz(1))
     Me.txtEmail = CStr(Matriz(2))
     Me.txtCodigo = CStr(Matriz(3))
-
+    
+    Me.txtGerenteContas = CStr(Matriz(4))
+    Me.txtTelefone = CStr(Matriz(5))
+    Me.txtCelular01 = CStr(Matriz(6))
+    Me.txtCelular02 = CStr(Matriz(7))
+    Me.txtIdNextel = CStr(Matriz(8))
+    
     Me.cmdSalvar.Enabled = True
 
 End Sub
@@ -497,12 +555,18 @@ Private Sub lstUsuariosExcluidos_Click()
 Dim Matriz As Variant
 
     Matriz = Array()
-    Matriz = Split(Me.lstUsuariosExcluidos.Value, " - ")
+    Matriz = Split(Me.lstUsuariosExcluidos.value, " - ")
     
     Me.cboDepartamento.Text = CStr(Matriz(0))
     Me.txtNome = CStr(Matriz(1))
     Me.txtEmail = CStr(Matriz(2))
     Me.txtCodigo = CStr(Matriz(3))
+    
+    Me.txtGerenteContas = CStr(Matriz(4))
+    Me.txtTelefone = CStr(Matriz(5))
+    Me.txtCelular01 = CStr(Matriz(6))
+    Me.txtCelular02 = CStr(Matriz(7))
+    Me.txtIdNextel = CStr(Matriz(8))
     
     Me.cmdSalvar.Enabled = False
 End Sub
@@ -515,12 +579,17 @@ End Sub
 ''  PROCEDIMENTOS
 ''#########################################
 
-Private Sub LimparCampos()
+Private Sub limparCampos()
 
     Me.cboDepartamento.Text = "DPTO"
     Me.txtCodigo.Text = "CODIGO"
     Me.txtNome.Text = "NOME"
     Me.txtEmail.Text = "E-MAIL"
+    Me.txtGerenteContas.Text = "GERENTE DE CONTAS"
+    Me.txtTelefone.Text = "TELEFONE"
+    Me.txtCelular01.Text = "CELULAR - 01"
+    Me.txtCelular02.Text = "CELULAR - 02"
+    Me.txtIdNextel.Text = "ID NEXTEL"
     
 End Sub
 
