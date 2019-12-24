@@ -123,6 +123,26 @@ Set qdfCadastroOrcamento = dbOrcamento.QueryDefs("CadastroOrcamento")
             c = c + 1
         Next x
     
+        
+'        'TRANSPORTE
+'        l = 61
+'        c = 3
+'        For x = 1 To 8
+'            .Parameters(x & "TRANSPORTE") = Cells(l, c).Value
+'            c = c + 1
+'        Next x
+'
+'
+'
+'        'IMPORT./DESEMB
+'        l = 62
+'        c = 3
+'        For x = 1 To 8
+'            .Parameters(x & "IMPORT") = Cells(l, c).Value
+'            c = c + 1
+'        Next x
+        
+        
         .Execute
         
     End With
@@ -265,6 +285,7 @@ On Error GoTo CadastroOrcamentoCustos_err
 Dim dbOrcamento As dao.Database
 Dim qdfCadastroCustos01 As dao.QueryDef
 Dim qdfCadastroCustos02 As dao.QueryDef
+Dim qdfCadastroCustos03 As dao.QueryDef
 Dim strSQL As String
 
 Dim l As Integer, c As Integer ' L = LINHA | C = COLUNA
@@ -273,6 +294,7 @@ Dim x As Integer ' contador de linhas
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfCadastroCustos01 = dbOrcamento.QueryDefs("CadastroOrcamentoCustos01")
 Set qdfCadastroCustos02 = dbOrcamento.QueryDefs("CadastroOrcamentoCustos02")
+Set qdfCadastroCustos03 = dbOrcamento.QueryDefs("CadastroOrcamentoCustos03")
 
 With qdfCadastroCustos01
 
@@ -462,7 +484,32 @@ With qdfCadastroCustos02
     
 End With
 
+With qdfCadastroCustos03
 
+    .Parameters("NOME_VENDEDOR") = strVendedor
+    .Parameters("NUMERO_CONTROLE") = strControle
+
+    'TRANSPORTE
+    l = 61
+    c = 3
+    For x = 1 To 8
+        .Parameters(x & "TRANSPORTE") = Cells(l, c).Value
+        c = c + 1
+    Next x
+
+    'IMPORT_DESEMB
+    l = 62
+    c = 3
+    For x = 1 To 8
+        .Parameters(x & "IMPORT_DESEMB") = Cells(l, c).Value
+        c = c + 1
+    Next x
+
+    .Execute
+    
+End With
+
+qdfCadastroCustos03.Close
 qdfCadastroCustos02.Close
 qdfCadastroCustos01.Close
 dbOrcamento.Close
@@ -473,6 +520,7 @@ CadastroOrcamentoCustos_Fim:
     Set dbOrcamento = Nothing
     Set qdfCadastroCustos01 = Nothing
     Set qdfCadastroCustos02 = Nothing
+    Set qdfCadastroCustos03 = Nothing
     
     Exit Function
 CadastroOrcamentoCustos_err:

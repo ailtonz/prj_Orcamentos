@@ -1,8 +1,6 @@
 Attribute VB_Name = "Módulo3"
 Option Explicit
 
-
-
 Sub Compact(NameFile As String, NameZipFile As String)
     Dim PathZipProgram As String
     Dim ShellStr As String

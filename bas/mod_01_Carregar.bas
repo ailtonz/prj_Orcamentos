@@ -346,6 +346,25 @@ Set rstCarregarCustos = dbOrcamento.OpenRecordset("Select * from OrcamentosCusto
             Cells(l, c).Value = .Fields(x & "_OUTROS")
             c = c + 1
         Next x
+        
+        'TRANSPORTE
+        l = 61
+        c = 3
+        For x = 1 To 8
+            Cells(l, c).Value = .Fields(x & "_TRANSPORTE")
+            c = c + 1
+        Next x
+
+
+        'IMPORT
+        l = 62
+        c = 3
+        For x = 1 To 8
+            Cells(l, c).Value = .Fields(x & "_IMPORT_DESEMB")
+            c = c + 1
+        Next x
+        
+        
     
     End With
     
