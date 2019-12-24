@@ -433,7 +433,7 @@ End Sub
 'End Sub
 
 
-Function admCadastroAtualizacao(strBanco As infBanco, sAtualizacao As String, sIDSubCategoria As String) As Boolean: admCadastroAtualizacao = True
+Function admCadastroAtualizacao(strBanco As infBanco, sAtualizacao As String, sIDSubCategoria As String, sObs As String) As Boolean: admCadastroAtualizacao = True
 On Error GoTo admCadastroAtualizacao_err
 Dim cnn As New ADODB.connection
 Set cnn = OpenConnection(strBanco)
@@ -447,6 +447,7 @@ With cmd
     .CommandType = adCmdStoredProc
     .Parameters.Append .CreateParameter("@NM_CATEGORIA", adVarChar, adParamInput, 100, sAtualizacao)
     .Parameters.Append .CreateParameter("@ID_SUBCATEGORIA", adVarChar, adParamInput, 10, sIDSubCategoria)
+    .Parameters.Append .CreateParameter("@NM_OBSERVACOES", adVarChar, adParamInput, 2000, sObs)
         
     Set rst = .Execute
     

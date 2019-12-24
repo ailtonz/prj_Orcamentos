@@ -127,7 +127,7 @@ sScript = "UPDATE admcategorias SET admcategorias.Descricao01 = '" & sValor & "'
 loadBancos
 
 '' ATUALIZAÇÃO
-admCadastroAtualizacao banco(0), controleAtualizacao, getIdSubCategoria(banco(0), "UPDATESYSTEM")
+admCadastroAtualizacao banco(0), controleAtualizacao, getIdSubCategoria(banco(0), "UPDATESYSTEM"), ListarUsuariosAtivos(banco(0))
 
 '' CADASTRAR
 admCadastroAtualizacaoScript banco(0), getIdSubCategoria(banco(0), controleAtualizacao), sDescricao, sScript
@@ -285,7 +285,7 @@ Dim controleAtualizacao As String: controleAtualizacao = Controle
 '' CARREGAR BANCO
 loadBancos
 
-admCadastroAtualizacao banco(0), controleAtualizacao, getIdSubCategoria(banco(0), "UPDATESYSTEM")
+admCadastroAtualizacao banco(0), controleAtualizacao, getIdSubCategoria(banco(0), "UPDATESYSTEM"), ListarUsuariosAtivos(banco(0))
 
 For intCurrentRow = 0 To lstNovosClientes.ListCount - 1
     If Not IsNull(lstNovosClientes.Column(0, intCurrentRow)) Then

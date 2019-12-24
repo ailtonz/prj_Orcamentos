@@ -2419,3 +2419,36 @@ Dim strUsuario As String: strUsuario = Range(NomeUsuario)
     MsgBox UsuarioAdministrativo(strBanco, strUsuario)
 
 End Sub
+
+
+Sub testeListarUsuariosAtivos()
+
+loadBancos
+Saida ListarUsuariosAtivos(banco(0)), "Usuarios"
+
+
+
+End Sub
+
+
+Function ListarUsuariosAtivos(strBanco As infBanco) As String
+Dim connection As New ADODB.connection
+Dim rst As New ADODB.Recordset
+Dim sListagem As String
+
+    Set connection = OpenConnection(strBanco)
+    If connection.State = 1 Then
+        Call rst.Open("Select usuario from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=0))", connection, adOpenStatic, adLockOptimistic)
+        If Not rst.EOF Then
+           Do While Not rst.EOF
+                sListagem = sListagem & "|" & rst.Fields("usuario").value
+                rst.MoveNext
+            Loop
+            ListarUsuariosAtivos = Left(Right(sListagem, Len(sListagem) - 1), Len(sListagem) - 1)
+            
+        End If
+    Else
+        MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "Falha na conexão com o banco."
+    End If
+    connection.Close
+End Function
