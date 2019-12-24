@@ -262,19 +262,33 @@ Dim strCaminhoDoBancoServer As String: strCaminhoDoBancoServer = Me.txtCaminhoDo
 End Sub
 
 Private Sub cmdNovoClienteAtualizar_Click()
-'Dim sScript As String
-'Dim sValor As String: sValor = "AILTON.OK.10-04-15_19-21"
-'Dim sDescricao As String: sDescricao = "CADASTRO DE CLIENTE"
-'Dim sID As String: sID = "2"
-'
-'sScript = "INSERT INTO admCategorias (admCategorias.codRelacao, admCategorias.Categoria) SELECT (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao ,'" & sValor & "',"
-'
-'loadBancos
-'If admUpDateClientes(banco(0), sID, sDescricao, sScript) Then
-'    MsgBox "Valor do Dolar Atualizado com sucesso.", vbInformation + vbOKOnly, "Atualização de moeda"
-'Else
-'    MsgBox "ERROR AO: Valor do Dolar Atualizado com sucesso.", vbCritical + vbOKOnly, "Atualização de moeda"
-'End If
+Dim sScript As String
+Dim sValor As String
+Dim sDescricao As String: sDescricao = "CADASTRO DE CLIENTE"
+Dim sID As String: sID = "2"
+Dim intCurrentRow As Long
+
+'' CARREGAR BANCO
+loadBancos
+
+'' LIMPAR
+admNovoCliente_LIMPAR banco(0)
+
+For intCurrentRow = 0 To lstNovosClientes.ListCount - 1
+    If Not IsNull(lstNovosClientes.Column(0, intCurrentRow)) Then
+        sValor = lstNovosClientes.Column(0, intCurrentRow)
+        sScript = "INSERT INTO admCategorias (admCategorias.codRelacao, admCategorias.Categoria) SELECT (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao ,'" & sValor & "'"
+        
+        '' CADASTRAR
+        admNovoCliente_CADASTRAR banco(0), sID, sDescricao, sScript
+        
+    End If
+Next intCurrentRow
+
+'' ATUALIZAR
+admNovoCliente_ATUALIZAR banco(0)
+
+MsgBox "OK!", vbInformation + vbOKOnly, "CADASTRO DE CLIENTES"
 
 End Sub
 
@@ -408,6 +422,7 @@ End Sub
 Private Sub lstNovosClientes_Click()
     Me.txtNovoCliente.value = Me.lstNovosClientes.value
 End Sub
+
 
 Private Sub txtNovoCliente_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Me.txtNovoCliente.value = UCase(Me.txtNovoCliente.value)

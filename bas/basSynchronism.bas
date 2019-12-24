@@ -259,8 +259,8 @@ admUpdateMoeda_err:
 
 End Function
 
-Function admUpDateClientes(strBanco As infBanco, sID As String, sDescricao As String, sScript As String) As Boolean: admUpDateClientes = True
-On Error GoTo admUpDateClientes_err
+Function admNovoCliente_CADASTRAR(strBanco As infBanco, sID As String, sDescricao As String, sScript As String) As Boolean: admNovoCliente_CADASTRAR = True
+On Error GoTo admNovoCliente_CADASTRAR_err
 Dim cnn As New ADODB.connection
 Set cnn = OpenConnection(strBanco)
 Dim rst As ADODB.Recordset
@@ -269,7 +269,7 @@ Dim cmd As ADODB.Command
 Set cmd = New ADODB.Command
 With cmd
     .ActiveConnection = cnn
-    .CommandText = "admUpDateClientes"
+    .CommandText = "admNovoCliente_CADASTRAR"
     .CommandType = adCmdStoredProc
     .Parameters.Append .CreateParameter("@NM_CATEGORIA", adVarChar, adParamInput, 100, "UPDATESYSTEM")
     .Parameters.Append .CreateParameter("@ATUALIZACAO_ID", adVarChar, adParamInput, 10, sID)
@@ -280,29 +280,88 @@ With cmd
 End With
 cnn.Close
 
-admUpDateClientes_Fim:
+admNovoCliente_CADASTRAR_Fim:
     Set cnn = Nothing
     Set rst = Nothing
     Set cmd = Nothing
     
     Exit Function
-admUpDateClientes_err:
-    admUpDateClientes = False
+admNovoCliente_CADASTRAR_err:
+    admNovoCliente_CADASTRAR = False
     MsgBox Err.Description
-    Resume admUpDateClientes_Fim
+    Resume admNovoCliente_CADASTRAR_Fim
 
 End Function
 
 
+Function admNovoCliente_LIMPAR(strBanco As infBanco) As Boolean: admNovoCliente_LIMPAR = True
+On Error GoTo admNovoCliente_LIMPAR_err
+Dim cnn As New ADODB.connection
+Set cnn = OpenConnection(strBanco)
+Dim rst As ADODB.Recordset
+Dim cmd As ADODB.Command
+
+Set cmd = New ADODB.Command
+With cmd
+    .ActiveConnection = cnn
+    .CommandText = "admNovoCliente_LIMPAR"
+    .CommandType = adCmdStoredProc
+    Set rst = .Execute
+End With
+cnn.Close
+
+admNovoCliente_LIMPAR_Fim:
+    Set cnn = Nothing
+    Set rst = Nothing
+    Set cmd = Nothing
+    
+    Exit Function
+admNovoCliente_LIMPAR_err:
+    admNovoCliente_LIMPAR = False
+    MsgBox Err.Description
+    Resume admNovoCliente_LIMPAR_Fim
+
+End Function
+
+
+Function admNovoCliente_ATUALIZAR(strBanco As infBanco) As Boolean: admNovoCliente_ATUALIZAR = True
+On Error GoTo admNovoCliente_ATUALIZAR_err
+Dim cnn As New ADODB.connection
+Set cnn = OpenConnection(strBanco)
+Dim rst As ADODB.Recordset
+Dim cmd As ADODB.Command
+
+Set cmd = New ADODB.Command
+With cmd
+    .ActiveConnection = cnn
+    .CommandText = "admNovoCliente_ATUALIZAR"
+    .CommandType = adCmdStoredProc
+    Set rst = .Execute
+End With
+cnn.Close
+
+admNovoCliente_ATUALIZAR_Fim:
+    Set cnn = Nothing
+    Set rst = Nothing
+    Set cmd = Nothing
+    
+    Exit Function
+admNovoCliente_ATUALIZAR_err:
+    admNovoCliente_ATUALIZAR = False
+    MsgBox Err.Description
+    Resume admNovoCliente_ATUALIZAR_Fim
+
+End Function
 
 Sub UpdateSystem()
 
     loadBancos
-    admUpdateSystem banco(0), banco(1)
+    admUpdateSystem banco(0), banco(1), "1"
+    admUpdateSystem banco(0), banco(1), "2"
 
 End Sub
 
-Function admUpdateSystem(strBanco As infBanco, strOrcamento As infBanco)
+Function admUpdateSystem(strBanco As infBanco, strOrcamento As infBanco, idAtualizacao As Integer)
 On Error GoTo admUpdateSystem_err
 Dim cnnServidor As New ADODB.connection
 Dim cnnLocal As New ADODB.connection
@@ -312,7 +371,7 @@ Dim cmdLocal As New ADODB.Command
 
     Set cnnServidor = OpenConnection(strBanco)
     If cnnServidor.State = 1 Then
-        Call rst.Open("SELECT * FROM qryUpdateSystem WHERE ID = '1'", cnnServidor, adOpenStatic, adLockOptimistic)
+        Call rst.Open("SELECT * FROM qryUpdateSystem WHERE ID = '" & idAtualizacao & "'", cnnServidor, adOpenStatic, adLockOptimistic)
         If Not rst.EOF Then
             Set cnnLocal = OpenConnection(strOrcamento)
             If cnnLocal.State = 1 Then
