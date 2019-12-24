@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Documento Tabela="Orçamentos" guia="Dados">
+<Title>ORÇAMENTO SPRINGER</Title>
+<Orcamento Origem="qryOrcamentos">
+	<Dados>
+		<Vendedor Campo="VENDEDOR" Posicao="C3"/>
+		<Cliente Campo="CLIENTE" Posicao="C4"/>
+		<responsavel Campo="RESPONSAVEL" Posicao="C5"/>
+		<projeto Campo="PROJETO" Posicao="C6"/>
+		<dt_pedido Campo="DT_PEDIDO" Posicao="G3"/>
+		<prev_entrega Campo="PREV_ENTREGA" Posicao="G4"/>
+		<valor_projeto Campo="VALOR_PROJETO" Posicao="J4"/>
+		<status Campo="STATUS" Posicao="J3"/>
+		<publisher Campo="PUBLISHER" Posicao="C8"/>
+		<journa Campo="JOURNAL" Posicao="C9"/>
+		<pags Campo="PAGS" Posicao="C10"/>	
+	</Dados>
+</Orcamento>
+<Acabamentos Origem="qryAcabamentos">
+	<Acabamento_01 Campo="1_ACABAMENTO" Posicao="B31"/>
+	<Acabamento_02 Campo="2_ACABAMENTO" Posicao="B32"/>
+	<Acabamento_03 Campo="3_ACABAMENTO" Posicao="B33"/>
+	<Acabamento_04 Campo="4_ACABAMENTO" Posicao="B34"/>
+</Acabamentos>
+<Impressoes Origem="qryImpressoes">
+	<Dados id="p01">
+		<Tipo Campo="1_TIPO" Posicao="C25"/>
+		<Papel Campo="1_PAPEL" Posicao="C26"/>
+		<NumPaginas Campo="1_PAGINAS" Posicao="C27"/>
+		<Impressao Campo="1_IMPRESSAO" Posicao="C28"/>
+		<Formato Campo="1_FORMATO" Posicao="C29"/>
+	</Dados>
+	<Dados id="p02">
+		<Tipo Campo="2_TIPO" Posicao="D25"/>
+		<Papel Campo="2_PAPEL" Posicao="D26"/>
+		<NumPaginas Campo="2_PAGINAS" Posicao="D27"/>
+		<Impressao Campo="2_IMPRESSAO" Posicao="D28"/>
+		<Formato Campo="2_FORMATO" Posicao="D29"/>
+	</Dados>
+	<Dados id="p03">
+		<Tipo Campo="3_TIPO" Posicao="E25"/>
+		<Papel Campo="3_PAPEL" Posicao="E26"/>
+		<NumPaginas Campo="3_PAGINAS" Posicao="E27"/>
+		<Impressao Campo="3_IMPRESSAO" Posicao="E28"/>
+		<Formato Campo="3_FORMATO" Posicao="E29"/>
+	</Dados>
+	<Dados id="p04">
+		<Tipo Campo="4_TIPO" Posicao="F25"/>
+		<Papel Campo="4_PAPEL" Posicao="F26"/>
+		<NumPaginas Campo="4_PAGINAS" Posicao="F27"/>
+		<Impressao Campo="4_IMPRESSAO" Posicao="F28"/>
+		<Formato Campo="4_FORMATO" Posicao="F29"/>
+	</Dados>
+	<Dados id="p05">
+		<Tipo Campo="5_TIPO" Posicao="G25"/>
+		<Papel Campo="5_PAPEL" Posicao="G26"/>
+		<NumPaginas Campo="5_PAGINAS" Posicao="G27"/>
+		<Impressao Campo="5_IMPRESSAO" Posicao="G28"/>
+		<Formato Campo="5_FORMATO" Posicao="G29"/>
+	</Dados>
+	<Dados id="p06">
+		<Tipo Campo="6_TIPO" Posicao="H25"/>
+		<Papel Campo="6_PAPEL" Posicao="H26"/>
+		<NumPaginas Campo="6_PAGINAS" Posicao="H27"/>
+		<Impressao Campo="6_IMPRESSAO" Posicao="H28"/>
+		<Formato Campo="6_FORMATO" Posicao="H29"/>
+	</Dados>
+	<Dados id="p07">
+		<Tipo Campo="7_TIPO" Posicao="I25"/>
+		<Papel Campo="7_PAPEL" Posicao="I26"/>
+		<NumPaginas Campo="7_PAGINAS" Posicao="I27"/>
+		<Impressao Campo="7_IMPRESSAO" Posicao="I28"/>
+		<Formato Campo="7_FORMATO" Posicao="I29"/>
+	</Dados>
+	<Dados id="p08">
+		<Tipo Campo="8_TIPO" Posicao="J25"/>
+		<Papel Campo="8_PAPEL" Posicao="J26"/>
+		<NumPaginas Campo="8_PAGINAS" Posicao="J27"/>
+		<Impressao Campo="8_IMPRESSAO" Posicao="J28"/>
+		<Formato Campo="8_FORMATO" Posicao="J29"/>
+	</Dados>
+</Impressoes>
+<Projetos Origem="qryProjetos">
+	<Projeto id="p1">
+		<Vendido Campo="1_FECHADO" Posicao="C12"/>
+		<LinhaProduto Campo="1_LINHA_PRODUTO" Posicao="C13"/>
+		<Fasciculos Campo="1_FASCICULOS" Posicao="C14"/>
+		<Venda Campo="1_VENDA" Posicao="C15"/>
+		<Idioma Campo="1_IDIOMA" Posicao="C16"/>
+		<Tiragem Campo="1_TIRAGEM" Posicao="C17"/>
+		<Especificaco Campo="1_ESPECIFICACAO" Posicao="C18"/>
+		<Moeda Campo="1_MOEDA" Posicao="C19"/>
+		<RoyaltyPercentual Campo="1_ROYALTY_PERCENTUAL" Posicao="C20"/>
+		<RoyaltyEspecie Campo="1_ROYALTY_ESPECIE" Posicao="C21"/>
+		<ReImpressao Campo="1_RE_IMPRESSAO" Posicao="C22"/>
+		<Custo_01 Campo="1_INDEXACAO" Posicao="C37"/>
+		<Custo_02 Campo="1_TRADUCAO" Posicao="C38"/>
+		<Custo_03 Campo="1_REVISAO_ORTOGRAFICA" Posicao="C39"/>
+		<Custo_04 Campo="1_REVISAO_MEDICA" Posicao="C40"/>
+		<Custo_05 Campo="1_CRIACAO" Posicao="C41"/>
+		<Custo_06 Campo="1_ILUSTRACAO" Posicao="C42"/>
+		<Custo_07 Campo="1_REVISAO" Posicao="C43"/>
+		<Custo_08 Campo="1_DIAGRAMACAO" Posicao="C44"/>
+		<Custo_09 Campo="1_MEDICO" Posicao="C45"/>
+		<Custo_10 Campo="1_GRAFICA" Posicao="C46"/>
+		<Custo_11 Campo="1_MIDIA" Posicao="C47"/>
+		<Custo_12 Campo="1_CORREIO" Posicao="C48"/>
+		<Custo_13 Campo="1_ULTIMA_CAPA" Posicao="C49"/>
+		<Custo_14 Campo="1_IMPORT" Posicao="C50"/>
+		<Custo_15 Campo="1_TRANSPORTE_NACIONAL" Posicao="C51"/>
+		<Custo_16 Campo="1_TRANSPORTE_INTERNACIONAL" Posicao="C52"/>
+		<Custo_17 Campo="1_SEGUROS" Posicao="C53"/>
+		<Custo_17 Campo="1_EXTRAS" Posicao="C54"/>
+		<Custo_17 Campo="1_EDITOR_FEE" Posicao="C55"/>
+		<Custo_17 Campo="1_DESP_VIAGEM" Posicao="C56"/>
+		<Custo_17 Campo="1_OUTROS" Posicao="C57"/>	
+		<PrecoMarketing Campo="1_PrecoMarketing" Posicao="C65"/>
+		<ArredondamentoMarketing Campo="1_ArredondamentoMarketing" Posicao="C72"/>
+		<DescontoCompras Campo="1_DescontoCompras" Posicao="C78"/>
+		<ArredondamentoCompras Campo="1_ArredondamentoCompras" Posicao="C87"/>
+	</Projeto>
+</Projetos>
+<Proposta>
+	<Arquivo Caminho="c:\tmp\modelo.doc"/>
+</Proposta>
+</Documento>

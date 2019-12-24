@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<Tipo descricao="modelo">
+	<Item Legenda="VENDEDOR">
+		<Campo>VENDEDOR</Campo>
+		<Posicao>C3</Posicao>
+	</Item>
+	<Item Legenda="CLIENTE">
+		<Campo>CLIENTE</Campo>
+		<Posicao>C4</Posicao>
+	</Item>
+	<Item Legenda="RESPONSAVEL">
+		<Campo>RESPONSAVEL</Campo>
+		<Posicao>C5</Posicao>
+	</Item>	
+	<Item Legenda="PROJETO">
+		<Campo>PROJETO</Campo>
+		<Posicao>C6</Posicao>
+	</Item>	
+	<Item Legenda="DT_PEDIDO">
+		<Campo>DT_PEDIDO</Campo>
+		<Posicao>G3</Posicao>
+	</Item>	
+	<Item Legenda="PREV_ENTREGA">
+		<Campo>PREV_ENTREGA</Campo>
+		<Posicao>G4</Posicao>
+	</Item>	
+	<Item Legenda="VALOR_PROJETO">
+		<Campo>VALOR_PROJETO</Campo>
+		<Posicao>J4</Posicao>
+	</Item>	
+	<Item Legenda="STATUS">
+		<Campo>STATUS</Campo>
+		<Posicao>J3</Posicao>
+	</Item>	
+	<Item Legenda="PUBLISHER">
+		<Campo>PUBLISHER</Campo>
+		<Posicao>C8</Posicao>
+	</Item>	
+	<Item Legenda="JOURNAL">
+		<Campo>JOURNAL</Campo>
+		<Posicao>C9</Posicao>
+	</Item>	
+	<Item Legenda="PAGS">
+		<Campo>PAGS</Campo>
+		<Posicao>C10</Posicao>
+	</Item>	
+	<Item Legenda="PROJETO 01">
+		<Campo>1_FECHADO</Campo>
+		<Posicao>C12</Posicao>
+	</Item>	
+	<Item Legenda="PROJETO 02">
+		<Campo>2_FECHADO</Campo>
+		<Posicao>D12</Posicao>
+	</Item>	
+	<Item Legenda="PROJETO 03">
+		<Campo>3_FECHADO</Campo>
+		<Posicao>E12</Posicao>
+	</Item>	
+	<Item Legenda="PROJETO 04">
+		<Campo>4_FECHADO</Campo>
+		<Posicao>F12</Posicao>
+	</Item>	
+	<Item Legenda="PROJETO 05">
+		<Campo>5_FECHADO</Campo>
+		<Posicao>G12</Posicao>
+	</Item>	
+	<Item Legenda="PROJETO 06">
+		<Campo>6_FECHADO</Campo>
+		<Posicao>H12</Posicao>
+	</Item>	
+	<Item Legenda="PROJETO 07">
+		<Campo>7_FECHADO</Campo>
+		<Posicao>I12</Posicao>
+	</Item>	
+	<Item Legenda="PROJETO 08">
+		<Campo>8_FECHADO</Campo>
+		<Posicao>J12</Posicao>
+	</Item>		
+	<Item Legenda="LINHA 01">
+		<Campo>1_LINHA_PRODUTO</Campo>
+		<Posicao>C13</Posicao>
+	</Item>	
+	<Item Legenda="LINHA 02">
+		<Campo>2_LINHA_PRODUTO</Campo>
+		<Posicao>D13</Posicao>
+	</Item>	
+	<Item Legenda="LINHA 03">
+		<Campo>3_LINHA_PRODUTO</Campo>
+		<Posicao>E13</Posicao>
+	</Item>	
+	<Item Legenda="LINHA 04">
+		<Campo>4_LINHA_PRODUTO</Campo>
+		<Posicao>F13</Posicao>
+	</Item>	
+	<Item Legenda="LINHA 05">
+		<Campo>5_LINHA_PRODUTO</Campo>
+		<Posicao>G13</Posicao>
+	</Item>	
+	<Item Legenda="LINHA 06">
+		<Campo>6_LINHA_PRODUTO</Campo>
+		<Posicao>H13</Posicao>
+	</Item>	
+	<Item Legenda="LINHA 07">
+		<Campo>7_LINHA_PRODUTO</Campo>
+		<Posicao>I13</Posicao>
+	</Item>	
+	<Item Legenda="LINHA 08">
+		<Campo>8_LINHA_PRODUTO</Campo>
+		<Posicao>J13</Posicao>
+	</Item>	
+	<Item Legenda="FASCICULO 01">
+		<Campo>1_FASCICULOS</Campo>
+		<Posicao>C14</Posicao>
+	</Item>	
+	<Item Legenda="FASCICULO 02">
+		<Campo>2_FASCICULOS</Campo>
+		<Posicao>D14</Posicao>
+	</Item>	
+	<Item Legenda="FASCICULO 03">
+		<Campo>3_FASCICULOS</Campo>
+		<Posicao>E14</Posicao>
+	</Item>	
+	<Item Legenda="FASCICULO 04">
+		<Campo>4_FASCICULOS</Campo>
+		<Posicao>F14</Posicao>
+	</Item>	
+	<Item Legenda="FASCICULO 05">
+		<Campo>5_FASCICULOS</Campo>
+		<Posicao>G14</Posicao>
+	</Item>	
+	<Item Legenda="FASCICULO 06">
+		<Campo>6_FASCICULOS</Campo>
+		<Posicao>H14</Posicao>
+	</Item>	
+	<Item Legenda="FASCICULO 07">
+		<Campo>7_FASCICULOS</Campo>
+		<Posicao>I14</Posicao>
+	</Item>	
+	<Item Legenda="FASCICULO 08">
+		<Campo>8_FASCICULOS</Campo>
+		<Posicao>J14</Posicao>
+	</Item>	
+	
+	<Item Legenda="VENDA 01">
+		<Campo>1_VENDA</Campo>
+		<Posicao>C15</Posicao>
+	</Item>	
+	<Item Legenda="VENDA 02">
+		<Campo>2_VENDA</Campo>
+		<Posicao>D15</Posicao>
+	</Item>	
+	<Item Legenda="VENDA 03">
+		<Campo>3_VENDA</Campo>
+		<Posicao>E15</Posicao>
+	</Item>	
+	<Item Legenda="VENDA 04">
+		<Campo>4_VENDA</Campo>
+		<Posicao>F15</Posicao>
+	</Item>	
+	<Item Legenda="VENDA 05">
+		<Campo>5_VENDA</Campo>
+		<Posicao>G15</Posicao>
+	</Item>	
+	<Item Legenda="VENDA 06">
+		<Campo>6_VENDA</Campo>
+		<Posicao>H15</Posicao>
+	</Item>	
+	<Item Legenda="VENDA 07">
+		<Campo>7_VENDA</Campo>
+		<Posicao>I15</Posicao>
+	</Item>	
+	<Item Legenda="VENDA 08">
+		<Campo>8_VENDA</Campo>
+		<Posicao>J15</Posicao>
+	</Item>		
+</Tipo>

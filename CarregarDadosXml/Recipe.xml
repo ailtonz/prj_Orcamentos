@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Recipe TimeToPrepare="5" CookMethod="Grill" Difficulty="Easy" Serves="1" Category="Entrees">
+<Title>Hot Dog with Onions</Title>
+<Ingredients>
+	<Ingredients Name="Hot Dog" Amount="1"/>
+	<Ingredients Name="Hot Dog Bun" Amount="1"/>
+	<Ingredients Name="Sliced Onion" Amount="1" Unit="tablespoon"/>
+	<Ingredients Name="Mustard" Amount="2" Unit="teaspoon"/>
+	<Ingredients Name="Relish" Amount="2" Unit="teaspoon"/>
+</Ingredients>
+<Preparation>
+	<Step> Preheat Grill to 350&#176;F.</Step>
+	<!-- &#176; is the degree symbol -->
+	<Step>Grill Hot dog for 5 Minutes, Turning frequently to avoid burning</Step>
+	<Step>Put Hot Dog in bun, add mustard, onion, and relish</Step>
+</Preparation>
+<Comment>Some like to use spicy mustard, or replace mustard with catsup</Comment>
+<Nutrition>
+<Calories>300</Calories>
+<FatGrams>18.5</FatGrams>
+<CarboGrams>12</CarboGrams>
+<ProteinGrams>9.5</ProteinGrams>
+</Nutrition>
+</Recipe>
