@@ -59,7 +59,6 @@ End Sub
 
 
 Function bIsBookOpen(ByRef szBookName As String) As Boolean
-' Rob Bovey
     On Error Resume Next
     bIsBookOpen = Not (Application.Workbooks(szBookName) Is Nothing)
 End Function
