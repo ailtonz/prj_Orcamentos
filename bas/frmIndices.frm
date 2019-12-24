@@ -34,7 +34,7 @@ Else
     Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstLinha.value, "|", 0))
     Dim strValor_01 As String: strValor_01 = IIf((Me.txtLinhaValor01) = "", 0, Me.txtLinhaValor01)
     Dim strValor_02 As String: strValor_02 = IIf((Me.txtLinhaValor02) = "", 0, Me.txtLinhaValor02)
-    Dim strSql As String
+    Dim strSQL As String
     
     
     ''' GERENCIAR INDICE DE LINHA DE PRODUTOS
@@ -49,10 +49,10 @@ Else
     
     ''' ATUALIZAR LISTAGEM
     Me.lstLinha.Clear
-    strSql = _
+    strSQL = _
     "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade =  '" & strPropriedade & "'"
     
-    ListBoxCarregar strBanco, Me, Me.lstLinha.Name, "strDescricao", strSql
+    ListBoxCarregar strBanco, Me, Me.lstLinha.Name, "strDescricao", strSQL
         
     ''' LIMPAR LINHA DE PRODUTOS
     Application.ScreenUpdating = False
@@ -92,7 +92,7 @@ Else
     Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstMoeda.value, "|", 0))
     Dim strValor_01 As String: strValor_01 = IIf((Me.txtMoedaValor01) = "", 0, Me.txtMoedaValor01)
     Dim strValor_02 As String: strValor_02 = ""
-    Dim strSql As String
+    Dim strSQL As String
     
     
     ''' GERENCIAR INDICE DE LINHA DE PRODUTOS
@@ -107,10 +107,10 @@ Else
     
     ''' ATUALIZAR LISTAGEM
     Me.lstMoeda.Clear
-    strSql = _
+    strSQL = _
     "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade =  '" & strPropriedade & "'"
     
-    ListBoxCarregar strBanco, Me, Me.lstMoeda.Name, "strDescricao", strSql
+    ListBoxCarregar strBanco, Me, Me.lstMoeda.Name, "strDescricao", strSQL
     
     
     ''' LIMPAR MOEDA
@@ -151,7 +151,7 @@ Else
     Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstVenda.value, "|", 0))
     Dim strValor_01 As String: strValor_01 = IIf((Me.txtVendaValor01) = "", 0, Me.txtVendaValor01)
     Dim strValor_02 As String: strValor_02 = ""
-    Dim strSql As String
+    Dim strSQL As String
     
     
     ''' GERENCIAR INDICE DE LINHA DE PRODUTOS
@@ -167,10 +167,10 @@ Else
     ''' ATUALIZAR LISTAGEM
     Me.lstVenda.Clear
     
-    strSql = _
+    strSQL = _
     "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade =  '" & strPropriedade & "'"
     
-    ListBoxCarregar strBanco, Me, Me.lstVenda.Name, "strDescricao", strSql
+    ListBoxCarregar strBanco, Me, Me.lstVenda.Name, "strDescricao", strSQL
     
     
     
@@ -211,7 +211,7 @@ Else
     Dim strIndice As String: strIndice = Trim(DivisorDeTexto(Me.lstDescontos.value, "|", 0))
     Dim strValor_01 As String: strValor_01 = IIf((Me.txtDescontoValor01) = "", 0, Me.txtDescontoValor01)
     Dim strValor_02 As String: strValor_02 = ""
-    Dim strSql As String
+    Dim strSQL As String
     
     
     ''' GERENCIAR INDICE DE LINHA DE PRODUTOS
@@ -227,10 +227,10 @@ Else
     ''' ATUALIZAR LISTAGEM
     Me.lstDescontos.Clear
     
-    strSql = _
+    strSQL = _
     "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade =  '" & strPropriedade & "'"
     
-    ListBoxCarregar strBanco, Me, Me.lstDescontos.Name, "strDescricao", strSql
+    ListBoxCarregar strBanco, Me, Me.lstDescontos.Name, "strDescricao", strSQL
         
     
     ''' LIMPAR DESCONTOS
@@ -272,19 +272,19 @@ Private Sub UserForm_Initialize()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim strUsuario As String: strUsuario = Range(GerenteDeContas)
 Dim strControle As String: strControle = ActiveSheet.Name
-Dim strSql As String
+Dim strSQL As String
 
-    strSql = "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade = 'LINHA'"
-    ListBoxCarregar strBanco, Me, Me.lstLinha.Name, "strDescricao", strSql
+    strSQL = "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade = 'LINHA'"
+    ListBoxCarregar strBanco, Me, Me.lstLinha.Name, "strDescricao", strSQL
     
-    strSql = "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade = 'MOEDA'"
-    ListBoxCarregar strBanco, Me, Me.lstMoeda.Name, "strDescricao", strSql
+    strSQL = "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade = 'MOEDA'"
+    ListBoxCarregar strBanco, Me, Me.lstMoeda.Name, "strDescricao", strSQL
     
-    strSql = "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade = 'VENDA'"
-    ListBoxCarregar strBanco, Me, Me.lstVenda.Name, "strDescricao", strSql
+    strSQL = "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade = 'VENDA'"
+    ListBoxCarregar strBanco, Me, Me.lstVenda.Name, "strDescricao", strSQL
     
-    strSql = "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade = 'DESCONTO'"
-    ListBoxCarregar strBanco, Me, Me.lstDescontos.Name, "strDescricao", strSql
+    strSQL = "Select * from qryOrcamentosIndicesDeCalculos where Vendedor = '" & strUsuario & "' AND Controle = '" & strControle & "'  AND Propriedade = 'DESCONTO'"
+    ListBoxCarregar strBanco, Me, Me.lstDescontos.Name, "strDescricao", strSQL
     
     
 End Sub

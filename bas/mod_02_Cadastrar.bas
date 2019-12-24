@@ -10,7 +10,7 @@ On Error GoTo CadastroOrcamento_err
 
 Dim dbOrcamento As DAO.Database
 Dim qdfCadastroOrcamento As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Dim L As Integer, c As Integer ' L = LINHA | C = COLUNA
 Dim x As Integer ' contador de linhas
@@ -225,7 +225,7 @@ On Error GoTo CadastroOrcamentoImpressao_err
 
 Dim dbOrcamento As DAO.Database
 Dim qdfCadastroOrcamentoImpressao As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Dim L As Integer, c As Integer ' L = LINHA | C = COLUNA
 Dim x As Integer ' contador de linhas
@@ -317,7 +317,7 @@ Dim dbOrcamento As DAO.Database
 Dim qdfCadastroCustos01 As DAO.QueryDef
 Dim qdfCadastroCustos02 As DAO.QueryDef
 Dim qdfCadastroCustos03 As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Dim L As Integer, c As Integer ' L = LINHA | C = COLUNA
 Dim x As Integer ' contador de linhas

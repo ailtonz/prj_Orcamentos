@@ -1,7 +1,7 @@
 Attribute VB_Name = "basUserForm"
 Option Explicit
 
-Public Function UserFormDesbloqueioDeFuncoes(BaseDeDados As String, frm As UserForm, strSql As String, strCampo As String)
+Public Function UserFormDesbloqueioDeFuncoes(BaseDeDados As String, frm As UserForm, strSQL As String, strCampo As String)
 On Error GoTo UserFormDesbloqueioDeFuncoes_err
 
 Dim dbOrcamento         As DAO.Database
@@ -18,7 +18,7 @@ If RetVal = "" Then
 Else
         
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
-    Set rstUserFormDesbloqueioDeFuncoes = dbOrcamento.OpenRecordset(strSql)
+    Set rstUserFormDesbloqueioDeFuncoes = dbOrcamento.OpenRecordset(strSQL)
         
     While Not rstUserFormDesbloqueioDeFuncoes.EOF
         For Each Ctrl In frm.Controls
@@ -115,7 +115,7 @@ Set ws = Nothing
 
 End Function
 
-Public Function ListBoxCarregar(BaseDeDados As String, frm As UserForm, NomeLista As String, strCampo As String, strSql As String)
+Public Function ListBoxCarregar(BaseDeDados As String, frm As UserForm, NomeLista As String, strCampo As String, strSQL As String)
 On Error GoTo ListBoxCarregar_err
 
 Dim dbOrcamento         As DAO.Database
@@ -133,7 +133,7 @@ If RetVal = "" Then
 Else
        
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
-    Set rstListBoxCarregar = dbOrcamento.OpenRecordset(strSql)
+    Set rstListBoxCarregar = dbOrcamento.OpenRecordset(strSQL)
     
     For Each Ctrl In frm.Controls
         If TypeName(Ctrl) = "ListBox" Then
@@ -165,7 +165,7 @@ ListBoxCarregar_err:
 End Function
 
 
-Public Function ListBoxCarregarADO(strLocal As infBanco, frm As UserForm, NomeLista As String, strCampo As String, strSql As String)
+Public Function ListBoxCarregarADO(strLocal As infBanco, frm As UserForm, NomeLista As String, strCampo As String, strSQL As String)
 On Error GoTo ListBoxCarregar_err
 
 Dim connection As New ADODB.connection
@@ -181,7 +181,7 @@ If IsInternetConnected() = True Then
     '' Is Connected
     If connection.State = 1 Then
         
-        Call rstListBoxCarregar.Open(strSql, connection, adOpenStatic, adLockOptimistic)
+        Call rstListBoxCarregar.Open(strSQL, connection, adOpenStatic, adLockOptimistic)
             
         For Each Ctrl In frm.Controls
         If TypeName(Ctrl) = "ListBox" Then
@@ -228,7 +228,7 @@ Next cLoc
 
 End Function
 
-Public Function ComboBoxCarregar(BaseDeDados As String, cbo As ComboBox, strCampo As String, strSql As String) As Boolean: ComboBoxCarregar = True
+Public Function ComboBoxCarregar(BaseDeDados As String, cbo As ComboBox, strCampo As String, strSQL As String) As Boolean: ComboBoxCarregar = True
 On Error GoTo ComboBoxCarregar_err
 Dim dbOrcamento As DAO.Database
 Dim rstComboBoxCarregar As DAO.Recordset
@@ -243,7 +243,7 @@ If RetVal = "" Then
 Else
     
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
-    Set rstComboBoxCarregar = dbOrcamento.OpenRecordset(strSql)
+    Set rstComboBoxCarregar = dbOrcamento.OpenRecordset(strSQL)
     
     cbo.Clear
     

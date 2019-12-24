@@ -15,7 +15,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private strPesquisar As String
-Private strSql As String
+Private strSQL As String
 
 Private Sub cboEtapas_Click()
     Call cboOperacao_Click
@@ -26,10 +26,10 @@ Dim strUsuario As String: strUsuario = Range(NomeUsuario)
 
     If Me.cboOperacao.value = "RECEBER" Then
         loadBancos
-        strSql = "Select * from qryOrcamentosEnviar WHERE qryOrcamentosEnviar.Pesquisa Like '%" & strPesquisar & "%' and STATUS = '" & Me.cboEtapas.value & "' "
-        strSql = strSql & " AND ((qryOrcamentosEnviar.VENDEDOR) In (SELECT  qryUsuariosUsuarios.Usuarios From qryUsuariosUsuarios WHERE (((qryUsuariosUsuarios.Usuario)='" & strUsuario & "')))) limit " & Me.txtLimiteRegistros.value & ""
+        strSQL = "Select * from qryOrcamentosEnviar WHERE qryOrcamentosEnviar.Pesquisa Like '%" & strPesquisar & "%' and STATUS = '" & Me.cboEtapas.value & "' "
+        strSQL = strSQL & " AND ((qryOrcamentosEnviar.VENDEDOR) In (SELECT  qryUsuariosUsuarios.Usuarios From qryUsuariosUsuarios WHERE (((qryUsuariosUsuarios.Usuario)='" & strUsuario & "')))) limit " & Me.txtLimiteRegistros.value & ""
         
-        ListBoxCarregarADO Banco(0), Me, Me.lstSelecao.Name, "Pesquisa", strSql
+        ListBoxCarregarADO Banco(0), Me, Me.lstSelecao.Name, "Pesquisa", strSQL
     ElseIf Me.cboOperacao.value = "ENVIAR" Then
         MontarPesquisa
         carregarLista
@@ -118,15 +118,15 @@ End Sub
 Private Sub MontarPesquisa()
 Dim strUsuario As String: strUsuario = Range(NomeUsuario)
 
-strSql = "Select top " & Me.txtLimiteRegistros.value & " * from qryOrcamentosEnviar WHERE ((qryOrcamentosEnviar.Pesquisa) Like '*" & strPesquisar & "*') and STATUS = '" & Me.cboEtapas.value & "'"
-strSql = strSql & " AND ((qryOrcamentosEnviar.VENDEDOR) In (SELECT  qryUsuariosUsuarios.Usuarios From qryUsuariosUsuarios WHERE (((qryUsuariosUsuarios.Usuario)='" & strUsuario & "'))))"
+strSQL = "Select top " & Me.txtLimiteRegistros.value & " * from qryOrcamentosEnviar WHERE ((qryOrcamentosEnviar.Pesquisa) Like '*" & strPesquisar & "*') and STATUS = '" & Me.cboEtapas.value & "'"
+strSQL = strSQL & " AND ((qryOrcamentosEnviar.VENDEDOR) In (SELECT  qryUsuariosUsuarios.Usuarios From qryUsuariosUsuarios WHERE (((qryUsuariosUsuarios.Usuario)='" & strUsuario & "'))))"
 
 End Sub
 
 Private Sub carregarLista()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 
-ListBoxCarregar strBanco, Me, Me.lstSelecao.Name, "Pesquisa", strSql
+ListBoxCarregar strBanco, Me, Me.lstSelecao.Name, "Pesquisa", strSQL
 Me.Repaint
 
 End Sub

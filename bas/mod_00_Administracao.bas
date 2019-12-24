@@ -34,10 +34,10 @@ Public Const TopPesquisa As String = "50"
 Public ProjetoAtual As String
 
 Sub GUIAS_APOIO_ATIVAR()
-    Sheets("LISTAS").Visible = -1
+'    Sheets("LISTAS").Visible = -1
     Sheets("APOIO").Visible = -1
     Sheets("BANCOS").Visible = -1
-    Sheets("ADM").Visible = -1
+'    Sheets("ADM").Visible = -1
 End Sub
 
 Sub GUIAS_APOIO_DESATIVAR()
@@ -549,7 +549,7 @@ Public Function admOrcamentoExcluirVirtual(BaseDeDados As String, strControle As
 On Error GoTo admOrcamentoExcluirVirtual_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmOrcamentoExcluir As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmOrcamentoExcluir = dbOrcamento.QueryDefs("admOrcamentoExcluirVirtual")
@@ -583,7 +583,7 @@ Public Function admOrcamentoExcluirAnexos(BaseDeDados As String, strControle As 
 On Error GoTo admOrcamentoExcluirAnexos_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmOrcamentoEtapaAvancar As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -618,7 +618,7 @@ Public Function admOrcamentoNovoCustosProducao(BaseDeDados As String, strControl
 On Error GoTo admOrcamentoNovoCustosProducao_err
 Dim db As DAO.Database
 Dim qdf As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 
 Set db = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -736,7 +736,7 @@ Public Function admOrcamentoAtualizarEtapa(BaseDeDados As String, strControle As
 On Error GoTo admOrcamentoAtualizarEtapa_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmOrcamentoEtapaAvancar As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1039,7 +1039,7 @@ Public Function admOrcamentoExcluirAnexoArquivo(BaseDeDados As String, strUsuari
 On Error GoTo admOrcamentoExcluirAnexoArquivo_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmOrcamentoExcluirAnexoArquivo As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmOrcamentoExcluirAnexoArquivo = dbOrcamento.QueryDefs("admOrcamentoExcluirAnexoArquivo")
@@ -1181,7 +1181,7 @@ Public Function admUsuarioNovoDepartamentos(BaseDeDados As String, strUsuario As
 On Error GoTo admUsuarioNovoDepartamentos_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuarioNovoDepartamentos As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmUsuarioNovoDepartamentos = dbOrcamento.QueryDefs("admUsuarioNovoDepartamentos")
@@ -1213,7 +1213,7 @@ Public Function admUsuarioNovoFuncoes(BaseDeDados As String, strUsuario As Strin
 On Error GoTo admUsuarioNovoFuncoes_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuarioNovoFuncoes As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmUsuarioNovoFuncoes = dbOrcamento.QueryDefs("admUsuarioNovoFuncoes")
@@ -1245,7 +1245,7 @@ Public Function admUsuarioNovoNotificacoes(BaseDeDados As String, strUsuario As 
 On Error GoTo admUsuarioNovoNotificacoes_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuarioNovoNotificacoes As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmUsuarioNovoNotificacoes = dbOrcamento.QueryDefs("admUsuarioNovoNotificacoes")
@@ -1276,7 +1276,7 @@ Public Function admUsuarioNovoStatus(BaseDeDados As String, strUsuario As String
 On Error GoTo admUsuarioNovoStatus_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuarioNovoStatus As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmUsuarioNovoStatus = dbOrcamento.QueryDefs("admUsuarioNovoStatus")
@@ -1308,7 +1308,7 @@ Public Function admUsuarioNovoUsuarios(BaseDeDados As String, strUsuario As Stri
 On Error GoTo admUsuarioNovoUsuarios_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuarioNovoUsuarios As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmUsuarioNovoUsuarios = dbOrcamento.QueryDefs("admUsuarioNovoUsuarios")
@@ -1340,7 +1340,7 @@ Public Function ExistenciaUsuario(BaseDeDados As String, strCODIGO As String, st
 On Error GoTo ExistenciaUsuario_err
 Dim dbOrcamento As DAO.Database
 Dim rstExistenciaUsuario As DAO.Recordset
-Dim strSql As String
+Dim strSQL As String
 Dim RetVal As Variant
 
 RetVal = Dir(BaseDeDados)
@@ -1351,10 +1351,10 @@ If RetVal = "" Then
     
 Else
    
-    strSql = "SELECT * FROM qryUsuarios WHERE Usuario = '" & strNOME & "' AND  Codigo = '" & strCODIGO & "' "
+    strSQL = "SELECT * FROM qryUsuarios WHERE Usuario = '" & strNOME & "' AND  Codigo = '" & strCODIGO & "' "
     
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
-    Set rstExistenciaUsuario = dbOrcamento.OpenRecordset(strSql)
+    Set rstExistenciaUsuario = dbOrcamento.OpenRecordset(strSQL)
       
     If rstExistenciaUsuario.EOF Then
         ExistenciaUsuario = False
@@ -1395,7 +1395,7 @@ Public Function admUsuarioNovo( _
 On Error GoTo admUsuarioNovo_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuarioNovo As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmUsuarioNovo = dbOrcamento.QueryDefs("admUsuarioNovo")
@@ -1453,7 +1453,7 @@ Public Function admUsuarioSalvar( _
 On Error GoTo admUsuarioSalvar_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuarioSalvar As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmUsuarioSalvar = dbOrcamento.QueryDefs("admUsuarioSalvar")
@@ -1494,7 +1494,7 @@ Public Function admUsuarioExcluir(BaseDeDados As String, strNOME As String, Excl
 On Error GoTo admUsuarioExcluir_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuarioExcluir As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmUsuarioExcluir = dbOrcamento.QueryDefs("admUsuarioExcluir")
@@ -1572,7 +1572,7 @@ Public Function admUsuariosPermissoes(BaseDeDados As String, strUsuario As Strin
 On Error GoTo admUsuariosPermissoes_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuariosPermissoes As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmUsuariosPermissoes = dbOrcamento.QueryDefs("admUsuariosPermissoes")
@@ -1606,7 +1606,7 @@ Public Function admUsuariosPermissoesExcluir(BaseDeDados As String, strUsuario A
 On Error GoTo admUsuariosPermissoesExcluir_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuariosPermissoesExcluir As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfadmUsuariosPermissoesExcluir = dbOrcamento.QueryDefs("admUsuariosPermissoesExcluir")
@@ -1640,17 +1640,17 @@ Public Function EtapaUsuario(BaseDeDados As String, strCategoria As String, strN
 On Error GoTo EtapaUsuario_err
 Dim dbOrcamento As DAO.Database
 Dim rstEtapaUsuario As DAO.Recordset
-Dim strSql As String
+Dim strSQL As String
 Dim RetVal As Variant
 
 RetVal = Dir(BaseDeDados)
 
 If RetVal <> "" Then
    
-    strSql = "SELECT * FROM qryPermissoesUsuarios WHERE Usuario = '" & strNOME & "' AND  Categoria = 'Status' AND Selecionado = '" & strCategoria & "' "
+    strSQL = "SELECT * FROM qryPermissoesUsuarios WHERE Usuario = '" & strNOME & "' AND  Categoria = 'Status' AND Selecionado = '" & strCategoria & "' "
     
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
-    Set rstEtapaUsuario = dbOrcamento.OpenRecordset(strSql)
+    Set rstEtapaUsuario = dbOrcamento.OpenRecordset(strSQL)
       
     If rstEtapaUsuario.EOF Then
         EtapaUsuario = False
@@ -1679,17 +1679,17 @@ Public Function BloqueioEtapaUsuario(BaseDeDados As String, strCategoria As Stri
 On Error GoTo BloqueioEtapaUsuario_err
 Dim dbOrcamento As DAO.Database
 Dim rstBloqueioEtapaUsuario As DAO.Recordset
-Dim strSql As String
+Dim strSQL As String
 Dim RetVal As Variant
 
 RetVal = Dir(BaseDeDados)
 
 If RetVal <> "" Then
    
-    strSql = "SELECT * FROM qryPermissoesUsuarios WHERE Usuario = '" & strNOME & "' AND  Categoria = 'Bloqueio' AND Selecionado = '" & strCategoria & "' "
+    strSQL = "SELECT * FROM qryPermissoesUsuarios WHERE Usuario = '" & strNOME & "' AND  Categoria = 'Bloqueio' AND Selecionado = '" & strCategoria & "' "
     
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
-    Set rstBloqueioEtapaUsuario = dbOrcamento.OpenRecordset(strSql)
+    Set rstBloqueioEtapaUsuario = dbOrcamento.OpenRecordset(strSQL)
       
     If rstBloqueioEtapaUsuario.EOF Then
         BloqueioEtapaUsuario = True
@@ -1718,17 +1718,17 @@ Public Function UsuarioAdministrativo(BaseDeDados As String, strUsuario As Strin
 On Error GoTo UsuarioAdministrativo_err
 Dim dbOrcamento As DAO.Database
 Dim rstUsuarioAdministrativo As DAO.Recordset
-Dim strSql As String
+Dim strSQL As String
 Dim RetVal As Variant
 
 RetVal = Dir(BaseDeDados)
 
 If RetVal <> "" Then
 
-    strSql = "SELECT DPTO FROM qryUsuarios WHERE Usuario = '" & strUsuario & "' and DPTO IN ('Vendas')"
+    strSQL = "SELECT DPTO FROM qryUsuarios WHERE Usuario = '" & strUsuario & "' and DPTO IN ('Vendas')"
 
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
-    Set rstUsuarioAdministrativo = dbOrcamento.OpenRecordset(strSql)
+    Set rstUsuarioAdministrativo = dbOrcamento.OpenRecordset(strSQL)
 
     If rstUsuarioAdministrativo.EOF Then
         UsuarioAdministrativo = True
@@ -1855,6 +1855,8 @@ Next x
 
 'AtualizarListagens BaseDeDados, "qryApoio_Clientes", "APOIO", 2, 3
 
+GUIAS_APOIO_DESATIVAR
+
 Application.ScreenUpdating = True
 
 MsgBox "Atualização da guia de apoio concluida!", vbOKOnly + vbInformation, "Atualização da guia de apoio "
@@ -1883,7 +1885,7 @@ End With
 Do While Not rstListagem.EOF
 
     With Sheets(Guia)
-        .Cells(Linha, 11).value = rstListagem.Fields("DESCRICAO")
+        .Cells(Linha, Coluna).value = rstListagem.Fields("DESCRICAO")
         rstListagem.MoveNext
         Linha = Linha + 1
     End With
@@ -1899,7 +1901,7 @@ Public Function admCategoriaLimparTabela(BaseDeDados As String) As Boolean
 On Error GoTo admCategoriaLimparTabela_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmCategoriaLimparTabela As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1931,7 +1933,7 @@ Public Function admExcluirOrcamentosSemVinculosComUsuario(BaseDeDados As String,
 On Error GoTo admOrcamentosVinculadosVendedor_err
 Dim dbOrcamento As DAO.Database
 Dim qdfEXCLUSAO As DAO.QueryDef
-Dim strSql(2) As String
+Dim strSQL(2) As String
 
 Dim L As Integer, c As Integer
 
@@ -1940,16 +1942,16 @@ Dim y As Integer ' contador de colunas
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 
-strSql(1) = "admOrcamentosEXCLUSAO"
-strSql(2) = "admOrcamentosCustosEXCLUSAO"
+strSQL(1) = "admOrcamentosEXCLUSAO"
+strSQL(2) = "admOrcamentosCustosEXCLUSAO"
 'strSQL(3) = "admOrcamentosAnexosEXCLUSAO"
 
 
 'Saida Now(), "admOrcamentosVinculadosVendedor.log"
 
-For x = 1 To UBound(strSql)
+For x = 1 To UBound(strSQL)
     
-    Set qdfEXCLUSAO = dbOrcamento.QueryDefs(strSql(x))
+    Set qdfEXCLUSAO = dbOrcamento.QueryDefs(strSQL(x))
     
     With qdfEXCLUSAO
     
@@ -2010,7 +2012,7 @@ Public Function admGerenciarApoioExcluir(BaseDeDados As String, strListagemDeApo
 On Error GoTo admGerenciarApoioExcluir_err
 Dim dbOrcamento As DAO.Database
 Dim qdfQuery As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfQuery = dbOrcamento.QueryDefs("admGerenciarApoioExcluir")
@@ -2044,7 +2046,7 @@ Public Function admGerenciarApoioAterar(BaseDeDados As String, strListagemDeApoi
 On Error GoTo admGerenciarApoioAterar_err
 Dim dbOrcamento As DAO.Database
 Dim qdfQuery As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfQuery = dbOrcamento.QueryDefs("admGerenciarApoioAterar")
@@ -2078,7 +2080,7 @@ Public Function admGerenciarApoioIncluir(BaseDeDados As String, strListagemDeApo
 On Error GoTo admGerenciarApoioIncluir_err
 Dim dbOrcamento As DAO.Database
 Dim qdfQuery As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfQuery = dbOrcamento.QueryDefs("admGerenciarApoioIncluir")
@@ -2111,7 +2113,7 @@ Public Function admGerenciarIndiceExcluir(BaseDeDados As String, strIndice As St
 On Error GoTo admGerenciarIndiceExcluir_err
 Dim dbOrcamento As DAO.Database
 Dim qdfQuery As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfQuery = dbOrcamento.QueryDefs("admGerenciarIndiceExcluir")
@@ -2144,7 +2146,7 @@ Public Function admGerenciarIndiceAterar(BaseDeDados As String, strIndice As Str
 On Error GoTo admGerenciarIndiceAterar_err
 Dim dbOrcamento As DAO.Database
 Dim qdfQuery As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfQuery = dbOrcamento.QueryDefs("admGerenciarIndiceAterar")
@@ -2180,7 +2182,7 @@ Public Function admGerenciarIndiceIncluir(BaseDeDados As String, strIndice As St
 On Error GoTo admGerenciarIndiceIncluir_err
 Dim dbOrcamento As DAO.Database
 Dim qdfQuery As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfQuery = dbOrcamento.QueryDefs("admGerenciarIndiceIncluir")
@@ -2224,7 +2226,7 @@ Public Function admGerenciarIndicesDeCalculos _
 On Error GoTo admGerenciarIndicesDeCalculos_err
 Dim dbOrcamento As DAO.Database
 Dim qdfQuery As DAO.QueryDef
-Dim strSql As String
+Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfQuery = dbOrcamento.QueryDefs("admGerenciarIndicesDeCalculos")
@@ -2306,17 +2308,17 @@ Public Function ListarCamposObrigatorios(BaseDeDados As String, strEtapa As Stri
 On Error GoTo ListarCamposObrigatorios_err
 Dim dbOrcamento As DAO.Database
 Dim rstSelecao As DAO.Recordset
-Dim strSql As String
+Dim strSQL As String
 Dim RetVal As Variant
 
 RetVal = Dir(BaseDeDados)
 
 If RetVal <> "" Then
    
-    strSql = "SELECT selecao FROM qryObrigatorios WHERE Etapa = '" & strEtapa & "' ORDER BY Ordem"
+    strSQL = "SELECT selecao FROM qryObrigatorios WHERE Etapa = '" & strEtapa & "' ORDER BY Ordem"
     
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
-    Set rstSelecao = dbOrcamento.OpenRecordset(strSql)
+    Set rstSelecao = dbOrcamento.OpenRecordset(strSQL)
     
     DesbloqueioDeGuia SenhaBloqueio
     While Not rstSelecao.EOF
@@ -2431,24 +2433,4 @@ Saida ListarUsuariosAtivos(Banco(0)), "Usuarios"
 End Sub
 
 
-Function ListarUsuariosAtivos(strBanco As infBanco) As String
-Dim connection As New ADODB.connection
-Dim rst As New ADODB.Recordset
-Dim sListagem As String
 
-    Set connection = OpenConnection(strBanco)
-    If connection.State = 1 Then
-        Call rst.Open("Select usuario from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=0))", connection, adOpenStatic, adLockOptimistic)
-        If Not rst.EOF Then
-           Do While Not rst.EOF
-                sListagem = sListagem & "|" & rst.Fields("usuario").value
-                rst.MoveNext
-            Loop
-            ListarUsuariosAtivos = Left(Right(sListagem, Len(sListagem) - 1), Len(sListagem) - 1)
-            
-        End If
-    Else
-        MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "Falha na conexão com o banco."
-    End If
-    connection.Close
-End Function

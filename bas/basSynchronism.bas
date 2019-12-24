@@ -41,19 +41,19 @@ Function Transferencia(strOperacao As String, strDepartamento As String, strOrca
 Dim connection As New ADODB.connection
 Dim rstSincronismo As ADODB.Recordset
 Set rstSincronismo = New ADODB.Recordset
-Dim strSql As String
+Dim strSQL As String
 
 ''Is Internet Connected
 If IsInternetConnected() = True Then
     Set connection = OpenConnection(strLocal)
     '' Is Connected
     If connection.State = 1 Then
-        strSql = "SELECT DISTINCT tabela FROM qrySincronismo where sincronismo = '" & strOperacao & "' and dpto = '" & strDepartamento & "'"
-        Call rstSincronismo.Open(strSql, connection, adOpenStatic, adLockOptimistic)
+        strSQL = "SELECT DISTINCT tabela FROM qrySincronismo where sincronismo = '" & strOperacao & "' and dpto = '" & strDepartamento & "'"
+        Call rstSincronismo.Open(strSQL, connection, adOpenStatic, adLockOptimistic)
         '' ENVIAR/RECEBER DADOS
         Do While Not rstSincronismo.EOF
-            strSql = "SELECT * FROM " & rstSincronismo.Fields("tabela") & " WHERE controle = '" & strOrcamento.strControle & "' AND vendedor = '" & strOrcamento.strVendedor & "'"
-            EnvioDeDados strLocal, strServer, strSql
+            strSQL = "SELECT * FROM " & rstSincronismo.Fields("tabela") & " WHERE controle = '" & strOrcamento.strControle & "' AND vendedor = '" & strOrcamento.strVendedor & "'"
+            EnvioDeDados strLocal, strServer, strSQL
             
             If strOperacao = "ENVIAR" Then
                 '' server ( RECEBER )
@@ -80,7 +80,7 @@ End If
     
 End Function
 
-Sub EnvioDeDados(dbOrigem As infBanco, dbDestino As infBanco, strSql As String)
+Sub EnvioDeDados(dbOrigem As infBanco, dbDestino As infBanco, strSQL As String)
 Dim Origem As New ADODB.connection
 Set Origem = OpenConnection(dbOrigem)
 Dim rstOrigem As ADODB.Recordset
@@ -92,12 +92,12 @@ Set rstDestino = New ADODB.Recordset
 Dim fld As ADODB.Field
 Dim NewFile As Boolean: NewFile = False
     
-    Call rstOrigem.Open(strSql, Origem, , adLockOptimistic)
+    Call rstOrigem.Open(strSQL, Origem, , adLockOptimistic)
     
     If dbDestino.strDriver = "Access2003" Then
-        Call rstDestino.Open(strSql, Destino, adOpenDynamic, adLockOptimistic, adCmdText)
+        Call rstDestino.Open(strSQL, Destino, adOpenDynamic, adLockOptimistic, adCmdText)
     Else
-        Call rstDestino.Open(strSql, Destino, adOpenDynamic, adLockOptimistic, adCmdText)
+        Call rstDestino.Open(strSQL, Destino, adOpenDynamic, adLockOptimistic, adCmdText)
     End If
     
     '' SE Ñ EXISTE NO SERVER CADASTRAR
@@ -159,37 +159,8 @@ Dim rst As New ADODB.Recordset
     End If
     connection.Close
 End Function
-Sub updateStatus()
-loadBancos
-
-'' local ( ENVIAR )
-'loadOrcamento "VANESSA VICTORELLO", "117-14"
-'loadOrcamento "VANESSA VICTORELLO", "117-14", strStatus:=ID_STATUS(banco(0), orcamento)
-'Call admOrcamentoAtualizarEtapaADO(banco(1), orcamento)
-
-'' server ( RECEBER )
-loadOrcamento "VANESSA VICTORELLO", "117-14"
-loadOrcamento "VANESSA VICTORELLO", "117-14", strStatus:=ID_STATUS(Banco(1), orcamento)
-Call admOrcamentoAtualizarEtapaADO(Banco(0), orcamento)
 
 
-End Sub
-
-Sub idStatus()
-
-'loadBancos
-'loadOrcamento "FABIANA", "134-14"
-'loadOrcamento "FABIANA", "134-14", strStatus:=ID_STATUS(banco(1), orcamento)
-'
-''' local
-''MsgBox ID_STATUS(banco(1), orcamento)
-'
-''' server
-''MsgBox ID_STATUS(banco(0), orcamento)
-'
-'MsgBox orcamento.strStatus
-
-End Sub
 
 Sub admOrcamentoAtualizarEtapaADO(strBanco As infBanco, strOrcamento As infOrcamento)
 Dim connection As New ADODB.connection
@@ -353,222 +324,30 @@ admNovoCliente_ATUALIZAR_err:
 
 End Function
 
-Sub UpdateSystem()
-
-    loadBancos
-    admUpdateSystem Banco(0), Banco(1), "1"
-    admUpdateSystem Banco(0), Banco(1), "2"
-
- End Sub
 
 
 
-'Sub listUpdate()
-'Dim myArray() As String
-'
-'Dim numLimit As Long: numLimit = 20
-'
-'
-'ReDim myArray(1 To numLimit)
-'
-'For x = 1 To numLimit
-'    myArray(x) = x
-'Next x
-'
-'
-'MsgBox UBound(myArray), vbInformation, "LIMITE"
-'MsgBox LBound(myArray), vbInformation, "INICIO"
-'
-'End Sub
 
 
 
-Sub listUpdate(myArray As String)
-Dim x As Integer
-
-For x = LBound(myArray) To UBound(myArray)
-    MsgBox myArray(x)
-Next x
-
-End Sub
-
-'Function listarAtualizacoes(Banco As infBanco, sUserName As String)
-'On Error GoTo listarAtualizacoes_err
-'Dim cnnServidor As New ADODB.connection
-'Dim rst As New ADODB.Recordset
-'Dim myArray() As String
-'
-'    Set cnnServidor = OpenConnection(strServidor)
-'    If cnnServidor.State = 1 Then
-'        Call rst.Open("SELECT * FROM qryUpdateSystem WHERE UserNames  '%" & sUserName & "'% ORDER BY id ", cnnServidor, adOpenStatic, adLockOptimistic)
-'        rst.MoveLast
-'        rst.MoveFirst
-'
-'        For x = 1 To rst.RecordCount
-'
-'
-'            rst.MoveNext
-'        Next x
-'    Else
-'        MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "ERROR DE FUNÇÃO: listarAtualizacoes"
-'    End If
-'
-'    cnnServidor.Close
-'    cnnLocal.Close
-'
-'listarAtualizacoes_Fim:
-'    Set cnnServidor = Nothing
-'    Set rst = Nothing
-'
-'    Exit Function
-'listarAtualizacoes_err:
-'    MsgBox Err.Description
-'    Resume listarAtualizacoes_Fim
-'
-'End Function
 
 
 
-Function admUpdateSystem(strServidor As infBanco, strLocal As infBanco, idAtualizacao As Integer)
-On Error GoTo admUpdateSystem_err
-Dim cnnServidor As New ADODB.connection
-Dim cnnLocal As New ADODB.connection
-Dim rst As New ADODB.Recordset
-Dim rstLocal As New ADODB.Recordset
-Dim cmdLocal As New ADODB.Command
-
-    Set cnnServidor = OpenConnection(strServidor)
-    If cnnServidor.State = 1 Then
-        Call rst.Open("SELECT * FROM qryUpdateSystem WHERE ID = '" & idAtualizacao & "'", cnnServidor, adOpenStatic, adLockOptimistic)
-        rst.MoveLast
-        rst.MoveFirst
-        
-        Do While Not rst.EOF
-            Set cnnLocal = OpenConnection(strLocal)
-            If cnnLocal.State = 1 Then
-                cmdLocal.ActiveConnection = cnnLocal
-                cmdLocal.CommandType = adCmdText
-                cmdLocal.CommandText = rst.Fields("SCRIPT").value
-'                Saida rst.Fields("SCRIPT").value, "admUpdateSystem.log"
-                Set rstLocal = cmdLocal.Execute
-                rst.MoveNext
-'            Else
-'                MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "ERROR DE FUNÇÃO: admUpdateSystem"
-            End If
-        Loop
-'    Else
-'        MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "ERROR DE FUNÇÃO: admUpdateSystem"
-    End If
-    
-    cnnServidor.Close
-    cnnLocal.Close
-    
-admUpdateSystem_Fim:
-    Set cnnServidor = Nothing
-    Set cnnLocal = Nothing
-    Set rst = Nothing
-    Set rstLocal = Nothing
-    Set cmdLocal = Nothing
-    
-    Exit Function
-admUpdateSystem_err:
-    MsgBox Err.Description
-    Resume admUpdateSystem_Fim
-    
-End Function
 
 
-Sub teste_UpdateSystem(sDescricao As String, sScript As String)
-Dim sDataAtualizacao As String: sDataAtualizacao = Controle
-
-loadBancos
-admCadastroAtualizacao Banco(0), sDataAtualizacao, 0
-admCadastroAtualizacaoScript Banco(0), sDataAtualizacao, sDescricao, sScript
-
-End Sub
 
 
-'Sub teste_admCadastroUpdateSystem()
-'Dim sDataAtualizacao As String: sDataAtualizacao = Controle
-'
-'loadBancos
-''admCadastroAtualizacao banco(0), sDataAtualizacao
-''admCadastroAtualizacaoScript banco(0), sDataAtualizacao, "Objetivo da atualização", "Select * from admCategorias"
-'
-''' CADASTRO DA SUBCATEGORIA
-'admCadastroAtualizacao banco(0), sDataAtualizacao, "1346"
-'
-'End Sub
 
 
-Function admCadastroAtualizacao(strBanco As infBanco, sAtualizacao As String, sIDSubCategoria As String, sObs As String) As Boolean: admCadastroAtualizacao = True
-On Error GoTo admCadastroAtualizacao_err
-Dim cnn As New ADODB.connection
-Set cnn = OpenConnection(strBanco)
-Dim rst As ADODB.Recordset
-Dim cmd As ADODB.Command
-
-Set cmd = New ADODB.Command
-With cmd
-    .ActiveConnection = cnn
-    .CommandText = "admCategoriaNovo"
-    .CommandType = adCmdStoredProc
-    .Parameters.Append .CreateParameter("@NM_CATEGORIA", adVarChar, adParamInput, 100, sAtualizacao)
-    .Parameters.Append .CreateParameter("@ID_SUBCATEGORIA", adVarChar, adParamInput, 10, sIDSubCategoria)
-    .Parameters.Append .CreateParameter("@NM_OBSERVACOES", adVarChar, adParamInput, 2000, sObs)
-        
-    Set rst = .Execute
-    
-End With
-cnn.Close
-
-admCadastroAtualizacao_Fim:
-    Set cnn = Nothing
-    Set rst = Nothing
-    Set cmd = Nothing
-    
-    Exit Function
-admCadastroAtualizacao_err:
-    admCadastroAtualizacao = False
-    MsgBox Err.Description
-    Resume admCadastroAtualizacao_Fim
-
-End Function
 
 
-Function admCadastroAtualizacaoScript(strBanco As infBanco, sAtualizacao As String, sDescricao As String, sScript As String) As Boolean: admCadastroAtualizacaoScript = True
-On Error GoTo admCadastroAtualizacaoScript_err
-Dim cnn As New ADODB.connection
-Set cnn = OpenConnection(strBanco)
-Dim rst As ADODB.Recordset
-Dim cmd As ADODB.Command
 
-Set cmd = New ADODB.Command
-With cmd
-    .ActiveConnection = cnn
-    .CommandText = "admCategoriaScript"
-    .CommandType = adCmdStoredProc
-    .Parameters.Append .CreateParameter("@ID_SUBCATEGORIA", adVarChar, adParamInput, 10, sAtualizacao)
-    .Parameters.Append .CreateParameter("@NM_SUBCATEGORIA", adVarChar, adParamInput, 100, sDescricao)
-    .Parameters.Append .CreateParameter("@NM_SELECAO", adVarChar, adParamInput, 2000, sScript)
-        
-    Set rst = .Execute
-    
-End With
-cnn.Close
 
-admCadastroAtualizacaoScript_Fim:
-    Set cnn = Nothing
-    Set rst = Nothing
-    Set cmd = Nothing
-    
-    Exit Function
-admCadastroAtualizacaoScript_err:
-    admCadastroAtualizacaoScript = False
-    MsgBox Err.Description
-    Resume admCadastroAtualizacaoScript_Fim
 
-End Function
+
+
+
+
 
 
 

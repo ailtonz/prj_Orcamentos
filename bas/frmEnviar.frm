@@ -16,7 +16,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Public strPesquisar As String
-Public strSql As String
+Public strSQL As String
 Public strUsuarios As String
 
 
@@ -212,7 +212,7 @@ Dim retValor As Variant
     
     MontarPesquisa
     
-    ListBoxCarregar strBanco, Me, Me.lstOrigem.Name, "Pesquisa", strSql
+    ListBoxCarregar strBanco, Me, Me.lstOrigem.Name, "Pesquisa", strSQL
     Me.Repaint
 
 End Sub
@@ -250,7 +250,7 @@ sqlUsuarios = "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=N
 
 sqlEnvio = "SELECT * From qryUsuarios WHERE (((qryUsuarios.Usuario) In (Select Usuarios from qryUsuariosUsuarios where Usuario = '" & strUsuarios & "')) AND ((qryUsuarios.ExclusaoVirtual)=No)) ORDER BY qryUsuarios.Usuario Union SELECT * FROM qryUsuarios WHERE (((qryUsuarios.DPTO) In ('Produção','FINANCEIRO')))"
 
-ListBoxCarregar strBanco, Me, Me.lstOrigem.Name, "Pesquisa", strSql
+ListBoxCarregar strBanco, Me, Me.lstOrigem.Name, "Pesquisa", strSQL
 ListBoxCarregar strBanco, Me, Me.lstEmails.Name, "email", sqlEnvio
 
 
@@ -259,10 +259,10 @@ End Sub
 
 Private Sub MontarPesquisa()
 
-strSql = "SELECT qryOrcamentosEnviar.Pesquisa FROM qryOrcamentosEnviar WHERE ((qryOrcamentosEnviar.Pesquisa) Like '*" & strPesquisar & "*')"
-strSql = strSql + " AND ((qryOrcamentosEnviar.VENDEDOR) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Usuarios'))"
-strSql = strSql + " AND ((qryOrcamentosEnviar.DEPARTAMENTO) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Departamentos')) "
-strSql = strSql + "ORDER BY qryOrcamentosEnviar.CONTROLE DESC , qryOrcamentosEnviar.VENDEDOR"
+strSQL = "SELECT qryOrcamentosEnviar.Pesquisa FROM qryOrcamentosEnviar WHERE ((qryOrcamentosEnviar.Pesquisa) Like '*" & strPesquisar & "*')"
+strSQL = strSQL + " AND ((qryOrcamentosEnviar.VENDEDOR) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Usuarios'))"
+strSQL = strSQL + " AND ((qryOrcamentosEnviar.DEPARTAMENTO) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Departamentos')) "
+strSQL = strSQL + "ORDER BY qryOrcamentosEnviar.CONTROLE DESC , qryOrcamentosEnviar.VENDEDOR"
 
 
 End Sub

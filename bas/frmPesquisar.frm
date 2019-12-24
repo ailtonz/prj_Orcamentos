@@ -18,7 +18,7 @@ Option Base 1
 Option Explicit
 
 Public strPesquisar As String
-Public strSql As String
+Public strSQL As String
 Public strUsuarios As String
 
 Private Sub spbEtapas_Change()
@@ -28,7 +28,7 @@ Dim strBanco As String: strBanco = Range(BancoLocal)
     
     MontarPesquisa
     
-    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
+    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
     
     '' DISPOSIÇÃO DE ETAPA
     Me.lstPesquisa.Enabled = EtapaUsuario(strBanco, Me.txtEtapa, Range(NomeUsuario))
@@ -90,7 +90,7 @@ Dim strPendentes As String: strPendentes = "SELECT [controle] & ' ' & [usuario] 
 '    Saida strSQL, "Pesquisa.log"
     
     ''' CARREGAR LIST BOX DE PESQUISA
-    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
+    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
     
 '    ListBoxCarregar strBanco, Me, Me.lstPendentes.Name, "strControle", strPendentes
      
@@ -127,7 +127,7 @@ Dim retValor As Variant
     
     MontarPesquisa
     
-    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
+    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
     Me.Repaint
 
 End Sub
@@ -137,7 +137,7 @@ Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim sqlUsuario As String: strUsuarios = Range(NomeUsuario)
 
     admOrcamentoNovo strBanco, Me.cboUsuario
-    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
+    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
     
 End Sub
 
@@ -195,7 +195,7 @@ Dim strTitulo As String
         Matriz = Split(lstPesquisa.value, " - ")
         
         admOrcamentoCopiar strBanco, CStr(Matriz(0)), CStr(Matriz(2)), strUsuario
-        ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
+        ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
     End If
 End Sub
 
@@ -234,7 +234,7 @@ Dim varResposta As Variant
                     strMSG = "Exclusão concluida com sucesso!" & Chr(10) & Chr(13) & Chr(13)
                     strTitulo = "EXCLUIR!"
                     
-                    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
+                    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
                 Else
                     strMSG = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
                     strTitulo = "EXCLUIR!"
@@ -294,7 +294,7 @@ Dim strBanco As String: strBanco = Range(BancoLocal)
     
     Range(NomeUsuario) = Me.cboUsuario
     
-    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
+    ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSQL
     
     admOrcamentoFormulariosLiberar Range(NomeUsuario)
     
@@ -378,11 +378,11 @@ End Sub
 
 Private Sub MontarPesquisa()
 
-strSql = "SELECT top " & txtTop.Text & " qryOrcamentosListar.Pesquisa FROM qryOrcamentosListar WHERE ((qryOrcamentosListar.Pesquisa) Like '*" & strPesquisar & "*')"
-strSql = strSql + " AND ((qryOrcamentosListar.VENDEDOR) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Usuarios'))"
-strSql = strSql + " AND ((qryOrcamentosListar.DEPARTAMENTO) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Departamentos')) "
-strSql = strSql + " AND ((qryOrcamentosListar.STATUS) In ('" & Me.txtEtapa & "')) "
-strSql = strSql + "ORDER BY Right([controle],2) DESC , Left([CONTROLE],3) DESC"
+strSQL = "SELECT top " & txtTop.Text & " qryOrcamentosListar.Pesquisa FROM qryOrcamentosListar WHERE ((qryOrcamentosListar.Pesquisa) Like '*" & strPesquisar & "*')"
+strSQL = strSQL + " AND ((qryOrcamentosListar.VENDEDOR) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Usuarios'))"
+strSQL = strSQL + " AND ((qryOrcamentosListar.DEPARTAMENTO) In (Select Descricao01 from admCategorias where codRelacao = (SELECT admCategorias.codCategoria FROM admCategorias WHERE ((admCategorias.Categoria)='" & strUsuarios & "')) and Categoria = 'Departamentos')) "
+strSQL = strSQL + " AND ((qryOrcamentosListar.STATUS) In ('" & Me.txtEtapa & "')) "
+strSQL = strSQL + "ORDER BY Right([controle],2) DESC , Left([CONTROLE],3) DESC"
 
 End Sub
 

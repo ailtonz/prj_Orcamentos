@@ -23,17 +23,17 @@ Dim EntryCount As Single
 
 Private Sub cboApoio_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strSql As String
+Dim strSQL As String
 Dim strParemetro As String: strParemetro = Me.cboApoio.Text
 
 If Len(Me.cboApoio.Text) > 0 Then
 
-    strSql = "SELECT admCategorias.Categoria AS DESCRICAO From admCategorias WHERE " & _
+    strSQL = "SELECT admCategorias.Categoria AS DESCRICAO From admCategorias WHERE " & _
              " (((admCategorias.codRelacao)= " & _
              " (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria = '" & strParemetro & "' and codRelacao = 0))) ORDER BY admCategorias.Categoria"
         
     Me.lstApoio.Clear
-    ListBoxCarregar strBanco, Me, Me.lstApoio.Name, "DESCRICAO", strSql
+    ListBoxCarregar strBanco, Me, Me.lstApoio.Name, "DESCRICAO", strSQL
         
 End If
 
@@ -41,7 +41,7 @@ End Sub
 
 Private Sub cboIndice_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strSql As String
+Dim strSQL As String
 Dim strParemetro As String: strParemetro = Me.cboIndice.Text
 
 If Len(Me.cboIndice.Text) > 0 Then
@@ -51,14 +51,14 @@ If Len(Me.cboIndice.Text) > 0 Then
 '             " (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria = '" & strParemetro & "' and codRelacao = 0))) ORDER BY admCategorias.Categoria"
 
 
-    strSql = "SELECT IIf(([DESCRICAO02])<>'',[CATEGORIA] & ' | ' & [DESCRICAO01] & ' | ' & [DESCRICAO02],[CATEGORIA] & ' | ' & [DESCRICAO01]) AS DESCRICAO " & _
+    strSQL = "SELECT IIf(([DESCRICAO02])<>'',[CATEGORIA] & ' | ' & [DESCRICAO01] & ' | ' & [DESCRICAO02],[CATEGORIA] & ' | ' & [DESCRICAO01]) AS DESCRICAO " & _
                 " From admCategorias " & _
                 " WHERE (((admCategorias.codRelacao)=(SELECT admCategorias.codCategoria FROM admCategorias Where Categoria = '" & strParemetro & "' and codRelacao = 0))) " & _
                 "ORDER BY IIf(([DESCRICAO02])<>'',[CATEGORIA] & ' | ' & [DESCRICAO01] & ' | ' & [DESCRICAO02],[CATEGORIA] & ' | ' & [DESCRICAO01])"
 
 
     Me.lstIndices.Clear
-    ListBoxCarregar strBanco, Me, Me.lstIndices.Name, "DESCRICAO", strSql
+    ListBoxCarregar strBanco, Me, Me.lstIndices.Name, "DESCRICAO", strSQL
 End If
 
 End Sub
@@ -78,21 +78,21 @@ End Sub
 
 Private Sub cboPermissoes_Enter()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strSql As String
+Dim strSQL As String
 
-    strSql = "qryPermissoesGrupos"
+    strSQL = "qryPermissoesGrupos"
     
-    ComboBoxCarregar strBanco, Me.cboPermissoes, "Grupo", strSql
+    ComboBoxCarregar strBanco, Me.cboPermissoes, "Grupo", strSQL
 
 End Sub
 
 Private Sub cboUsuario_Enter()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strSql As String
+Dim strSQL As String
 
-    strSql = "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No)) Order By Usuario"
+    strSQL = "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No)) Order By Usuario"
 
-    ComboBoxCarregar strBanco, Me.cboUsuario, "Usuario", strSql
+    ComboBoxCarregar strBanco, Me.cboUsuario, "Usuario", strSQL
     
     Me.cboPermissoes.Clear
 
