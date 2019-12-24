@@ -257,7 +257,7 @@ End If
 
 On Error GoTo 0
 
-Set wdDoc = wdApp.Documents.Open(obj.ArqCaminho & "\" & obj.ArqNome, ReadOnly:=True)
+Set wdDoc = wdApp.Documents.Open(obj.ArqCaminho & obj.ArqNome, ReadOnly:=True)
 
 wdApp.Visible = True
 

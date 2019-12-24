@@ -18,7 +18,7 @@ Private registro As New clsAcabamento
 Private Sub UserForm_Activate()
     carregarDados
     carregarListagens
-    carregarProjetos
+    carregarAcabamentos
 End Sub
 
 
@@ -53,7 +53,7 @@ End With
 End Sub
 
 
-Private Sub carregarProjetos()
+Private Sub carregarAcabamentos()
 Dim col As clsAcabamento
 
 With Me.lstRegistros

@@ -5,6 +5,7 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 ' Macro1 Macro
 '
 
+    '' PREÇO VENDA GROSS MARKETING
     Range("C71").Select
     Selection.Copy
     Range("C72").Select
@@ -12,7 +13,7 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
         :=False, Transpose:=False
     Application.CutCopyMode = False
     
-    
+    '' PREÇO VENDA GROSS COMPRAS
     Range("C86").Select
     Selection.Copy
     Range("C87").Select
@@ -23,14 +24,4 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 End Sub
 
 
-Sub Macro2()
 
-Dim ws As Worksheet
-Set ws = Worksheets("BANCOS")
-
-ws.EnableCalculation = False
-ws.EnableCalculation = True
-
-Set ws = Nothing
-
-End Sub

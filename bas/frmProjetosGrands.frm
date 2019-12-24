@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmProjetosGrands 
-   Caption         =   "GRAND'S DE PROJETO"
+   Caption         =   "GRANT DE PROJETO"
    ClientHeight    =   6660
    ClientLeft      =   45
    ClientTop       =   375
@@ -61,61 +61,61 @@ End Sub
 
 Private Sub salvarRegistro()
 
-'Dim ws As Worksheet
-'Set ws = Worksheets(ActiveSheet.Name)
-'
-'Dim Grd As clsGrands
-'Set Grd = New clsGrands
-'
-'carregarBanco
-'
-'    With Grd
-'        .ID = Me.txtId.value
-'
-'        .NumProjeto = objOrc.NumProjeto
-'        .NumControle = objOrc.Controle
-'        .Vendedor = objOrc.Vendedor
-'
-'        .Profissao = Me.cboProfissao.value
-'        .ValorLiquido = Me.txtValorLiquido.value
-''        .CustoMedico = ws.Range("C45").value
-''        .CustoEditorFee = ws.Range("C55").value
-'        .add Grd
-'    End With
-'
-'    If Grd.ID = "" Then
-'        If (Grd.Insert(Bnc, Grd) = True) Then
-'            MsgBox "Cadastro realisado com sucesso!", vbInformation + vbOKOnly, "Cadastro"
-'        Else
-'            MsgBox "Não foi possivel realizar o cadastro!", vbCritical + vbOKOnly, "Cadastro - ERRO!"
-'        End If
-'
-'    Else
-'
-'        If Me.cmdSalvar.Caption = "SALVAR" Then
-'            If (Grd.Update(Bnc, Grd) = True) Then
-'                MsgBox "Alteração realizada com sucesso!", vbInformation + vbOKOnly, "Alteração"
-'            Else
-'                MsgBox "Não foi possivel realizar alteração!", vbCritical + vbOKOnly, "Alteração - ERRO!"
-'            End If
-'        Else
-'            If mostrarRegistro = vbYes Then
-'                If (Grd.Delete(Bnc, Grd) = True) Then
-'                    MsgBox "Exclusão realizada com sucesso!", vbInformation + vbOKOnly, "Exclusão"
-'                Else
-'                    MsgBox "Não foi possivel realizar Exclusão!", vbCritical + vbOKOnly, "Exclusão - ERRO!"
-'                End If
-'            End If
-'
-'        End If
-'
-'    End If
-'
-'    listarGrands
-'    limparCampos
-'
-'Set Grd = Nothing
-'Set Bnc = Nothing
+Dim ws As Worksheet
+Set ws = Worksheets(ActiveSheet.Name)
+
+Dim Grd As clsGrands
+Set Grd = New clsGrands
+
+carregarBanco
+            
+    With Grd
+        .ID = Me.txtId.value
+        
+        .NumProjeto = objOrc.NumProjeto
+        .NumControle = objOrc.Controle
+        .Vendedor = objOrc.Vendedor
+        
+        .Profissao = Me.cboProfissao.value
+        .ValorLiquido = Me.txtValorLiquido.value
+'        .CustoMedico = ws.Range("C45").value
+'        .CustoEditorFee = ws.Range("C55").value
+        .add Grd
+    End With
+                      
+    If Grd.ID = "" Then
+        If (Grd.Insert(Bnc, Grd) = True) Then
+            MsgBox "Cadastro realisado com sucesso!", vbInformation + vbOKOnly, "Cadastro"
+        Else
+            MsgBox "Não foi possivel realizar o cadastro!", vbCritical + vbOKOnly, "Cadastro - ERRO!"
+        End If
+        
+    Else
+    
+        If Me.cmdSalvar.Caption = "SALVAR" Then
+            If (Grd.Update(Bnc, Grd) = True) Then
+                MsgBox "Alteração realizada com sucesso!", vbInformation + vbOKOnly, "Alteração"
+            Else
+                MsgBox "Não foi possivel realizar alteração!", vbCritical + vbOKOnly, "Alteração - ERRO!"
+            End If
+        Else
+            If mostrarRegistro = vbYes Then
+                If (Grd.Delete(Bnc, Grd) = True) Then
+                    MsgBox "Exclusão realizada com sucesso!", vbInformation + vbOKOnly, "Exclusão"
+                Else
+                    MsgBox "Não foi possivel realizar Exclusão!", vbCritical + vbOKOnly, "Exclusão - ERRO!"
+                End If
+            End If
+            
+        End If
+        
+    End If
+    
+    listarGrands
+    limparCampos
+
+Set Grd = Nothing
+Set Bnc = Nothing
 
 End Sub
 
@@ -178,31 +178,40 @@ End Sub
 'Next obj
 '
 'End Sub
-
-
+    
 Private Sub listarProfissoes()
+Dim ws As Worksheet
+Set ws = Worksheets("Apoio")
 
-carregarBanco
+ComboBoxUpdate ws.Name, "PROFISSOES", Me.cboProfissao
 
-Dim Prf As clsProfissoes
-Set Prf = New clsProfissoes
-
-Dim col As clsProfissoes
-Set col = Prf.getProfissoes(Bnc)
-    
-With Me.cboProfissao
-    .Clear
-    .Clear
-    .ColumnCount = 1
-    .ColumnWidths = "60"
-    
-    For Each Prf In col.Itens
-        .AddItem Prf.Profissao
-    Next Prf
-
-End With
+Set ws = Nothing
 
 End Sub
+
+'Private Sub listarProfissoes()
+'
+'carregarBanco
+'
+'Dim Prf As clsProfissoes
+'Set Prf = New clsProfissoes
+'
+'Dim col As clsProfissoes
+'Set col = Prf.getProfissoes(Bnc)
+'
+'With Me.cboProfissao
+'    .Clear
+'    .Clear
+'    .ColumnCount = 1
+'    .ColumnWidths = "60"
+'
+'    For Each Prf In col.Itens
+'        .AddItem Prf.Profissao
+'    Next Prf
+'
+'End With
+'
+'End Sub
 
 Private Sub listarGrands()
 'Dim Prf As clsGrands
