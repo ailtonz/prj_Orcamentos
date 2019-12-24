@@ -182,7 +182,7 @@ Sub idStatus()
 'loadOrcamento "FABIANA", "134-14", strStatus:=ID_STATUS(banco(1), orcamento)
 '
 ''' local
-''MsgBox ID_STATUS(banco(1),orcamento)
+''MsgBox ID_STATUS(banco(1), orcamento)
 '
 ''' server
 ''MsgBox ID_STATUS(banco(0), orcamento)
@@ -359,7 +359,7 @@ Sub UpdateSystem()
     admUpdateSystem banco(0), banco(1), "1"
     admUpdateSystem banco(0), banco(1), "2"
 
-End Sub
+ End Sub
 
 Function admUpdateSystem(strServidor As infBanco, strLocal As infBanco, idAtualizacao As Integer)
 On Error GoTo admUpdateSystem_err
@@ -443,6 +443,8 @@ With cmd
     
         
     Set rst = .Execute
+    
+    
 End With
 cnn.Close
 
@@ -457,4 +459,30 @@ admCadastroUpdateSystem_err:
     MsgBox Err.Description
     Resume admCadastroUpdateSystem_Fim
 
+End Function
+
+
+Sub teste_getIdSubCategoria()
+
+loadBancos
+
+MsgBox getIdSubCategoria(banco(0), "150414-0953")
+
+End Sub
+
+Function getIdSubCategoria(strBanco As infBanco, sSubCategoria As String) As String
+Dim connection As New ADODB.connection
+Dim rst As New ADODB.Recordset
+    Set connection = OpenConnection(strBanco)
+    If connection.State = 1 Then
+        Call rst.Open("SELECT admCategorias.codCategoria FROM admCategorias Where Categoria = '" & sSubCategoria & "' limit 1", connection, adOpenStatic, adLockOptimistic)
+        If Not rst.EOF Then
+            getIdSubCategoria = rst.Fields("codCategoria").value
+        Else
+            getIdSubCategoria = "0"
+        End If
+    Else
+        MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "Falha na conexão com o banco."
+    End If
+    connection.Close
 End Function
