@@ -176,3 +176,17 @@ Public Function ContarAreaPreechida(area As Range) As Long
     ContarAreaPreechida = Contador
 End Function
 
+
+Public Sub OcultarSheets()
+  Dim strUsuario As String: strUsuario = Range(NomeUsuario)
+  Dim sht As Worksheet
+  
+  For Each sht In Sheets
+   
+    If sht.Name <> strUsuario Then
+        sht.Visible = xlSheetHidden
+    End If
+    
+  Next sht
+  
+End Sub

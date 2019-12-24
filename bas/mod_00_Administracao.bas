@@ -3,6 +3,7 @@ Option Base 1
 Option Explicit
 
 '''   CONTROLES DO SISTEMA
+Public Const VersaoDoSistema As String = "131104-1919"
 
 '' SENHAS
 Public Const SenhaBloqueio As String = "Ge456B!"

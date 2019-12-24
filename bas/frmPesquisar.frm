@@ -25,6 +25,9 @@ Dim strBancoServidor As String: strBancoServidor = Sheets(cfgGuiaConfiguracao).R
 Dim strBancoLocal As String: strBancoLocal = pathWorkSheetAddress & "bin\" & Controle & "_db" & "HOME" & ".mdb"
 Dim strAmbiente As String: strAmbiente = Me.cboAmbienteDeTrabalho.Text
 
+'''DESATIVAR AS MSGS DE ALERTAS!
+Application.DisplayAlerts = False
+
 
 ''' VERIFICAR EXISTENCIA (BANCO_SERVER)
 If Not Dir$(strBancoServidor, vbArchive) <> "" Then
@@ -41,20 +44,25 @@ Else
     Select Case strAmbiente
     
         Case "CASA"
-            ''' COPIAR BASE DE DADOS (SERVER) PARA PASTA LOCAL
-            FileCopy strBancoServidor, strBancoLocal
+        
+            If Dir$(strBancoServidor, vbArchive) <> "" Then
             
-            ''' EXCLUIR ORCAMENTOS SEM VINCULOS COM USUARIO
-            admExcluirOrcamentosSemVinculosComUsuario strBancoLocal, Range(NomeUsuario)
+                ''' COPIAR BASE DE DADOS (SERVER) PARA PASTA LOCAL
+                FileCopy strBancoServidor, strBancoLocal
+                
+                ''' EXCLUIR ORCAMENTOS SEM VINCULOS COM USUARIO
+                admExcluirOrcamentosSemVinculosComUsuario strBancoLocal, Range(NomeUsuario)
+                
+                ''' ARMAZENAR BANCO SELECIONADO EM CONFIGIRAÇÕES DO SISTEMA (BANCO LOCAL)
+                Sheets(cfgGuiaConfiguracao).Range(cfgBancoLocal) = strBancoLocal
+                
+                ''' SETA AMBIENTE DE TRABALHO COMO: CASA
+                Range(AmbienteDeTrabalho) = strAmbiente
+                
+                ''' CADASTRA CAMINHO DO BANCO
+                Range(BancoLocal) = strBancoLocal
             
-            ''' ARMAZENAR BANCO SELECIONADO EM CONFIGIRAÇÕES DO SISTEMA (BANCO LOCAL)
-            Sheets(cfgGuiaConfiguracao).Range(cfgBancoLocal) = strBancoLocal
-            
-            ''' SETA AMBIENTE DE TRABALHO COMO: CASA
-            Range(AmbienteDeTrabalho) = strAmbiente
-            
-            ''' CADASTRA CAMINHO DO BANCO
-            Range(BancoLocal) = strBancoLocal
+            End If
         
         Case "ESCRITORIO"
         
@@ -69,10 +77,14 @@ Else
     
     ''' BLOQUEIO DE PLANILHA
     BloqueioDeGuia SenhaBloqueio
+    
+    ''' SALVAR PLANILHA
+    ActiveWorkbook.Save
+    
     Application.ScreenUpdating = True
     
     ''' ATUALIZAR TITULO DA TELA
-    Me.Caption = UCase(strAmbiente & " - " & " Pesquisa de Orçamentos ")
+    Me.Caption = UCase(strAmbiente & " - " & " Pesquisa de Orçamentos " & " - ver: " & VersaoDoSistema)
     
     ''' MENSAGEM DE CONCLUSÃO DE PROCEDIMENTO
     MsgBox "Troca de Ambiente Concluida!", vbInformation + vbOKOnly, "Troca de Ambiente"
@@ -113,7 +125,6 @@ Private Sub UserForm_Activate()
     Range(InicioCursor).Select
     spbEtapas_Change
 
-       
     UserForm_Initialize
         
 End Sub
@@ -128,7 +139,7 @@ Dim sqlUsuarios As String: strUsuarios = Range(NomeUsuario)
 Dim strAmbiente As String: strAmbiente = Range(AmbienteDeTrabalho)
     
     ''' ATUALIZAR TITULO DA TELA
-    Me.Caption = UCase(strAmbiente & " - " & " Pesquisa de Orçamentos ")
+    Me.Caption = UCase(strAmbiente & " - " & " Pesquisa de Orçamentos " & " - ver: " & VersaoDoSistema)
     
     ''' VERIFICAR EXISTENCIA DA BASE DE DADOS
     admVerificarBaseDeDados
