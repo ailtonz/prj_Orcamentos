@@ -267,9 +267,13 @@ Dim sValor As String
 Dim sDescricao As String: sDescricao = "CADASTRO DE CLIENTE"
 Dim sID As String: sID = "2"
 Dim intCurrentRow As Long
+'Dim sDataAtualizacao As String: sDataAtualizacao = Format(Now(), "dd/mm/yy")
+Dim controleAtualizacao As String: controleAtualizacao = Controle
 
 '' CARREGAR BANCO
 loadBancos
+
+admCadastroUpdateSystem banco(0), controleAtualizacao, "Cadastro de clientes."
 
 '' LIMPAR
 admNovoCliente_LIMPAR banco(0)
@@ -282,7 +286,7 @@ For intCurrentRow = 0 To lstNovosClientes.ListCount - 1
         sScript = "INSERT INTO admCategorias ( codRelacao, Categoria ) SELECT TOP 1 (SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='CLIENTES' and codRelacao = 0) AS idRelacao, '" & sValor & "' AS strDescricao FROM admCategorias"
         
         '' CADASTRAR
-        admNovoCliente_CADASTRAR banco(0), sID, sDescricao, sScript
+        admNovoCliente_CADASTRAR banco(0), sID, sDescricao, sScript, controleAtualizacao
         
     End If
 Next intCurrentRow
