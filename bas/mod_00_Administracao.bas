@@ -41,10 +41,10 @@ Sub GUIAS_APOIO_ATIVAR()
 End Sub
 
 Sub GUIAS_APOIO_DESATIVAR()
-    Sheets("LISTAS").Visible = 2
+'    Sheets("LISTAS").Visible = 2
     Sheets("APOIO").Visible = 2
     Sheets("BANCOS").Visible = 2
-    Sheets("ADM").Visible = 2
+'    Sheets("ADM").Visible = 2
 End Sub
 
 'Sub carregarBancos()

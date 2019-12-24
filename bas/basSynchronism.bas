@@ -410,23 +410,51 @@ admUpdateSystem_err:
 End Function
 
 Sub teste_admCadastroUpdateSystem()
+Dim sDataAtualizacao As String: sDataAtualizacao = Controle
 
 loadBancos
-admCadastroUpdateSystem banco(0), "15/04/15", "Cadastro de clientes [2]"
+admCadastroAtualizacao banco(0), sDataAtualizacao
+admCadastroAtualizacaoScript banco(0), sDataAtualizacao, "Objetivo da atualização", "Select * from admCategorias"
 
 
 End Sub
 
-Sub teste_DataAtualizacao()
-'Dim sDataAtualizacao As String: sDataAtualizacao = Format(Now(), "dd/mm/yy")
 
-MsgBox Controle
+Function admCadastroAtualizacao(strBanco As infBanco, sAtualizacao As String) As Boolean: admCadastroAtualizacao = True
+On Error GoTo admCadastroAtualizacao_err
+Dim cnn As New ADODB.connection
+Set cnn = OpenConnection(strBanco)
+Dim rst As ADODB.Recordset
+Dim cmd As ADODB.Command
+
+Set cmd = New ADODB.Command
+With cmd
+    .ActiveConnection = cnn
+    .CommandText = "admCategoriaNovo"
+    .CommandType = adCmdStoredProc
+    .Parameters.Append .CreateParameter("@NM_CATEGORIA", adVarChar, adParamInput, 100, sAtualizacao)
+        
+    Set rst = .Execute
+    
+End With
+cnn.Close
+
+admCadastroAtualizacao_Fim:
+    Set cnn = Nothing
+    Set rst = Nothing
+    Set cmd = Nothing
+    
+    Exit Function
+admCadastroAtualizacao_err:
+    admCadastroAtualizacao = False
+    MsgBox Err.Description
+    Resume admCadastroAtualizacao_Fim
+
+End Function
 
 
-End Sub
-
-Function admCadastroUpdateSystem(strBanco As infBanco, sDataAtualizacao As String, sDescricao As String) As Boolean: admCadastroUpdateSystem = True
-On Error GoTo admCadastroUpdateSystem_err
+Function admCadastroAtualizacaoScript(strBanco As infBanco, sAtualizacao As String, sDescricao As String, sScript As String) As Boolean: admCadastroAtualizacaoScript = True
+On Error GoTo admCadastroAtualizacaoScript_err
 Dim cnn As New ADODB.connection
 Set cnn = OpenConnection(strBanco)
 Dim rst As ADODB.Recordset
@@ -437,27 +465,25 @@ With cmd
     .ActiveConnection = cnn
     .CommandText = "admCategoriaSubNovo"
     .CommandType = adCmdStoredProc
-    .Parameters.Append .CreateParameter("@NM_CATEGORIA", adVarChar, adParamInput, 100, "UPDATESYSTEM")
-    .Parameters.Append .CreateParameter("@NM_SUBCATEGORIA", adVarChar, adParamInput, 11, sDataAtualizacao)
-    .Parameters.Append .CreateParameter("@NM_SELECAO", adVarChar, adParamInput, 100, sDescricao)
-    
+    .Parameters.Append .CreateParameter("@NM_CATEGORIA", adVarChar, adParamInput, 100, sAtualizacao)
+    .Parameters.Append .CreateParameter("@NM_SUBCATEGORIA", adVarChar, adParamInput, 100, sDescricao)
+    .Parameters.Append .CreateParameter("@NM_SELECAO", adVarChar, adParamInput, 2000, sScript)
         
     Set rst = .Execute
-    
     
 End With
 cnn.Close
 
-admCadastroUpdateSystem_Fim:
+admCadastroAtualizacaoScript_Fim:
     Set cnn = Nothing
     Set rst = Nothing
     Set cmd = Nothing
     
     Exit Function
-admCadastroUpdateSystem_err:
-    admCadastroUpdateSystem = False
+admCadastroAtualizacaoScript_err:
+    admCadastroAtualizacaoScript = False
     MsgBox Err.Description
-    Resume admCadastroUpdateSystem_Fim
+    Resume admCadastroAtualizacaoScript_Fim
 
 End Function
 
