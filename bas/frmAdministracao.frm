@@ -17,6 +17,9 @@ Option Base 1
 Option Explicit
 Dim sqlPermissoes As String
 Dim sqlSelecao As String
+Dim EntryCount As Single
+
+
 
 Private Sub cboApoio_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
@@ -258,6 +261,29 @@ Dim strCaminhoDoBancoServer As String: strCaminhoDoBancoServer = Me.txtCaminhoDo
 
 End Sub
 
+Private Sub cmdNovoClienteExcluir_Click()
+    'Ensure ListBox contains list items
+    If lstNovosClientes.ListCount >= 1 Then
+        'If no selection, choose last list item.
+        If lstNovosClientes.ListIndex = -1 Then
+            lstNovosClientes.ListIndex = _
+                    lstNovosClientes.ListCount - 1
+        End If
+        lstNovosClientes.RemoveItem (lstNovosClientes.ListIndex)
+    End If
+    Me.txtNovoCliente.value = ""
+    
+End Sub
+
+Private Sub cmdNovoClienteSalvar_Click()
+    If Len(Me.txtNovoCliente.value) > 0 Then
+        EntryCount = EntryCount + 1
+        Me.lstNovosClientes.AddItem (Me.txtNovoCliente.value)
+        Me.txtNovoCliente.SetFocus
+        Me.txtNovoCliente.value = ""
+    End If
+End Sub
+
 Private Sub cmdSalvarApoio_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim strApoio As String: strApoio = Me.cboApoio.Text
@@ -361,12 +387,22 @@ Dim strTitulo As String
     
 End Sub
 
+
+Private Sub lstNovosClientes_Click()
+    Me.txtNovoCliente.value = Me.lstNovosClientes.value
+End Sub
+
+Private Sub txtNovoCliente_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+    Me.txtNovoCliente.value = UCase(Me.txtNovoCliente.value)
+End Sub
+
 ''#########################################
 ''  FORMULARIO
 ''#########################################
 
 Private Sub UserForm_Initialize()
 Dim strBanco As String: strBanco = Range(BancoLocal)
+EntryCount = 0
 
     ''' ADICIONAR O "ADM" EM DEPARTAMENTOS
     Me.cboDepartamento.AddItem "ADM"
