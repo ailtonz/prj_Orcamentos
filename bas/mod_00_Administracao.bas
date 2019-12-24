@@ -12,8 +12,6 @@ Public Const SenhaBanco As String = "abc"
 Public Const BancoLocal As String = "B1"
 Public Const NomeDoBanco As String = "dbOrcamentos.mdb"
 
-
-
 '' GUIA DE CONFIGURAÇÃO
 Public Const cfgGuiaConfiguracao As String = "CFG"
 Public Const cfgBancoServidor As String = "B2"
@@ -34,7 +32,103 @@ Public Const TopPesquisa As String = "50"
 
 '' PROJETO ATUAL
 Public ProjetoAtual As String
-'Public ProjetoEditar As Boolean
+
+Sub GUIAS_APOIO_ATIVAR()
+'    Sheets("LISTAS").Visible = -1
+    Sheets("APOIO").Visible = -1
+    Sheets("BANCOS").Visible = -1
+'    Sheets("ADM").Visible = -1
+End Sub
+
+Sub GUIAS_APOIO_DESATIVAR()
+'    Sheets("LISTAS").Visible = 2
+    Sheets("APOIO").Visible = 2
+    Sheets("BANCOS").Visible = 2
+'    Sheets("ADM").Visible = 2
+End Sub
+
+'Sub carregarBancos()
+'
+'    With banco(0)
+'        .strSource = Sheets("BANCOS").Range("C2")
+'        .strDriver = Sheets("BANCOS").Range("C3")
+'        .strLocation = Sheets("BANCOS").Range("C4")
+'        .strDatabase = Sheets("BANCOS").Range("C5")
+'        .strUser = Sheets("BANCOS").Range("C6")
+'        .strPassword = Sheets("BANCOS").Range("C7")
+'        .strPort = Sheets("BANCOS").Range("C8")
+''        .strOperator = Sheets(ActiveSheet.Name).Range(NomeUsuario)
+'
+'    End With
+'
+'    With banco(1)
+'        .strSource = Sheets("BANCOS").Range("F2")
+'        .strDriver = Sheets("BANCOS").Range("F3")
+'        .strLocation = getPath(Sheets(ActiveSheet.Name).Range(BancoLocal)) 'Sheets("BANCOS").Range("F4")
+'        .strDatabase = getFileNameAndExt(Sheets(ActiveSheet.Name).Range(BancoLocal)) 'Sheets("BANCOS").Range("F5")
+'        .strUser = Sheets("BANCOS").Range("F6")
+'        .strPassword = Sheets("BANCOS").Range("F7")
+'        .strPort = Sheets("BANCOS").Range("F8")
+'
+''        .strVendedor = Sheets(ActiveSheet.Name).Range(GerenteDeContas)
+''        .strControle = ActiveSheet.Name
+''
+''        .strOperator = Sheets(ActiveSheet.Name).Range(NomeUsuario)
+'
+'    End With
+'
+'End Sub
+
+'Sub loadOrcamento()
+'
+'    With orcamento
+'        .strOperator = Sheets(ActiveSheet.Name).Range(NomeUsuario)
+'        .strVendedor = Sheets(ActiveSheet.Name).Range(GerenteDeContas)
+'        .strControle = ActiveSheet.Name
+'    End With
+'
+'End Sub
+
+Sub carregarPropostas()
+
+    With proposta(0)
+        .strControle = ActiveSheet.Name
+        .strCliente = Sheets(ActiveSheet.Name).Range("C4")
+        .strResponsavel = Sheets(ActiveSheet.Name).Range("C5")
+        .strProjeto = Sheets(ActiveSheet.Name).Range("C6")
+        .strJournal = Sheets(ActiveSheet.Name).Range("C9")
+        .strAutor = Sheets(ActiveSheet.Name).Range("C10")
+        .strPublisher = Sheets(ActiveSheet.Name).Range("C8")
+        
+        
+    End With
+
+
+End Sub
+
+Sub TESTE_BANCOS()
+Dim x As Integer
+
+'carregarBancos
+
+For x = 0 To 1
+
+    Debug.Print Banco(x).strSource
+    Debug.Print Banco(x).strDriver
+    Debug.Print Banco(x).strLocation
+    Debug.Print Banco(x).strDatabase
+    Debug.Print Banco(x).strUser
+    Debug.Print Banco(x).strPassword
+    Debug.Print Banco(x).strPort
+    
+    Debug.Print "--------------------"
+    Debug.Print "--------------------"
+    
+Next x
+
+
+End Sub
+
 
 Sub admAtualizarCaminhoBaseDados(strCaminhoDaBase As String, strTipoDeBase As String)
     DesbloqueioDeGuia SenhaBloqueio
@@ -51,231 +145,6 @@ End Sub
 Function SelecionarAmbienteDeTrabalho(Ind As Integer)
     SelecionarAmbienteDeTrabalho = Choose(Ind, "CASA", "ESCRITORIO")
 End Function
-
-Sub Pesquisar(ByVal Control As IRibbonControl)
-    frmPesquisar.Show
-End Sub
-
-Sub Cadastro(ByVal Control As IRibbonControl)
-    If Range(GerenteDeContas) <> "" Then
-        frmCadastro.Show
-    End If
-End Sub
-
-Sub AnexosArquivos(ByVal Control As IRibbonControl)
-    If Range(GerenteDeContas) <> "" Then
-        frmAnexosArquivos.Show
-    End If
-End Sub
-
-Sub ENVIAR(ByVal Control As IRibbonControl)
-    frmEnviar.Show
-End Sub
-
-Sub Indices(ByVal Control As IRibbonControl)
-Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-Dim strMSG As String
-Dim strTitulo As String
-    
-If Range(GerenteDeContas) <> "" Then
-
-    If LiberarIndice(strBanco, strUsuario) = False Then
-        strMSG = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
-        strMSG = strMSG & "Você não tem permissão para acessar este conteúdo. " & Chr(10) & Chr(13) & Chr(13)
-        strTitulo = "Indices de calculos!"
-        
-        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
-    Else
-        
-        LiberarIndice strBanco, strUsuario
-        frmIndices.Show
-        
-    End If
-
-End If
-
-End Sub
-
-
-Sub Projeto01(ByVal Control As IRibbonControl)
-Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-
-    If ActiveSheet.Name = strUsuario Then
-        Unload frmPojeto
-        Exit Sub
-    Else
-        ProjetoAtual = "C"
-        
-        If Range(StatusProjeto) = "Novo" Then
-            frmPojeto.Show
-        Else
-            If Range(ProjetoAtual & "13") <> "" Then
-                Exit Sub
-            Else
-                frmPojeto.Show
-            End If
-        End If
-    End If
-
-
-End Sub
-
-Sub Projeto02(ByVal Control As IRibbonControl)
-Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-
-    If ActiveSheet.Name = strUsuario Then
-        Unload frmPojeto
-        Exit Sub
-    Else
-        ProjetoAtual = "D"
-        
-        If Range(StatusProjeto) = "Novo" Then
-            frmPojeto.Show
-        Else
-            If Range(ProjetoAtual & "13") <> "" Then
-                Exit Sub
-            Else
-                frmPojeto.Show
-            End If
-        End If
-    End If
-
-End Sub
-
-Sub Projeto03(ByVal Control As IRibbonControl)
-Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-
-
-
-    If ActiveSheet.Name = strUsuario Then
-        Unload frmPojeto
-        Exit Sub
-    Else
-        ProjetoAtual = "E"
-        
-        If Range(StatusProjeto) = "Novo" Then
-            frmPojeto.Show
-        Else
-            If Range(ProjetoAtual & "13") <> "" Then
-                Exit Sub
-            Else
-                frmPojeto.Show
-            End If
-        End If
-    End If
-
-End Sub
-
-Sub Projeto04(ByVal Control As IRibbonControl)
-Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-
-    If ActiveSheet.Name = strUsuario Then
-        Unload frmPojeto
-        Exit Sub
-    Else
-        ProjetoAtual = "F"
-        
-        If Range(StatusProjeto) = "Novo" Then
-            frmPojeto.Show
-        Else
-            If Range(ProjetoAtual & "13") <> "" Then
-                Exit Sub
-            Else
-                frmPojeto.Show
-            End If
-        End If
-    End If
-
-End Sub
-
-Sub Projeto05(ByVal Control As IRibbonControl)
-Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-
-    If ActiveSheet.Name = strUsuario Then
-        Unload frmPojeto
-        Exit Sub
-    Else
-        ProjetoAtual = "G"
-        
-        If Range(StatusProjeto) = "Novo" Then
-            frmPojeto.Show
-        Else
-            If Range(ProjetoAtual & "13") <> "" Then
-                Exit Sub
-            Else
-                frmPojeto.Show
-            End If
-        End If
-    End If
-
-End Sub
-
-Sub Projeto06(ByVal Control As IRibbonControl)
-Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-
-    If ActiveSheet.Name = strUsuario Then
-        Unload frmPojeto
-        Exit Sub
-    Else
-        ProjetoAtual = "H"
-        
-        If Range(StatusProjeto) = "Novo" Then
-            frmPojeto.Show
-        Else
-            If Range(ProjetoAtual & "13") <> "" Then
-                Exit Sub
-            Else
-                frmPojeto.Show
-            End If
-        End If
-    End If
-
-End Sub
-
-Sub Projeto07(ByVal Control As IRibbonControl)
-Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-
-    If ActiveSheet.Name = strUsuario Then
-        Unload frmPojeto
-        Exit Sub
-    Else
-        ProjetoAtual = "I"
-        
-        If Range(StatusProjeto) = "Novo" Then
-            frmPojeto.Show
-        Else
-            If Range(ProjetoAtual & "13") <> "" Then
-                Exit Sub
-            Else
-                frmPojeto.Show
-            End If
-        End If
-    End If
-
-End Sub
-
-Sub Projeto08(ByVal Control As IRibbonControl)
-Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-
-    If ActiveSheet.Name = strUsuario Then
-        Unload frmPojeto
-        Exit Sub
-    Else
-        ProjetoAtual = "J"
-        
-        If Range(StatusProjeto) = "Novo" Then
-            frmPojeto.Show
-        Else
-            If Range(ProjetoAtual & "13") <> "" Then
-                Exit Sub
-            Else
-                frmPojeto.Show
-            End If
-        End If
-    End If
-
-End Sub
 
 
 'Sub Atualizacao(ByVal Control As IRibbonControl)
@@ -394,12 +263,17 @@ Public Function admOrcamentoNovo(BaseDeDados As String, strVendedor As String) A
 
 On Error GoTo admOrcamentoNovo_err
 Dim dbOrcamento As DAO.Database
-Dim qdfOrcamentoNovo As DAO.queryDef
-Dim qdfOrcamentoNovoCustos As DAO.queryDef
-Dim qdfOrcamentoNovoLinha As DAO.queryDef
-Dim qdfOrcamentoNovoMoeda As DAO.queryDef
-Dim qdfOrcamentoNovoVenda As DAO.queryDef
-Dim qdfOrcamentoNovoDescontos As DAO.queryDef
+Dim qdfOrcamentoNovo As DAO.QueryDef
+Dim qdfOrcamentoNovoCustos As DAO.QueryDef
+Dim qdfOrcamentoNovoLinha As DAO.QueryDef
+Dim qdfOrcamentoNovoMoeda As DAO.QueryDef
+Dim qdfOrcamentoNovoVenda As DAO.QueryDef
+Dim qdfOrcamentoNovoDescontos As DAO.QueryDef
+
+Dim qdfOrcamentoNovoTraducao As DAO.QueryDef
+Dim qdfOrcamentoNovoRevisao As DAO.QueryDef
+Dim qdfOrcamentoNovoDiagramacao As DAO.QueryDef
+
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 
@@ -459,6 +333,36 @@ With qdfOrcamentoNovoDescontos
 End With
 
 
+'' TRADUCAO
+Set qdfOrcamentoNovoTraducao = dbOrcamento.QueryDefs("admOrcamentoNovoTraducao")
+With qdfOrcamentoNovoTraducao
+
+    .Parameters("NM_VENDEDOR") = strVendedor
+    .Execute
+    
+End With
+
+'' REVISAO
+Set qdfOrcamentoNovoRevisao = dbOrcamento.QueryDefs("admOrcamentoNovoRevisao")
+With qdfOrcamentoNovoRevisao
+
+    .Parameters("NM_VENDEDOR") = strVendedor
+    .Execute
+    
+End With
+
+'' DIAGRAMACAO
+Set qdfOrcamentoNovoDiagramacao = dbOrcamento.QueryDefs("admOrcamentoNovoDiagramacao")
+With qdfOrcamentoNovoDiagramacao
+
+    .Parameters("NM_VENDEDOR") = strVendedor
+    .Execute
+    
+End With
+
+
+
+
 admOrcamentoNovo_Fim:
     dbOrcamento.Close
     qdfOrcamentoNovo.Close
@@ -467,6 +371,9 @@ admOrcamentoNovo_Fim:
     qdfOrcamentoNovoMoeda.Close
     qdfOrcamentoNovoVenda.Close
     qdfOrcamentoNovoDescontos.Close
+    qdfOrcamentoNovoTraducao.Close
+    qdfOrcamentoNovoRevisao.Close
+    qdfOrcamentoNovoDiagramacao.Close
     
     Set dbOrcamento = Nothing
     Set qdfOrcamentoNovo = Nothing
@@ -475,6 +382,9 @@ admOrcamentoNovo_Fim:
     Set qdfOrcamentoNovoMoeda = Nothing
     Set qdfOrcamentoNovoVenda = Nothing
     Set qdfOrcamentoNovoDescontos = Nothing
+    Set qdfOrcamentoNovoTraducao = Nothing
+    Set qdfOrcamentoNovoRevisao = Nothing
+    Set qdfOrcamentoNovoDiagramacao = Nothing
     
     Exit Function
 admOrcamentoNovo_err:
@@ -489,12 +399,12 @@ Public Function admOrcamentoCopiar(BaseDeDados As String, strControle_SELECAO As
 
 On Error GoTo admOrcamentoCopiar_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmOrcamentoCopiar As DAO.queryDef
-Dim qdfOrcamentoNovoCustos As DAO.queryDef
-Dim qdfOrcamentoNovoLinha As DAO.queryDef
-Dim qdfOrcamentoNovoMoeda As DAO.queryDef
-Dim qdfOrcamentoNovoVenda As DAO.queryDef
-Dim qdfOrcamentoNovoDescontos As DAO.queryDef
+Dim qdfadmOrcamentoCopiar As DAO.QueryDef
+Dim qdfOrcamentoNovoCustos As DAO.QueryDef
+Dim qdfOrcamentoNovoLinha As DAO.QueryDef
+Dim qdfOrcamentoNovoMoeda As DAO.QueryDef
+Dim qdfOrcamentoNovoVenda As DAO.QueryDef
+Dim qdfOrcamentoNovoDescontos As DAO.QueryDef
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 
@@ -638,7 +548,7 @@ End Sub
 Public Function admOrcamentoExcluirVirtual(BaseDeDados As String, strControle As String, strNOME As String, strMotivo As String) As Boolean: admOrcamentoExcluirVirtual = True
 On Error GoTo admOrcamentoExcluirVirtual_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmOrcamentoExcluir As DAO.queryDef
+Dim qdfadmOrcamentoExcluir As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -672,7 +582,7 @@ End Function
 Public Function admOrcamentoExcluirAnexos(BaseDeDados As String, strControle As String, strVendedor As String) As Boolean
 On Error GoTo admOrcamentoExcluirAnexos_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmOrcamentoEtapaAvancar As DAO.queryDef
+Dim qdfadmOrcamentoEtapaAvancar As DAO.QueryDef
 Dim strSQL As String
 
 
@@ -703,6 +613,42 @@ admOrcamentoExcluirAnexos_err:
     Resume admOrcamentoExcluirAnexos_Fim
 End Function
 
+
+Public Function admOrcamentoNovoCustosProducao(BaseDeDados As String, strControle As String, strVendedor As String) As Boolean
+On Error GoTo admOrcamentoNovoCustosProducao_err
+Dim db As DAO.Database
+Dim qdf As DAO.QueryDef
+Dim strSQL As String
+
+
+Set db = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
+Set qdf = db.QueryDefs("admOrcamentoNovoCustosProducao")
+
+With qdf
+    
+    .Parameters("NM_VENDEDOR") = strVendedor
+    .Parameters("NM_CONTROLE") = strControle
+    
+    .Execute
+    
+End With
+
+qdf.Close
+db.Close
+
+admOrcamentoNovoCustosProducao_Fim:
+
+    Set db = Nothing
+    Set qdf = Nothing
+    
+    Exit Function
+admOrcamentoNovoCustosProducao_err:
+    admOrcamentoNovoCustosProducao = False
+    MsgBox Err.Description
+    Resume admOrcamentoNovoCustosProducao_Fim
+End Function
+
+
 Public Function CodigoEtapa(BaseDeDados As String, strEtapa As String)
 On Error GoTo CodigoEtapa_err
 Dim dbOrcamento As DAO.Database
@@ -729,8 +675,6 @@ CodigoEtapa_err:
 
 
 End Function
-
-
 
 Public Function DescricaoEtapa(BaseDeDados As String, intEtapa As Integer)
 On Error GoTo DescricaoEtapa_err
@@ -760,7 +704,6 @@ DescricaoEtapa_err:
 
 End Function
 
-
 Public Function DepartamentoPorStatus(BaseDeDados As String, strStatus As String) As String
 On Error GoTo DescricaoEtapa_err
 Dim dbOrcamento As DAO.Database
@@ -789,11 +732,10 @@ DescricaoEtapa_err:
 
 End Function
 
-
 Public Function admOrcamentoAtualizarEtapa(BaseDeDados As String, strControle As String, strVendedor As String, strEtapa As String) As Boolean: admOrcamentoAtualizarEtapa = True
 On Error GoTo admOrcamentoAtualizarEtapa_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmOrcamentoEtapaAvancar As DAO.queryDef
+Dim qdfadmOrcamentoEtapaAvancar As DAO.QueryDef
 Dim strSQL As String
 
 
@@ -802,9 +744,9 @@ Set qdfadmOrcamentoEtapaAvancar = dbOrcamento.QueryDefs("admOrcamentoAtualizarEt
 
 With qdfadmOrcamentoEtapaAvancar
     
-    .Parameters("NM_VENDEDOR") = strVendedor
-    .Parameters("NM_CONTROLE") = strControle
     .Parameters("NM_ETAPA") = strEtapa
+    .Parameters("NM_CONTROLE") = strControle
+    .Parameters("NM_VENDEDOR") = strVendedor
     
     .Execute
     
@@ -813,19 +755,6 @@ End With
 qdfadmOrcamentoEtapaAvancar.Close
 dbOrcamento.Close
 
-
-If Not UsuarioAdministrativo(Range(BancoLocal), Range(NomeUsuario)) Then
-    
-    '' VENDAS / OUTROS
-    addTasksShipping "Access2003", strVendedor, strControle
-        
-Else
-    '' OUTROS / VENDAS
-    addTasksReturn "Access2003", strVendedor, strControle
-    
-End If
-
-Sincronismo_dados
 
 admOrcamentoAtualizarEtapa_Fim:
 
@@ -862,9 +791,12 @@ strIntervalos = "Select * from qryEtapasIntervalosEdicoes where Departamento = '
 
 Set rstIntervalos = dbOrcamento.OpenRecordset(strIntervalos)
 
+
+
+
 DesbloqueioDeGuia SenhaBloqueio
 
-rstIntervalos.MoveFirst
+'rstIntervalos.MoveFirst
 While Not rstIntervalos.EOF
     
     strSelecao = rstIntervalos.Fields("Selecao")
@@ -966,6 +898,60 @@ admIntervalosDeEdicaoLimparSelecao_err:
     Resume admIntervalosDeEdicaoLimparSelecao_Fim
 End Sub
 
+Public Sub admLimparAnexos()
+
+    ''' DESATIVA ATUALIZAÇÃO DA TELA
+    Application.ScreenUpdating = False
+    ''' DESBLOQUEIA GUIA
+    DesbloqueioDeGuia SenhaBloqueio
+    
+    
+    
+    ''' LIMPAR LINHA DE PRODUTOS
+    Range("L3:N3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.ClearContents
+    
+    ''' LIMPAR MOEDA
+    Range("P3:Q3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.ClearContents
+    
+    ''' LIMPAR VENDA
+    Range("S3:T3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.ClearContents
+    
+    ''' LIMPAR DESCONTOS
+    Range("V3:W3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.ClearContents
+    
+    ''' LIMPAR TRADUÇÃO
+    Range("AC3:AD3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.ClearContents
+    
+    ''' LIMPAR REVISÃO
+    Range("AF3:AG3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.ClearContents
+    
+    ''' LIMPAR DIAGRAMAÇÃO
+    Range("AI3:AJ3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.ClearContents
+    
+    
+    
+    ''' BLOQUEIA GUIA
+    BloqueioDeGuia SenhaBloqueio
+    ''' ATIVA ATUALIZAÇÃO DA TELA
+    Application.ScreenUpdating = True
+
+
+End Sub
+
 Public Sub admOrcamentoFormulariosLimpar()
 Dim strBanco As String: strBanco = Range(BancoLocal)
         
@@ -1052,7 +1038,7 @@ End Sub
 Public Function admOrcamentoExcluirAnexoArquivo(BaseDeDados As String, strUsuario As String, strControle As String, strArquivo As String) As Boolean: admOrcamentoExcluirAnexoArquivo = True
 On Error GoTo admOrcamentoExcluirAnexoArquivo_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmOrcamentoExcluirAnexoArquivo As DAO.queryDef
+Dim qdfadmOrcamentoExcluirAnexoArquivo As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1179,10 +1165,22 @@ Public Sub admAtualizarLocalizacaoDaBaseDeDados()
         BloqueioDeGuia SenhaBloqueio
 End Sub
 
+Public Sub admAtualizarUsuario()
+Dim userFile As String: userFile = ActiveWorkbook.Path & "\user.txt"
+    
+    DesbloqueioDeGuia SenhaBloqueio
+    If fileExist(ActiveWorkbook.Path & "\user.txt") Then
+        Range(NomeUsuario) = getLineTextFile(userFile, 1)
+        ActiveSheet.Name = IIf(IsNull(Range(NomeUsuario)), "SEM_USUARIO", Range(NomeUsuario))
+        Kill userFile
+    End If
+    BloqueioDeGuia SenhaBloqueio
+End Sub
+
 Public Function admUsuarioNovoDepartamentos(BaseDeDados As String, strUsuario As String) As Boolean: admUsuarioNovoDepartamentos = True
 On Error GoTo admUsuarioNovoDepartamentos_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuarioNovoDepartamentos As DAO.queryDef
+Dim qdfadmUsuarioNovoDepartamentos As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1214,7 +1212,7 @@ End Function
 Public Function admUsuarioNovoFuncoes(BaseDeDados As String, strUsuario As String) As Boolean: admUsuarioNovoFuncoes = True
 On Error GoTo admUsuarioNovoFuncoes_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuarioNovoFuncoes As DAO.queryDef
+Dim qdfadmUsuarioNovoFuncoes As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1246,7 +1244,7 @@ End Function
 Public Function admUsuarioNovoNotificacoes(BaseDeDados As String, strUsuario As String) As Boolean: admUsuarioNovoNotificacoes = True
 On Error GoTo admUsuarioNovoNotificacoes_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuarioNovoNotificacoes As DAO.queryDef
+Dim qdfadmUsuarioNovoNotificacoes As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1277,7 +1275,7 @@ End Function
 Public Function admUsuarioNovoStatus(BaseDeDados As String, strUsuario As String) As Boolean: admUsuarioNovoStatus = True
 On Error GoTo admUsuarioNovoStatus_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuarioNovoStatus As DAO.queryDef
+Dim qdfadmUsuarioNovoStatus As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1309,7 +1307,7 @@ End Function
 Public Function admUsuarioNovoUsuarios(BaseDeDados As String, strUsuario As String) As Boolean: admUsuarioNovoUsuarios = True
 On Error GoTo admUsuarioNovoUsuarios_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuarioNovoUsuarios As DAO.queryDef
+Dim qdfadmUsuarioNovoUsuarios As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1381,10 +1379,22 @@ ExistenciaUsuario_err:
     Resume ExistenciaUsuario_Fim
 End Function
 
-Public Function admUsuarioNovo(BaseDeDados As String, strDPTO As String, strCODIGO As String, strNOME As String, strEmail As String) As Boolean: admUsuarioNovo = True
+Public Function admUsuarioNovo( _
+    BaseDeDados As String, _
+    strDPTO As String, _
+    strCODIGO As String, _
+    strNOME As String, _
+    strEmail As String, _
+    strG_CONTAS As String, _
+    strTELEFONE As String, _
+    strCEL01 As String, _
+    strCEL02 As String, _
+    strIDNEXTEL As String _
+    ) As Boolean: admUsuarioNovo = True
+
 On Error GoTo admUsuarioNovo_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuarioNovo As DAO.queryDef
+Dim qdfadmUsuarioNovo As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1397,6 +1407,12 @@ With qdfadmUsuarioNovo
     .Parameters("EMAIL_USUARIO") = strEmail
     .Parameters("DPTO_USUARIO") = strDPTO
     
+    .Parameters("G_CONTAS") = strG_CONTAS
+    .Parameters("TELEFONE") = strTELEFONE
+    .Parameters("CEL_01") = strCEL01
+    .Parameters("CEL_02") = strCEL02
+    .Parameters("ID_NEXTEL") = strIDNEXTEL
+        
     .Execute
     
 End With
@@ -1422,10 +1438,21 @@ admUsuarioNovo_err:
     Resume admUsuarioNovo_Fim
 End Function
 
-Public Function admUsuarioSalvar(BaseDeDados As String, strDPTO As String, strCODIGO As String, strNOME As String, strEmail As String) As Boolean: admUsuarioSalvar = True
+Public Function admUsuarioSalvar( _
+    BaseDeDados As String, _
+    strDPTO As String, _
+    strCODIGO As String, _
+    strNOME As String, _
+    strEmail As String, _
+    strG_CONTAS As String, _
+    strTELEFONE As String, _
+    strCEL01 As String, _
+    strCEL02 As String, _
+    strIDNEXTEL As String _
+    ) As Boolean: admUsuarioSalvar = True
 On Error GoTo admUsuarioSalvar_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuarioSalvar As DAO.queryDef
+Dim qdfadmUsuarioSalvar As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1437,6 +1464,12 @@ With qdfadmUsuarioSalvar
     .Parameters("NOME_USUARIO") = strNOME
     .Parameters("EMAIL_USUARIO") = strEmail
     .Parameters("DPTO_USUARIO") = strDPTO
+    
+    .Parameters("strG_CONTAS") = strG_CONTAS
+    .Parameters("strTELEFONE") = strTELEFONE
+    .Parameters("strCEL_01") = strCEL01
+    .Parameters("strCEL_02") = strCEL02
+    .Parameters("strID_NEXTEL") = strIDNEXTEL
     
     .Execute
     
@@ -1460,7 +1493,7 @@ End Function
 Public Function admUsuarioExcluir(BaseDeDados As String, strNOME As String, Excluir As Boolean) As Boolean: admUsuarioExcluir = True
 On Error GoTo admUsuarioExcluir_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuarioExcluir As DAO.queryDef
+Dim qdfadmUsuarioExcluir As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1493,8 +1526,8 @@ End Function
 Public Function admUsuarioCopiar(BaseDeDados As String, strUSUARIO_DESTINO As String, strUSUARIO_SELECAO As String) As Boolean: admUsuarioCopiar = True
 On Error GoTo admUsuarioCopiar_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuarioCopiar As DAO.queryDef
-Dim qdfadmUsuarioCopiarConfiguracao As DAO.queryDef
+Dim qdfadmUsuarioCopiar As DAO.QueryDef
+Dim qdfadmUsuarioCopiarConfiguracao As DAO.QueryDef
 
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1518,10 +1551,6 @@ With qdfadmUsuarioCopiarConfiguracao
     
 End With
 
-
-
-
-
 qdfadmUsuarioCopiarConfiguracao.Close
 qdfadmUsuarioCopiar.Close
 dbOrcamento.Close
@@ -1542,7 +1571,7 @@ End Function
 Public Function admUsuariosPermissoes(BaseDeDados As String, strUsuario As String, strPERMISSAO As String, strCategoria As String) As Boolean: admUsuariosPermissoes = True
 On Error GoTo admUsuariosPermissoes_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuariosPermissoes As DAO.queryDef
+Dim qdfadmUsuariosPermissoes As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1576,7 +1605,7 @@ End Function
 Public Function admUsuariosPermissoesExcluir(BaseDeDados As String, strUsuario As String, strPERMISSAO As String, strCategoria As String) As Boolean: admUsuariosPermissoesExcluir = True
 On Error GoTo admUsuariosPermissoesExcluir_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmUsuariosPermissoesExcluir As DAO.queryDef
+Dim qdfadmUsuariosPermissoesExcluir As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -1646,7 +1675,6 @@ EtapaUsuario_err:
     Resume EtapaUsuario_Fim
 End Function
 
-
 Public Function BloqueioEtapaUsuario(BaseDeDados As String, strCategoria As String, strNOME As String) As Boolean: BloqueioEtapaUsuario = False
 On Error GoTo BloqueioEtapaUsuario_err
 Dim dbOrcamento As DAO.Database
@@ -1685,7 +1713,6 @@ BloqueioEtapaUsuario_err:
     MsgBox Err.Description
     Resume BloqueioEtapaUsuario_Fim
 End Function
-
 
 Public Function UsuarioAdministrativo(BaseDeDados As String, strUsuario As String) As Boolean
 On Error GoTo UsuarioAdministrativo_err
@@ -1726,11 +1753,10 @@ UsuarioAdministrativo_err:
     Resume UsuarioAdministrativo_Fim
 End Function
 
-
 Public Function admExecutarTarefa(BaseDeDados As String, strTarefa As String)
 On Error GoTo admExecutarTarefa_err
 Dim dbOrcamento As DAO.Database
-Dim qdfTarefa As DAO.queryDef
+Dim qdfTarefa As DAO.QueryDef
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
 Set qdfTarefa = CurrentDb.QueryDefs(strTarefa)
@@ -1802,7 +1828,7 @@ Sub AmbienteDeTrabalhoDefinir(ByVal Ambiente As String)
 
 End Sub
 
-Sub admAtualizarDaGuiaDeApoio()
+Sub admAtualizarGuiaDeApoio()
 
 Dim BaseDeDados As String: BaseDeDados = Range(BancoLocal)
 Dim strConsultas(10) As String
@@ -1822,13 +1848,18 @@ strConsultas(10) = "qryApoio_Formato"
 Application.ScreenUpdating = False
 
 For x = 1 To 10
-    
+
     AtualizarListagens BaseDeDados, strConsultas(x), "APOIO", 2, x
 
 Next x
 
+'AtualizarListagens BaseDeDados, "qryApoio_Clientes", "APOIO", 2, 3
+
+GUIAS_APOIO_DESATIVAR
+
 Application.ScreenUpdating = True
 
+MsgBox "Atualização da guia de apoio concluida!", vbOKOnly + vbInformation, "Atualização da guia de apoio "
 
 End Sub
 
@@ -1854,7 +1885,7 @@ End With
 Do While Not rstListagem.EOF
 
     With Sheets(Guia)
-        .Cells(Linha, Coluna).Value = rstListagem.Fields("DESCRICAO")
+        .Cells(Linha, Coluna).value = rstListagem.Fields("DESCRICAO")
         rstListagem.MoveNext
         Linha = Linha + 1
     End With
@@ -1869,7 +1900,7 @@ End Sub
 Public Function admCategoriaLimparTabela(BaseDeDados As String) As Boolean
 On Error GoTo admCategoriaLimparTabela_err
 Dim dbOrcamento As DAO.Database
-Dim qdfadmCategoriaLimparTabela As DAO.queryDef
+Dim qdfadmCategoriaLimparTabela As DAO.QueryDef
 Dim strSQL As String
 
 
@@ -1901,7 +1932,7 @@ Public Function admExcluirOrcamentosSemVinculosComUsuario(BaseDeDados As String,
 ''' DEIXAR APENAS ORCAMENTOS VINCULADOS AO VENDEDOR
 On Error GoTo admOrcamentosVinculadosVendedor_err
 Dim dbOrcamento As DAO.Database
-Dim qdfEXCLUSAO As DAO.queryDef
+Dim qdfEXCLUSAO As DAO.QueryDef
 Dim strSQL(2) As String
 
 Dim L As Integer, c As Integer
@@ -1977,11 +2008,10 @@ CaminhoDoBancoOffice_err:
 
 End Function
 
-
 Public Function admGerenciarApoioExcluir(BaseDeDados As String, strListagemDeApoio As String, strNomeApoio As String) As Boolean: admGerenciarApoioExcluir = True
 On Error GoTo admGerenciarApoioExcluir_err
 Dim dbOrcamento As DAO.Database
-Dim qdfQuery As DAO.queryDef
+Dim qdfQuery As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -2015,7 +2045,7 @@ End Function
 Public Function admGerenciarApoioAterar(BaseDeDados As String, strListagemDeApoio As String, strNomeAntigo As String, strNomeNovo As String) As Boolean: admGerenciarApoioAterar = True
 On Error GoTo admGerenciarApoioAterar_err
 Dim dbOrcamento As DAO.Database
-Dim qdfQuery As DAO.queryDef
+Dim qdfQuery As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -2049,7 +2079,7 @@ End Function
 Public Function admGerenciarApoioIncluir(BaseDeDados As String, strListagemDeApoio As String, strNomeNovo As String) As Boolean: admGerenciarApoioIncluir = True
 On Error GoTo admGerenciarApoioIncluir_err
 Dim dbOrcamento As DAO.Database
-Dim qdfQuery As DAO.queryDef
+Dim qdfQuery As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -2079,11 +2109,10 @@ admGerenciarApoioIncluir_err:
     Resume admGerenciarApoioIncluir_Fim
 End Function
 
-
 Public Function admGerenciarIndiceExcluir(BaseDeDados As String, strIndice As String, strNomeIndice As String) As Boolean: admGerenciarIndiceExcluir = True
 On Error GoTo admGerenciarIndiceExcluir_err
 Dim dbOrcamento As DAO.Database
-Dim qdfQuery As DAO.queryDef
+Dim qdfQuery As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -2113,11 +2142,10 @@ admGerenciarIndiceExcluir_err:
     Resume admGerenciarIndiceExcluir_Fim
 End Function
 
-
 Public Function admGerenciarIndiceAterar(BaseDeDados As String, strIndice As String, strNomeAntigo As String, strNomeNovo As String, strValor_01 As String, strValor_02 As String) As Boolean: admGerenciarIndiceAterar = True
 On Error GoTo admGerenciarIndiceAterar_err
 Dim dbOrcamento As DAO.Database
-Dim qdfQuery As DAO.queryDef
+Dim qdfQuery As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -2153,7 +2181,7 @@ End Function
 Public Function admGerenciarIndiceIncluir(BaseDeDados As String, strIndice As String, strNomeIndice As String, strValor_01 As String, strValor_02 As String) As Boolean: admGerenciarIndiceIncluir = True
 On Error GoTo admGerenciarIndiceIncluir_err
 Dim dbOrcamento As DAO.Database
-Dim qdfQuery As DAO.queryDef
+Dim qdfQuery As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -2185,7 +2213,6 @@ admGerenciarIndiceIncluir_err:
     Resume admGerenciarIndiceIncluir_Fim
 End Function
 
-
 Public Function admGerenciarIndicesDeCalculos _
                     (BaseDeDados As String, _
                         strVendedor As String, _
@@ -2198,7 +2225,7 @@ Public Function admGerenciarIndicesDeCalculos _
                         
 On Error GoTo admGerenciarIndicesDeCalculos_err
 Dim dbOrcamento As DAO.Database
-Dim qdfQuery As DAO.queryDef
+Dim qdfQuery As DAO.QueryDef
 Dim strSQL As String
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -2250,7 +2277,6 @@ End If
 rstIndice.Close
 dbOrcamento.Close
 
-
 LiberarIndice_Fim:
 
     Set dbOrcamento = Nothing
@@ -2275,9 +2301,6 @@ strObrigatorio = Array("J4", "C12", "D12", "E12", "F12", "G12", "H12", "I12", "J
         MarcarObrigatorio strObrigatorio(i), False
         BloqueioDeGuia SenhaBloqueio
     Next i
-    
-    
-    
 
 End Sub
 
@@ -2299,7 +2322,7 @@ If RetVal <> "" Then
     
     DesbloqueioDeGuia SenhaBloqueio
     While Not rstSelecao.EOF
-        MarcarObrigatorio rstSelecao.Fields("Selecao").Value, False
+        MarcarObrigatorio rstSelecao.Fields("Selecao").value, False
         rstSelecao.MoveNext
     Wend
     BloqueioDeGuia SenhaBloqueio
@@ -2388,3 +2411,26 @@ End Function
 '    MsgBox Err.Description
 '    Resume admOrcamentoRETORNO_Fim
 'End Function
+
+
+
+Sub testeDPTO()
+Dim strBanco As String: strBanco = Range(BancoLocal)
+Dim strUsuario As String: strUsuario = Range(NomeUsuario)
+
+    MsgBox UsuarioAdministrativo(strBanco, strUsuario)
+
+End Sub
+
+
+Sub testeListarUsuariosAtivos()
+
+loadBancos
+Saida ListarUsuariosAtivos(Banco(0)), "Usuarios"
+
+
+
+End Sub
+
+
+
