@@ -18,50 +18,6 @@ Option Explicit
 Dim sqlPermissoes As String
 Dim sqlSelecao As String
 
-Private Sub mensagemAtualizacao()
-    MsgBox "Atualização concluida", vbOKOnly + vbInformation, "Atualização do sistema."
-End Sub
-
-Private Sub btnCustos_ATUALIZACAO_Click()
-    mensagemAtualizacao
-End Sub
-
-Private Sub btnCustos_Click()
-    frmCustos.Show
-End Sub
-
-Private Sub btnEstilos_ATUALIZACAO_Click()
-    mensagemAtualizacao
-End Sub
-
-Private Sub btnEstilos_Click()
-    frmEstilos.Show
-End Sub
-
-Private Sub btnIR_ATUALIZACAO_Click()
-    mensagemAtualizacao
-End Sub
-
-Private Sub btnIR_Click()
-    frmIR.Show
-End Sub
-
-Private Sub btnLinhas_ATUALIZACAO_Click()
-    mensagemAtualizacao
-End Sub
-
-Private Sub btnLinhas_Click()
-    frmLinhaProduto.Show
-End Sub
-
-Private Sub btnProfissoes_ATUALIZACAO_Click()
-    mensagemAtualizacao
-End Sub
-
-Private Sub btnProfissoes_Click()
-    frmProfissoes.Show
-End Sub
-
 Private Sub cboApoio_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim strSql As String
@@ -154,6 +110,23 @@ Private Sub cmdAtualizarApoio_Click()
     admAtualizarGuiaDeApoio
 End Sub
 
+Private Sub cmdAtualizarMoeda_Click()
+Dim sScript As String
+Dim sValor As String: sValor = Me.txtValorMoeda.value
+Dim sMoeda As String: sMoeda = "Dolar"
+Dim sID As String: sID = "1"
+
+sScript = "UPDATE admcategorias SET admcategorias.Descricao01 = '" & sValor & "' WHERE (((admcategorias.categoria)='" & sMoeda & "') AND ((admcategorias.codRelacao)=(SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='MOEDA' and codRelacao = 0)))"
+
+loadBancos
+If admUpdateMoeda(banco(0), sID, sMoeda, sScript) Then
+    MsgBox "Valor do Dolar Atualizado com sucesso.", vbInformation + vbOKOnly, "Atualização de moeda"
+Else
+    MsgBox "ERROR AO: Valor do Dolar Atualizado com sucesso.", vbCritical + vbOKOnly, "Atualização de moeda"
+End If
+
+End Sub
+
 Private Sub cmdAtualizarOperacional_Click()
 '    AtualizarOperacional
 End Sub
@@ -161,16 +134,16 @@ End Sub
 Private Sub cmdCopiar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim Matriz As Variant
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 Dim strSelecao As String
 
 
     If Me.lstUsuarios.value = "" Or IsNull(Me.lstUsuarios.value) Then
-        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "COPIAR!"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
       
         Matriz = Array()
@@ -181,7 +154,7 @@ Dim strSelecao As String
         ListBoxCarregar strBanco, Me, Me.lstUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
         ListBoxCarregar strBanco, Me, Me.lstUsuariosExcluidos.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=yes))"
                 
-        limparCampos
+        LimparCampos
         
     End If
 End Sub
@@ -264,7 +237,7 @@ Dim strCaminhoDoBancoServer As String: strCaminhoDoBancoServer = Me.txtCaminhoDo
 
     Set fd = Application.FileDialog(msoFileDialogFilePicker)
     fd.Filters.Clear
-    fd.Filters.add "BDs do Access", "*.MDB"
+    fd.Filters.Add "BDs do Access", "*.MDB"
     fd.Title = "Selecionar Banco Servidor"
     fd.AllowMultiSelect = False
     
@@ -351,14 +324,14 @@ End Sub
 
 Private Sub lstItensDisponiveis_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 
     If IsNull(Me.lstItensDisponiveis.value) Then
-        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Seleção de Item disponivel"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
     
         admUsuariosPermissoes strBanco, Me.cboUsuario, Me.lstItensDisponiveis, Me.cboPermissoes
@@ -370,14 +343,14 @@ End Sub
 
 Private Sub lstItensEmUso_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 
     If IsNull(Me.lstItensEmUso.value) Then
-        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Remoção de Item em uso"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
 
         admUsuariosPermissoesExcluir strBanco, Me.cboUsuario, Me.lstItensEmUso, Me.cboPermissoes
@@ -439,29 +412,29 @@ Dim strBanco As String: strBanco = Range(BancoLocal)
         admUsuarioNovo Range(BancoLocal), Me.cboDepartamento, Me.txtCodigo, Me.txtNome, Me.txtEmail, Me.txtGerenteContas, Me.txtTelefone, Me.txtCelular01, Me.txtCelular02, Me.txtIdNextel
     End If
     
-    limparCampos
+    LimparCampos
     
     ListBoxCarregar strBanco, Me, Me.lstUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
     
 End Sub
 
 Private Sub cmdCancelar_Click()
-    limparCampos
+    LimparCampos
 End Sub
 
 Private Sub cmdExcluir_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim Matriz As Variant
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 Dim strSelecao As String
 
 
     If Me.lstUsuarios.value = "" Or IsNull(Me.lstUsuarios.value) Then
-        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "EXCLUIR!"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
       
         Matriz = Array()
@@ -472,7 +445,7 @@ Dim strSelecao As String
         ListBoxCarregar strBanco, Me, Me.lstUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
         ListBoxCarregar strBanco, Me, Me.lstUsuariosExcluidos.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=yes))"
                 
-        limparCampos
+        LimparCampos
         
     End If
 
@@ -481,15 +454,15 @@ End Sub
 Private Sub cmdRestaurar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim Matriz As Variant
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 Dim strSelecao As String
 
     If Me.lstUsuariosExcluidos.value = "" Or IsNull(Me.lstUsuariosExcluidos.value) Then
-        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "RESTAURAR!"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
 
         Matriz = Array()
@@ -500,7 +473,7 @@ Dim strSelecao As String
         ListBoxCarregar strBanco, Me, Me.lstUsuarios.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No))"
         ListBoxCarregar strBanco, Me, Me.lstUsuariosExcluidos.Name, "Pesquisa", "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=yes))"
         
-        limparCampos
+        LimparCampos
 
     End If
 
@@ -579,7 +552,7 @@ End Sub
 ''  PROCEDIMENTOS
 ''#########################################
 
-Private Sub limparCampos()
+Private Sub LimparCampos()
 
     Me.cboDepartamento.Text = "DPTO"
     Me.txtCodigo.Text = "CODIGO"

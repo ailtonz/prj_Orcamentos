@@ -1,17 +1,7 @@
 Attribute VB_Name = "basType"
 Public banco(2) As infBanco
 Public proposta(8) As infProposta
-Public Orcamento As infOrcamento
-Public grand As infGrand
-
-Type infGrand
-
-    strProfissao As String
-    strNome As String
-    strValorLiquido As String
-    strOperacao As String
-    
-End Type
+Public orcamento As infOrcamento
 
 Type infFiltro
 

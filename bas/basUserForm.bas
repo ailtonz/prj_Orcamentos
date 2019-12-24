@@ -6,12 +6,12 @@ On Error GoTo UserFormDesbloqueioDeFuncoes_err
 
 Dim dbOrcamento         As DAO.Database
 Dim rstUserFormDesbloqueioDeFuncoes   As DAO.Recordset
-Dim retVal              As Variant
+Dim RetVal              As Variant
 Dim Ctrl                As control
 
-retVal = Dir(BaseDeDados)
+RetVal = Dir(BaseDeDados)
 
-If retVal = "" Then
+If RetVal = "" Then
 
     UserFormDesbloqueioDeFuncoes = False
     
@@ -120,13 +120,13 @@ On Error GoTo ListBoxCarregar_err
 
 Dim dbOrcamento         As DAO.Database
 Dim rstListBoxCarregar   As DAO.Recordset
-Dim retVal              As Variant
+Dim RetVal              As Variant
 
 Dim Ctrl                As control
 
-retVal = Dir(BaseDeDados)
+RetVal = Dir(BaseDeDados)
 
-If retVal = "" Then
+If RetVal = "" Then
 
     ListBoxCarregar = False
     
@@ -168,7 +168,7 @@ End Function
 Public Function ListBoxCarregarADO(strLocal As infBanco, frm As UserForm, NomeLista As String, strCampo As String, strSql As String)
 On Error GoTo ListBoxCarregar_err
 
-Dim Connection As New ADODB.Connection
+Dim connection As New ADODB.connection
 
 Dim rstListBoxCarregar As ADODB.Recordset
 Set rstListBoxCarregar = New ADODB.Recordset
@@ -177,11 +177,11 @@ Dim Ctrl                As control
 
 ''Is Internet Connected
 If IsInternetConnected() = True Then
-    Set Connection = OpenConnection(strLocal)
+    Set connection = OpenConnection(strLocal)
     '' Is Connected
-    If Connection.State = 1 Then
+    If connection.State = 1 Then
         
-        Call rstListBoxCarregar.Open(strSql, Connection, adOpenStatic, adLockOptimistic)
+        Call rstListBoxCarregar.Open(strSql, connection, adOpenStatic, adLockOptimistic)
             
         For Each Ctrl In frm.Controls
         If TypeName(Ctrl) = "ListBox" Then
@@ -198,7 +198,7 @@ If IsInternetConnected() = True Then
     Else
         MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "Falha na conexão com o banco."
     End If
-    Connection.Close
+    connection.Close
 Else
     ' no connected
     MsgBox "SEM INTERNET.", vbOKOnly + vbExclamation
@@ -232,11 +232,11 @@ Public Function ComboBoxCarregar(BaseDeDados As String, cbo As ComboBox, strCamp
 On Error GoTo ComboBoxCarregar_err
 Dim dbOrcamento As DAO.Database
 Dim rstComboBoxCarregar As DAO.Recordset
-Dim retVal As Variant
+Dim RetVal As Variant
 
-retVal = Dir(BaseDeDados)
+RetVal = Dir(BaseDeDados)
 
-If retVal = "" Then
+If RetVal = "" Then
 
     ComboBoxCarregar = False
     

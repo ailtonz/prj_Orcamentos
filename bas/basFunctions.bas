@@ -65,7 +65,7 @@ Dim strArq As String
     'Diálogo de selecionar arquivo - Office
     Set fd = Application.FileDialog(msoFileDialogFilePicker)
     fd.Filters.Clear
-    fd.Filters.add "BDs do Access", "*.MDB;*.MDE"
+    fd.Filters.Add "BDs do Access", "*.MDB;*.MDE"
     fd.Title = "Localize a fonte de dados"
     fd.AllowMultiSelect = False
     If fd.Show = -1 Then

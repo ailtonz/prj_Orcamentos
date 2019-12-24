@@ -12,7 +12,7 @@ Dim dbOrcamento As DAO.Database
 Dim rstCarregarOrcamento As DAO.Recordset
 Dim rstCarregarCustos As DAO.Recordset
 
-Dim l As Integer, c As Integer ' L = LINHA | C = COLUNA
+Dim L As Integer, c As Integer ' L = LINHA | C = COLUNA
 Dim x As Integer ' contador de linhas
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -43,34 +43,34 @@ Set rstCarregarOrcamento = dbOrcamento.OpenRecordset("Select * from Orcamentos w
         Range("C10").value = .Fields("PAGS")
     
         'FECHADO COM CLIENTE
-        l = 12
+        L = 12
         c = 3
         For x = 1 To 8
-            Cells(l, c).value = .Fields(x & "_FECHADO")
+            Cells(L, c).value = .Fields(x & "_FECHADO")
             c = c + 1
         Next x
         
         'LINHA
-        l = 13
+        L = 13
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_LINHA_PRODUTO")
+            Cells(L, c).value = .Fields(x & "_LINHA_PRODUTO")
             c = c + 1
         Next x
         
         'FASCICULOS
-        l = 14
+        L = 14
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_FASCICULOS")
+            Cells(L, c).value = .Fields(x & "_FASCICULOS")
             c = c + 1
         Next x
         
         'VENDA
-        l = 15
+        L = 15
         c = 3
         For x = 1 To 8
-            Cells(l, c).value = .Fields(x & "_VENDA")
+            Cells(L, c).value = .Fields(x & "_VENDA")
             c = c + 1
         Next x
         
@@ -80,107 +80,107 @@ Set rstCarregarOrcamento = dbOrcamento.OpenRecordset("Select * from Orcamentos w
         ''''''''''''''''''''''''''''''''''''' [IMPOSTOS]
     
         'IDIOMA
-        l = 17
+        L = 17
         c = 3
         For x = 1 To 8
-            Cells(l, c).value = .Fields(x & "_IDIOMA")
+            Cells(L, c).value = .Fields(x & "_IDIOMA")
             c = c + 1
         Next x
     
         'TIRAGEM
-        l = 18
+        L = 18
         c = 3
         For x = 1 To 8
-            Cells(l, c).value = .Fields(x & "_TIRAGEM")
+            Cells(L, c).value = .Fields(x & "_TIRAGEM")
             c = c + 1
         Next x
     
         'ESPECIFICACAO
-        l = 19
+        L = 19
         c = 3
         For x = 1 To 8
-            Cells(l, c).value = .Fields(x & "_ESPECIFICACAO")
+            Cells(L, c).value = .Fields(x & "_ESPECIFICACAO")
             c = c + 1
         Next x
     
         'MOEDA
-        l = 20
+        L = 20
         c = 3
         For x = 1 To 8
-            Cells(l, c).value = .Fields(x & "_MOEDA")
+            Cells(L, c).value = .Fields(x & "_MOEDA")
             c = c + 1
         Next x
     
         'ROYALTY PERCENTUAL
-        l = 21
+        L = 21
         c = 3
         For x = 1 To 8
-            Cells(l, c).value = .Fields(x & "_ROYALTY_PERCENTUAL")
+            Cells(L, c).value = .Fields(x & "_ROYALTY_PERCENTUAL")
             c = c + 1
         Next x
     
         'ROYALTY ESPECIE
-        l = 22
+        L = 22
         c = 3
         For x = 1 To 8
-            Cells(l, c).value = .Fields(x & "_ROYALTY_ESPECIE")
+            Cells(L, c).value = .Fields(x & "_ROYALTY_ESPECIE")
             c = c + 1
         Next x
     
         'RE IMPRESSAO
-        l = 23
+        L = 23
         c = 3
         For x = 1 To 8
-            Cells(l, c).value = .Fields(x & "_RE_IMPRESSAO")
+            Cells(L, c).value = .Fields(x & "_RE_IMPRESSAO")
             c = c + 1
         Next x
     
         'TIPO
-        l = 25
+        L = 25
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_TIPO")
+            Cells(L, c).value = .Fields(x & "_TIPO")
             c = c + 1
         Next x
     
         'PAPEL
-        l = 26
+        L = 26
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_PAPEL")
+            Cells(L, c).value = .Fields(x & "_PAPEL")
             c = c + 1
         Next x
     
         'PAGINAS
-        l = 27
+        L = 27
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_PAGINAS")
+            Cells(L, c).value = .Fields(x & "_PAGINAS")
             c = c + 1
         Next x
     
         'IMPRESSAO
-        l = 28
+        L = 28
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_IMPRESSAO")
+            Cells(L, c).value = .Fields(x & "_IMPRESSAO")
             c = c + 1
         Next x
         
         'FORMATO
-        l = 29
+        L = 29
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_FORMATO")
+            Cells(L, c).value = .Fields(x & "_FORMATO")
             c = c + 1
         Next x
     
         'ACABAMENTO
-        l = 31
+        L = 31
         c = 2
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_ACABAMENTO")
-            l = l + 1
+            Cells(L, c).value = .Fields(x & "_ACABAMENTO")
+            L = L + 1
         Next x
                 
 '        'DESCONTO
@@ -192,34 +192,34 @@ Set rstCarregarOrcamento = dbOrcamento.OpenRecordset("Select * from Orcamentos w
 '        Next x
         
         'PREÇO MKT
-        l = 65
+        L = 65
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_PrecoMKT")
+            Cells(L, c).value = .Fields(x & "_PrecoMKT")
             c = c + 1
         Next x
         
         'DESCONTO PADRÃO
-        l = 71
+        L = 71
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_DescontoPadrao")
+            Cells(L, c).value = .Fields(x & "_DescontoPadrao")
             c = c + 1
         Next x
         
         'PREÇO COMPRA TOTAL
-        l = 73
+        L = 73
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_PrecoTotal")
+            Cells(L, c).value = .Fields(x & "_PrecoTotal")
             c = c + 1
         Next x
         
         'ARREDONDAMENTO
-        l = 83
+        L = 83
         c = 3
         For x = 1 To 4
-            Cells(l, c).value = .Fields(x & "_Arredondamento")
+            Cells(L, c).value = .Fields(x & "_Arredondamento")
             c = c + 1
         Next x
         
@@ -239,171 +239,171 @@ carregar_custos:
         With rstCarregarCustos
         
             'INDEXACAO
-            l = 37
+            L = 37
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_INDEXACAO")
+                Cells(L, c).value = .Fields(x & "_INDEXACAO")
                 c = c + 1
             Next x
             
             'TRADUCAO
-            l = 38
+            L = 38
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_TRADUCAO")
+                Cells(L, c).value = .Fields(x & "_TRADUCAO")
                 c = c + 1
             Next x
             
             'REVISAO ORTOGRAFICA
-            l = 39
+            L = 39
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_REVISAO_ORTOGRAFICA")
+                Cells(L, c).value = .Fields(x & "_REVISAO_ORTOGRAFICA")
                 c = c + 1
             Next x
             
             'REVISAO MEDICA
-            l = 40
+            L = 40
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_REVISAO_MEDICA")
+                Cells(L, c).value = .Fields(x & "_REVISAO_MEDICA")
                 c = c + 1
             Next x
             
             'CRIACAO
-            l = 41
+            L = 41
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_CRIACAO")
+                Cells(L, c).value = .Fields(x & "_CRIACAO")
                 c = c + 1
             Next x
             
             'ILUSTRACAO
-            l = 42
+            L = 42
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_ILUSTRACAO")
+                Cells(L, c).value = .Fields(x & "_ILUSTRACAO")
                 c = c + 1
             Next x
             
             'REVISAO
-            l = 43
+            L = 43
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_REVISAO")
+                Cells(L, c).value = .Fields(x & "_REVISAO")
                 c = c + 1
             Next x
             
             'DIAGRAMACAO
-            l = 44
+            L = 44
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_DIAGRAMACAO")
+                Cells(L, c).value = .Fields(x & "_DIAGRAMACAO")
                 c = c + 1
             Next x
             
             'MEDICO
-            l = 45
+            L = 45
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_MEDICO")
+                Cells(L, c).value = .Fields(x & "_MEDICO")
                 c = c + 1
             Next x
             
             'GRAFICA
-            l = 46
+            L = 46
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_GRAFICA")
+                Cells(L, c).value = .Fields(x & "_GRAFICA")
                 c = c + 1
             Next x
             
             'MIDIA
-            l = 47
+            L = 47
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_MIDIA")
+                Cells(L, c).value = .Fields(x & "_MIDIA")
                 c = c + 1
             Next x
         
             'CORREIO
-            l = 48
+            L = 48
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_CORREIO")
+                Cells(L, c).value = .Fields(x & "_CORREIO")
                 c = c + 1
             Next x
         
         
             'ULTIMA CAPA
-            l = 49
+            L = 49
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_ULTIMA_CAPA")
+                Cells(L, c).value = .Fields(x & "_ULTIMA_CAPA")
                 c = c + 1
             Next x
         
             'IMPORT
-            l = 50
+            L = 50
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_IMPORT")
+                Cells(L, c).value = .Fields(x & "_IMPORT")
                 c = c + 1
             Next x
         
             'TRANSPORTE NACIONAL
-            l = 51
+            L = 51
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_TRANSPORTE_NACIONAL")
+                Cells(L, c).value = .Fields(x & "_TRANSPORTE_NACIONAL")
                 c = c + 1
             Next x
         
             'TRANSPORTE INTERNACIONAL
-            l = 52
+            L = 52
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_TRANSPORTE_INTERNACIONAL")
+                Cells(L, c).value = .Fields(x & "_TRANSPORTE_INTERNACIONAL")
                 c = c + 1
             Next x
         
             'SEGUROS
-            l = 53
+            L = 53
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_SEGUROS")
+                Cells(L, c).value = .Fields(x & "_SEGUROS")
                 c = c + 1
             Next x
         
             'EXTRAS
-            l = 54
+            L = 54
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_EXTRAS")
+                Cells(L, c).value = .Fields(x & "_EXTRAS")
                 c = c + 1
             Next x
         
             'EDITOR FEE
-            l = 55
+            L = 55
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_EDITOR_FEE")
+                Cells(L, c).value = .Fields(x & "_EDITOR_FEE")
                 c = c + 1
             Next x
         
             'DESP VIAGEM
-            l = 56
+            L = 56
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_DESP_VIAGEM")
+                Cells(L, c).value = .Fields(x & "_DESP_VIAGEM")
                 c = c + 1
             Next x
         
             'OUTROS
-            l = 57
+            L = 57
             c = 3
             For x = 1 To 8
-                Cells(l, c).value = .Fields(x & "_OUTROS")
+                Cells(L, c).value = .Fields(x & "_OUTROS")
                 c = c + 1
             Next x
             
@@ -730,7 +730,6 @@ While Not rstCarregarAnexoLinha.EOF
             Cells(intLinha, intColuna).value = .Fields("DESCRICAO")
             Cells(intLinha, intColuna + 1).value = .Fields("VALOR_01")
             Cells(intLinha, intColuna + 2).value = .Fields("VALOR_02")
-'            Cells(intLinha, intColuna + 3).value = .Fields("ESTILO")
             rstCarregarAnexoLinha.MoveNext
             
         End With

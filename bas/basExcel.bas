@@ -9,8 +9,8 @@ Public Function DesbloqueioDeGuia(strSenha As String)
     ActiveSheet.Unprotect strSenha
 End Function
 
-Function LimparTemplate(selecao As String, Conteudo As Variant)
-    Range(selecao).Select
+Function LimparTemplate(Selecao As String, Conteudo As Variant)
+    Range(Selecao).Select
     Selection.value = Conteudo
 End Function
 
@@ -19,19 +19,19 @@ Public Function OcultarLinhas(LinhaInicio As Integer, LinhaFinal As Integer, ocu
     Selection.EntireRow.Hidden = ocultar
 End Function
 
-Public Function IntervaloEditacaoCriar(Titulo As String, selecao As String, Optional MarcarSelecao As Boolean)
+Public Function IntervaloEditacaoCriar(Titulo As String, Selecao As String, Optional MarcarSelecao As Boolean)
 On Error GoTo IntervaloEditacaoCriar_err
 'MarcarSelecao = False
 'On Error Resume Next
     
     If Not IntervaloEditacaoExiste(Titulo) Then
        
-        ActiveSheet.Protection.AllowEditRanges.add Title:=Titulo, Range:=Range(selecao)
+        ActiveSheet.Protection.AllowEditRanges.Add Title:=Titulo, Range:=Range(Selecao)
         
         If Not MarcarSelecao Then
-            DesmarcaTexto selecao
+            DesmarcaTexto Selecao
         Else
-            MarcaTexto selecao
+            MarcaTexto Selecao
         End If
     
     End If
@@ -91,13 +91,13 @@ Dim x As Integer
 
 End Function
 
-Public Function MarcaSelecao(selecao As String)
+Public Function MarcaSelecao(Selecao As String)
 ''####################
 ''     BRANCO
 '' LINK: http://msdn.microsoft.com/en-us/library/cc296089(v=office.12).aspx
 ''####################
     
-    Range(selecao).Select
+    Range(Selecao).Select
     
     With Selection.Interior
 '        .Pattern = xlSolid
@@ -109,9 +109,9 @@ Public Function MarcaSelecao(selecao As String)
     
 End Function
 
-Public Function MarcaTexto(selecao As String)
+Public Function MarcaTexto(Selecao As String)
     
-    Range(selecao).Select
+    Range(Selecao).Select
     
     With Selection.Interior
 '''####################
@@ -139,11 +139,11 @@ Public Function MarcaTexto(selecao As String)
     
 End Function
 
-Public Function DesmarcaTexto(selecao As String)
+Public Function DesmarcaTexto(Selecao As String)
     
 'Application.Wait DateAdd("s", 10, Now)
     
-    Range(selecao).Select
+    Range(Selecao).Select
     
     With Selection.Interior
         .Pattern = xlSolid

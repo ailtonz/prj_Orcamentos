@@ -35,24 +35,24 @@ Dim strArquivo As String
 Dim strConteudo As String
 Dim strSelecao As String
 
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 
 Matriz = Array()
 
     If ListBoxChecarSelecao(Me, Me.lstOrigem.Name) = False Then
-        strMsg = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
-        strMsg = strMsg & "Você esqueceu de selecionar um ORÇAMENTO da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = strMSG & "Você esqueceu de selecionar um ORÇAMENTO da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "SELEÇÃO DE ORÇAMENTO(S)!"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     ElseIf ListBoxChecarSelecao(Me, Me.lstEmails.Name) = False Then
     
-        strMsg = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
-        strMsg = strMsg & "Você esqueceu de selecionar um E-MAIL da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = strMSG & "Você esqueceu de selecionar um E-MAIL da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "SELEÇÃO DE E-MAIL!"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
     
         ''' BANCO DE TRANSITO

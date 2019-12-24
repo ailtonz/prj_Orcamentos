@@ -16,15 +16,15 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdAtualizarLinha_Click()
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 
 If ListBoxChecarSelecao(Me, Me.lstLinha.Name) = False Then
-    strMsg = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
-    strMsg = strMsg & "Você esqueceu de selecionar um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    strMSG = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
+    strMSG = strMSG & "Você esqueceu de selecionar um item da lista. " & Chr(10) & Chr(13) & Chr(13)
     strTitulo = "Atualização da linha de produto!"
     
-    MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+    MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
 Else
     
     Dim strBanco As String: strBanco = Range(BancoLocal)
@@ -74,15 +74,15 @@ End If
 End Sub
 
 Private Sub cmdAtualizarMoeda_Click()
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 
 If ListBoxChecarSelecao(Me, Me.lstMoeda.Name) = False Then
-    strMsg = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
-    strMsg = strMsg & "Você esqueceu de selecionar um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    strMSG = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
+    strMSG = strMSG & "Você esqueceu de selecionar um item da lista. " & Chr(10) & Chr(13) & Chr(13)
     strTitulo = "Atualização da moeda!"
     
-    MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+    MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
 Else
     
     Dim strBanco As String: strBanco = Range(BancoLocal)
@@ -133,15 +133,15 @@ End If
 End Sub
 
 Private Sub cmdAtualizarVenda_Click()
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 
 If ListBoxChecarSelecao(Me, Me.lstVenda.Name) = False Then
-    strMsg = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
-    strMsg = strMsg & "Você esqueceu de selecionar um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    strMSG = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
+    strMSG = strMSG & "Você esqueceu de selecionar um item da lista. " & Chr(10) & Chr(13) & Chr(13)
     strTitulo = "Atualização da Venda!"
     
-    MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+    MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
 Else
     
     Dim strBanco As String: strBanco = Range(BancoLocal)
@@ -193,15 +193,15 @@ End If
 End Sub
 
 Private Sub cmdAtualizarDescontos_Click()
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 
 If ListBoxChecarSelecao(Me, Me.lstDescontos.Name) = False Then
-    strMsg = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
-    strMsg = strMsg & "Você esqueceu de selecionar um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+    strMSG = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
+    strMSG = strMSG & "Você esqueceu de selecionar um item da lista. " & Chr(10) & Chr(13) & Chr(13)
     strTitulo = "Atualização do Desconto!"
     
-    MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+    MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
 Else
     
     Dim strBanco As String: strBanco = Range(BancoLocal)

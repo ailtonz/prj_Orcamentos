@@ -3,13 +3,10 @@ Sub Pesquisar(ByVal control As IRibbonControl)
     frmPesquisar.Show
 End Sub
 
-Sub cadastro(ByVal control As IRibbonControl)
-'    If Range(GerenteDeContas) <> "" Then
-'        frmCadastro.Show
-'    End If
-    
-    frmDadosOrcamento.Show
-    
+Sub Cadastro(ByVal control As IRibbonControl)
+    If Range(GerenteDeContas) <> "" Then
+        frmCadastro.Show
+    End If
 End Sub
 
 Sub AnexosArquivos(ByVal control As IRibbonControl)
@@ -22,20 +19,196 @@ Sub EnviarReceber(ByVal control As IRibbonControl)
     frmEnviarReceber.Show
 End Sub
 
+Sub Projeto01(ByVal control As IRibbonControl)
+Dim strUsuario As String: strUsuario = Range(NomeUsuario)
+
+    If ActiveSheet.Name = strUsuario Then
+        Unload frmPojeto
+        Exit Sub
+    Else
+        ProjetoAtual = "C"
+
+        If Range(StatusProjeto) = "Novo" Then
+            frmPojeto.Show
+        Else
+            If Range(ProjetoAtual & "13") <> "" Then
+                Exit Sub
+            Else
+                frmPojeto.Show
+            End If
+        End If
+    End If
+
+
+End Sub
+
+Sub Projeto02(ByVal control As IRibbonControl)
+Dim strUsuario As String: strUsuario = Range(NomeUsuario)
+
+    If ActiveSheet.Name = strUsuario Then
+        Unload frmPojeto
+        Exit Sub
+    Else
+        ProjetoAtual = "D"
+
+        If Range(StatusProjeto) = "Novo" Then
+            frmPojeto.Show
+        Else
+            If Range(ProjetoAtual & "13") <> "" Then
+                Exit Sub
+            Else
+                frmPojeto.Show
+            End If
+        End If
+    End If
+
+End Sub
+
+Sub Projeto03(ByVal control As IRibbonControl)
+Dim strUsuario As String: strUsuario = Range(NomeUsuario)
+
+    If ActiveSheet.Name = strUsuario Then
+        Unload frmPojeto
+        Exit Sub
+    Else
+        ProjetoAtual = "E"
+
+        If Range(StatusProjeto) = "Novo" Then
+            frmPojeto.Show
+        Else
+            If Range(ProjetoAtual & "13") <> "" Then
+                Exit Sub
+            Else
+                frmPojeto.Show
+            End If
+        End If
+    End If
+
+End Sub
+
+Sub Projeto04(ByVal control As IRibbonControl)
+Dim strUsuario As String: strUsuario = Range(NomeUsuario)
+
+    If ActiveSheet.Name = strUsuario Then
+        Unload frmPojeto
+        Exit Sub
+    Else
+        ProjetoAtual = "F"
+
+        If Range(StatusProjeto) = "Novo" Then
+            frmPojeto.Show
+        Else
+            If Range(ProjetoAtual & "13") <> "" Then
+                Exit Sub
+            Else
+                frmPojeto.Show
+            End If
+        End If
+    End If
+
+End Sub
+Sub Projeto05(ByVal control As IRibbonControl)
+Dim strUsuario As String: strUsuario = Range(NomeUsuario)
+
+    If ActiveSheet.Name = strUsuario Then
+        Unload frmPojeto
+        Exit Sub
+    Else
+        ProjetoAtual = "G"
+
+        If Range(StatusProjeto) = "Novo" Then
+            frmPojeto.Show
+        Else
+            If Range(ProjetoAtual & "13") <> "" Then
+                Exit Sub
+            Else
+                frmPojeto.Show
+            End If
+        End If
+    End If
+
+End Sub
+
+Sub Projeto06(ByVal control As IRibbonControl)
+Dim strUsuario As String: strUsuario = Range(NomeUsuario)
+
+    If ActiveSheet.Name = strUsuario Then
+        Unload frmPojeto
+        Exit Sub
+    Else
+        ProjetoAtual = "H"
+
+        If Range(StatusProjeto) = "Novo" Then
+            frmPojeto.Show
+        Else
+            If Range(ProjetoAtual & "13") <> "" Then
+                Exit Sub
+            Else
+                frmPojeto.Show
+            End If
+        End If
+    End If
+
+End Sub
+
+Sub Projeto07(ByVal control As IRibbonControl)
+Dim strUsuario As String: strUsuario = Range(NomeUsuario)
+
+    If ActiveSheet.Name = strUsuario Then
+        Unload frmPojeto
+        Exit Sub
+    Else
+        ProjetoAtual = "I"
+
+        If Range(StatusProjeto) = "Novo" Then
+            frmPojeto.Show
+        Else
+            If Range(ProjetoAtual & "13") <> "" Then
+                Exit Sub
+            Else
+                frmPojeto.Show
+            End If
+        End If
+    End If
+
+End Sub
+
+Sub Projeto08(ByVal control As IRibbonControl)
+Dim strUsuario As String: strUsuario = Range(NomeUsuario)
+
+    If ActiveSheet.Name = strUsuario Then
+        Unload frmPojeto
+        Exit Sub
+    Else
+        ProjetoAtual = "J"
+
+        If Range(StatusProjeto) = "Novo" Then
+            frmPojeto.Show
+        Else
+            If Range(ProjetoAtual & "13") <> "" Then
+                Exit Sub
+            Else
+                frmPojeto.Show
+            End If
+        End If
+    End If
+
+End Sub
+
 Sub Indices(ByVal control As IRibbonControl)
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 
 If Range(GerenteDeContas) <> "" Then
 
     If LiberarIndice(strBanco, strUsuario) = False Then
-        strMsg = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
-        strMsg = strMsg & "Você não tem permissão para acessar este conteúdo. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "Ops!!! " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = strMSG & "Você não tem permissão para acessar este conteúdo. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Indices de calculos!"
 
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
 
         LiberarIndice strBanco, strUsuario
@@ -51,166 +224,54 @@ Sub ENVIAR(ByVal control As IRibbonControl)
     frmEnviar.Show
 End Sub
 
-Sub nmMODELO(ByVal control As IRibbonControl)
-'Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-'
-'    If ActiveSheet.Name = strUsuario Then
-'        Unload frmProjetosModelo
-'        Exit Sub
-'    Else
-'        frmProjetosModelo.Show
-'    End If
-End Sub
-
-Sub nmPROJETOS(ByVal control As IRibbonControl)
-'Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-'
-'    If ActiveSheet.Name = strUsuario Then
-'        Unload frmProjetos
-'        Exit Sub
-'    Else
-'        frmProjetos.Show
-'    End If
-    
-    frmProjetosGuia.Show
-    
-End Sub
-
-Sub nmIMPRESSOES(ByVal control As IRibbonControl)
-'Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-'
-'    If ActiveSheet.Name = strUsuario Then
-'        Unload frmProjetos
-'        Exit Sub
-'    Else
-'        frmProjetos.Show
-'    End If
-    
-    frmImpressoes.Show
-    
-End Sub
-
-Sub nmACABAMENTO(ByVal control As IRibbonControl)
-'Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-'
-'    If ActiveSheet.Name = strUsuario Then
-'        Unload frmProjetos
-'        Exit Sub
-'    Else
-'        frmProjetos.Show
-'    End If
-    
-    frmAcabamento.Show
-    
-End Sub
-
-Sub nmPROPOSTAS(ByVal control As IRibbonControl)
-'Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-'
-'    If ActiveSheet.Name = strUsuario Then
-'        Unload frmProposta
-'        MsgBox "ATENÇÃO: É necessário abrir um orçamento para imprimir uma proposta", vbInformation + vbOKOnly, "Imprimir proposta."
-'        Exit Sub
-'    Else
-'        frmProposta.Show
-'    End If
-    
-    frmProposta.Show
-    
-End Sub
-
 Sub desbloqueio(ByVal control As IRibbonControl)
-
-DesbloqueioDeGuia SenhaBloqueio
-
+    DesbloqueioDeGuia SenhaBloqueio
+    Sheets("BANCOS").Visible = -1
 End Sub
 
-
+Sub GerarProposta(ByVal control As IRibbonControl)
+'    Gerar_Proposta
+    MsgBox "EM TESTES", vbInformation + vbOKOnly, "Gerar Proposta."
+End Sub
 
 Sub SimuladorCustos(ByVal control As IRibbonControl)
     MsgBox "EM TESTES", vbInformation + vbOKOnly, "Simulador de custos."
 End Sub
 
 Sub ControleGrand(ByVal control As IRibbonControl)
-Dim strUsuario As String: strUsuario = Range(NomeUsuario)
-
-    If ActiveSheet.Name = strUsuario Then
-        Unload frmGrand
-        Exit Sub
-    Else
-        frmGrand.Show
-    End If
-    
+    MsgBox "EM TESTES", vbInformation + vbOKOnly, "Cadastro de Grand."
 End Sub
 
 Sub EnviarDados(ByVal control As IRibbonControl)
-'    '' CARREGAR BANCOS
-'    loadBancos
-'
-'    '' CARREGAR ORÇAMENTO
-'    loadOrcamento Sheets(ActiveSheet.Name).Range(GerenteDeContas), ActiveSheet.Name, Sheets(ActiveSheet.Name).Range(NomeUsuario)
-'
-'    Transferencia "ENVIAR", Departamento(banco(1), orcamento), orcamento, banco(1), banco(0)
-      
-    
     MsgBox "EM TESTES", vbInformation + vbOKOnly, "Enviar Dados."
 End Sub
 
 Sub ReceberDados(ByVal control As IRibbonControl)
-'    '' CARREGAR BANCOS
-'    loadBancos
-'
-'    '' CARREGAR ORÇAMENTO
-'    loadOrcamento Sheets(ActiveSheet.Name).Range(GerenteDeContas), ActiveSheet.Name, Sheets(ActiveSheet.Name).Range(NomeUsuario)
-'
-'    Transferencia "RECEBER", Departamento(banco(1), orcamento), orcamento, banco(0), banco(1)
-'
-'    carregarOrcamentoSelecionado
-
     MsgBox "EM TESTES", vbInformation + vbOKOnly, "Receber Dados."
-End Sub
-
-
-Sub carregarOrcamentoSelecionado()
-
-'        Application.ScreenUpdating = False
-'
-''        admOrcamentoFormulariosLimpar
-'
-'        carregarOrcamento Sheets(ActiveSheet.Name).Range(BancoLocal), ActiveSheet.Name, Sheets(ActiveSheet.Name).Range(GerenteDeContas)
-'
-'        admIntervalosDeEdicaoControle Sheets(ActiveSheet.Name).Range(BancoLocal), ActiveSheet.Name, Sheets(ActiveSheet.Name).Range(GerenteDeContas)
-'
-'        admOrcamentoFormulariosLiberar Sheets(ActiveSheet.Name).Range(NomeUsuario)
-'
-'        Sheets(ActiveSheet.Name).Range(InicioCursor).Select
-'
-'        Application.ScreenUpdating = True
-
 End Sub
 
 
 Sub modelo_teste(ByVal control As IRibbonControl)
    
-'Dim strBanco As String: strBanco = Range(BancoLocal)
-'Dim strControle As String
-'Dim strUsuario As String
-'
-'    strControle = InputBox("Informe o numero de controle:", "Numero de controle", "082-14")
-'    strUsuario = InputBox("Informe o nome do vendedor:", "Nome do vendedor", "azs")
-'
-'    admLimparAnexos
-'
-'    DesbloqueioDeGuia SenhaBloqueio
-'
-'    CarregarAnexoLinha strBanco, strControle, strUsuario, 3, 12
-'    CarregarAnexoMoeda strBanco, strControle, strUsuario, 3, 16
-'    CarregarAnexoVenda strBanco, strControle, strUsuario, 3, 19
-'    CarregarAnexoDesconto strBanco, strControle, strUsuario, 3, 22
-'
-'    CarregarAnexoTraducao strBanco, strControle, strUsuario, 3, 29
-'    CarregarAnexoRevisao strBanco, strControle, strUsuario, 3, 32
-'    CarregarAnexoDiagramacao strBanco, strControle, strUsuario, 3, 35
+Dim strBanco As String: strBanco = Range(BancoLocal)
+Dim strControle As String
+Dim strUsuario As String
+
+    strControle = InputBox("Informe o numero de controle:", "Numero de controle", "082-14")
+    strUsuario = InputBox("Informe o nome do vendedor:", "Nome do vendedor", "azs")
+
+    admLimparAnexos
+        
+    DesbloqueioDeGuia SenhaBloqueio
+
+    CarregarAnexoLinha strBanco, strControle, strUsuario, 3, 12
+    CarregarAnexoMoeda strBanco, strControle, strUsuario, 3, 16
+    CarregarAnexoVenda strBanco, strControle, strUsuario, 3, 19
+    CarregarAnexoDesconto strBanco, strControle, strUsuario, 3, 22
+
+    CarregarAnexoTraducao strBanco, strControle, strUsuario, 3, 29
+    CarregarAnexoRevisao strBanco, strControle, strUsuario, 3, 32
+    CarregarAnexoDiagramacao strBanco, strControle, strUsuario, 3, 35
 
 'MarcaTexto InputBox("Informe a seleção:", "seleção", "")
     
@@ -315,14 +376,8 @@ Sub MenuChoice(control As IRibbonControl)
 End Sub
 
 Sub Administracao(ByVal control As IRibbonControl)
-
-'    frmProjetos.Show
-
-'    frmProjetosModelo.Show
-
-
-    frmPropostas.Show
-
+    frmAdministracao.Show
+    Sheets("BANCOS").Visible = 2
 End Sub
 
 Sub teste_formatos()

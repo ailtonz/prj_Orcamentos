@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmEnviarReceber 
    Caption         =   "Enviar / Receber"
-   ClientHeight    =   5895
+   ClientHeight    =   5580
    ClientLeft      =   45
    ClientTop       =   375
    ClientWidth     =   13800
@@ -34,8 +34,6 @@ Dim strUsuario As String: strUsuario = Range(NomeUsuario)
         MontarPesquisa
         carregarLista
     End If
-    
-    Me.lblStatus.Caption = Me.lstSelecao.ListCount
 
 End Sub
 
@@ -45,8 +43,6 @@ Dim intCurrentRow As Integer
 
 '' CARREGAR BANCOS
 loadBancos
-
-Me.lblStatus.Caption = Me.lstSelecao.ListCount
 
     ''' EXPORTA PARA O BANCO ITENS SELECIONADOS
     For intCurrentRow = 0 To Me.lstSelecao.ListCount - 1
@@ -60,12 +56,10 @@ Me.lblStatus.Caption = Me.lstSelecao.ListCount
             loadOrcamento CStr(Matriz(2)), CStr(Matriz(0)), Sheets(ActiveSheet.Name).Range(NomeUsuario)
             
             If Me.cboOperacao.value = "RECEBER" Then
-                Transferencia Me.cboOperacao.value, Departamento(banco(1), Orcamento), Orcamento, banco(0), banco(1)
+                Transferencia Me.cboOperacao.value, Departamento(banco(1), orcamento), orcamento, banco(0), banco(1)
             ElseIf Me.cboOperacao.value = "ENVIAR" Then
-                Transferencia Me.cboOperacao.value, Departamento(banco(1), Orcamento), Orcamento, banco(1), banco(0)
+                Transferencia Me.cboOperacao.value, Departamento(banco(1), orcamento), orcamento, banco(1), banco(0)
             End If
-            
-            Me.lblStatus.Caption = Me.lstSelecao.ListCount - 1 & " - " & intCurrentRow
             
             ''' DESMARCAR ITEM SELECIONADO
             Me.lstSelecao.Selected(intCurrentRow) = False

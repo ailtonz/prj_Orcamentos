@@ -19,14 +19,14 @@ Attribute VB_Name = "basInternet"
 Function IsInternetConnected() As Boolean
 
 #If VBA7 Then
-    Dim l As LongPtr
+    Dim L As LongPtr
     Dim R As LongPtr
 #Else
-    Dim l As Long
+    Dim L As Long
     Dim R As Long
 #End If
 
-    R = InternetGetConnectedState(l, 0&)
+    R = InternetGetConnectedState(L, 0&)
     If R = 0 Then
         IsInternetConnected = False
     Else

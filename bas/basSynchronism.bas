@@ -10,6 +10,7 @@ Sub loadBancos()
         .strUser = Sheets("BANCOS").Range("C6")
         .strPassword = Sheets("BANCOS").Range("C7")
         .strPort = Sheets("BANCOS").Range("C8")
+'        .strTabela = "qryUpdateSystem"
     End With
     
     '' LOCAL
@@ -27,7 +28,7 @@ End Sub
 
 Sub loadOrcamento(strVendedor As String, strControle As String, Optional strOperator As String, Optional strStatus As String)
 
-    With Orcamento
+    With orcamento
         .strVendedor = strVendedor
         .strControle = strControle
         .strOperator = strOperator
@@ -37,33 +38,33 @@ Sub loadOrcamento(strVendedor As String, strControle As String, Optional strOper
 End Sub
 
 Function Transferencia(strOperacao As String, strDepartamento As String, strOrcamento As infOrcamento, strLocal As infBanco, strServer As infBanco)
-Dim Connection As New ADODB.Connection
+Dim connection As New ADODB.connection
 Dim rstSincronismo As ADODB.Recordset
 Set rstSincronismo = New ADODB.Recordset
 Dim strSql As String
 
 ''Is Internet Connected
 If IsInternetConnected() = True Then
-    Set Connection = OpenConnection(strLocal)
+    Set connection = OpenConnection(strLocal)
     '' Is Connected
-    If Connection.State = 1 Then
+    If connection.State = 1 Then
         strSql = "SELECT DISTINCT tabela FROM qrySincronismo where sincronismo = '" & strOperacao & "' and dpto = '" & strDepartamento & "'"
-        Call rstSincronismo.Open(strSql, Connection, adOpenStatic, adLockOptimistic)
+        Call rstSincronismo.Open(strSql, connection, adOpenStatic, adLockOptimistic)
         '' ENVIAR/RECEBER DADOS
         Do While Not rstSincronismo.EOF
             strSql = "SELECT * FROM " & rstSincronismo.Fields("tabela") & " WHERE controle = '" & strOrcamento.strControle & "' AND vendedor = '" & strOrcamento.strVendedor & "'"
             EnvioDeDados strLocal, strServer, strSql
             
             If strOperacao = "ENVIAR" Then
-                '' server ( ENVIAR )
+                '' server ( RECEBER )
                 loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle
-                loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle, strStatus:=ID_STATUS(banco(1), Orcamento)
-                Call admOrcamentoAtualizarEtapaADO(banco(0), Orcamento)
+                loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle, strStatus:=ID_STATUS(banco(1), orcamento)
+                Call admOrcamentoAtualizarEtapaADO(banco(0), orcamento)
             ElseIf strOperacao = "RECEBER" Then
-                '' local ( RECEBER )
+                '' local ( ENVIAR )
                 loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle
-                loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle, strStatus:=ID_STATUS(banco(0), Orcamento)
-                Call admOrcamentoAtualizarEtapaADO(banco(1), Orcamento)
+                loadOrcamento strOrcamento.strVendedor, strOrcamento.strControle, strStatus:=ID_STATUS(banco(0), orcamento)
+                Call admOrcamentoAtualizarEtapaADO(banco(1), orcamento)
             End If
             
             rstSincronismo.MoveNext
@@ -71,7 +72,7 @@ If IsInternetConnected() = True Then
     Else
         MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "Falha na conexão com o banco. (" & strOperacao & ")"
     End If
-    Connection.Close
+    connection.Close
 Else
     ' no connected
     MsgBox "SEM INTERNET.", vbOKOnly + vbExclamation
@@ -80,11 +81,11 @@ End If
 End Function
 
 Sub EnvioDeDados(dbOrigem As infBanco, dbDestino As infBanco, strSql As String)
-Dim Origem As New ADODB.Connection
+Dim Origem As New ADODB.connection
 Set Origem = OpenConnection(dbOrigem)
 Dim rstOrigem As ADODB.Recordset
 Set rstOrigem = New ADODB.Recordset
-Dim Destino As New ADODB.Connection
+Dim Destino As New ADODB.connection
 Set Destino = OpenConnection(dbDestino)
 Dim rstDestino As ADODB.Recordset
 Set rstDestino = New ADODB.Recordset
@@ -126,11 +127,11 @@ Dim NewFile As Boolean: NewFile = False
 End Sub
 
 Function Departamento(strBanco As infBanco, strOrcamento As infOrcamento) As String
-Dim Connection As New ADODB.Connection
+Dim connection As New ADODB.connection
 Dim rst As New ADODB.Recordset
-    Set Connection = OpenConnection(strBanco)
-    If Connection.State = 1 Then
-        Call rst.Open("SELECT * FROM qryUsuarios WHERE usuario = '" & strOrcamento.strOperator & "'", Connection, adOpenStatic, adLockOptimistic)
+    Set connection = OpenConnection(strBanco)
+    If connection.State = 1 Then
+        Call rst.Open("SELECT * FROM qryUsuarios WHERE usuario = '" & strOrcamento.strOperator & "'", connection, adOpenStatic, adLockOptimistic)
         If Not rst.EOF Then
             Departamento = rst.Fields("DPTO").value
         Else
@@ -139,15 +140,15 @@ Dim rst As New ADODB.Recordset
     Else
         MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "Falha na conexão com o banco."
     End If
-    Connection.Close
+    connection.Close
 End Function
 
 Function ID_STATUS(strBanco As infBanco, strOrcamento As infOrcamento) As String
-Dim Connection As New ADODB.Connection
+Dim connection As New ADODB.connection
 Dim rst As New ADODB.Recordset
-    Set Connection = OpenConnection(strBanco)
-    If Connection.State = 1 Then
-        Call rst.Open("SELECT ID_ETAPA FROM Orcamentos WHERE controle = '" & strOrcamento.strControle & "' AND vendedor = '" & strOrcamento.strVendedor & "'", Connection, adOpenStatic, adLockOptimistic)
+    Set connection = OpenConnection(strBanco)
+    If connection.State = 1 Then
+        Call rst.Open("SELECT ID_ETAPA FROM Orcamentos WHERE controle = '" & strOrcamento.strControle & "' AND vendedor = '" & strOrcamento.strVendedor & "'", connection, adOpenStatic, adLockOptimistic)
         If Not rst.EOF Then
             ID_STATUS = rst.Fields("ID_ETAPA").value
         Else
@@ -156,20 +157,20 @@ Dim rst As New ADODB.Recordset
     Else
         MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "Falha na conexão com o banco."
     End If
-    Connection.Close
+    connection.Close
 End Function
 Sub updateStatus()
-'loadBancos
+loadBancos
 
 '' local ( ENVIAR )
 'loadOrcamento "VANESSA VICTORELLO", "117-14"
 'loadOrcamento "VANESSA VICTORELLO", "117-14", strStatus:=ID_STATUS(banco(0), orcamento)
 'Call admOrcamentoAtualizarEtapaADO(banco(1), orcamento)
 
-''' server ( RECEBER )
-'loadOrcamento "VANESSA VICTORELLO", "117-14"
-'loadOrcamento "VANESSA VICTORELLO", "117-14", strStatus:=ID_STATUS(Banco(1), Orcamento)
-'Call admOrcamentoAtualizarEtapaADO(Banco(0), Orcamento)
+'' server ( RECEBER )
+loadOrcamento "VANESSA VICTORELLO", "117-14"
+loadOrcamento "VANESSA VICTORELLO", "117-14", strStatus:=ID_STATUS(banco(1), orcamento)
+Call admOrcamentoAtualizarEtapaADO(banco(0), orcamento)
 
 
 End Sub
@@ -191,14 +192,14 @@ Sub idStatus()
 End Sub
 
 Sub admOrcamentoAtualizarEtapaADO(strBanco As infBanco, strOrcamento As infOrcamento)
-Dim Connection As New ADODB.Connection
-Set Connection = OpenConnection(strBanco)
+Dim connection As New ADODB.connection
+Set connection = OpenConnection(strBanco)
 Dim rst As ADODB.Recordset
 Dim cd As ADODB.Command
 
 Set cd = New ADODB.Command
 With cd
-    .ActiveConnection = Connection
+    .ActiveConnection = connection
     .CommandText = "admOrcamentoAtualizarEtapa"
     .CommandType = adCmdStoredProc
     .Parameters.Append .CreateParameter("@NM_ETAPA", adVarChar, adParamInput, 50, strOrcamento.strStatus)
@@ -206,6 +207,107 @@ With cd
     .Parameters.Append .CreateParameter("@NM_VENDEDOR", adVarChar, adParamInput, 50, strOrcamento.strVendedor)
     Set rst = .Execute
 End With
-Connection.Close
+connection.Close
 
 End Sub
+
+
+Sub teste_admUpdateMoeda()
+Dim sScript As String
+Dim sValor As String: sValor = "13,56"
+Dim sMoeda As String: sMoeda = "Dolar"
+Dim sID As String: sID = "1"
+
+sScript = "UPDATE admcategorias SET admcategorias.Descricao01 = '" & sValor & "' WHERE (((admcategorias.categoria)='" & sMoeda & "') AND ((admcategorias.codRelacao)=(SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='MOEDA' and codRelacao = 0)))"
+
+loadBancos
+admUpdateMoeda banco(0), sID, sMoeda, sScript
+
+End Sub
+
+Function admUpdateMoeda(strBanco As infBanco, sID As String, sDescricao As String, sScript As String) As Boolean: admUpdateMoeda = True
+On Error GoTo admUpdateMoeda_err
+Dim cnn As New ADODB.connection
+Set cnn = OpenConnection(strBanco)
+Dim rst As ADODB.Recordset
+Dim cmd As ADODB.Command
+
+Set cmd = New ADODB.Command
+With cmd
+    .ActiveConnection = cnn
+    .CommandText = "admUpdateMoeda"
+    .CommandType = adCmdStoredProc
+    .Parameters.Append .CreateParameter("@NM_CATEGORIA", adVarChar, adParamInput, 100, "UPDATESYSTEM")
+    .Parameters.Append .CreateParameter("@ATUALIZACAO_ID", adVarChar, adParamInput, 10, sID)
+    .Parameters.Append .CreateParameter("@ATUALIZACAO_DESCRICAO", adVarChar, adParamInput, 100, sDescricao)
+    .Parameters.Append .CreateParameter("@ATUALIZACAO_SCRIPT", adVarChar, adParamInput, 2000, sScript)
+        
+    Set rst = .Execute
+End With
+cnn.Close
+
+admUpdateMoeda_Fim:
+    Set cnn = Nothing
+    Set rst = Nothing
+    Set cmd = Nothing
+    
+    Exit Function
+admUpdateMoeda_err:
+    admUpdateMoeda = False
+    MsgBox Err.Description
+    Resume admUpdateMoeda_Fim
+
+End Function
+
+Sub UpdateSystem()
+
+    loadBancos
+    admUpdateSystem banco(0), banco(1)
+
+End Sub
+
+Function admUpdateSystem(strBanco As infBanco, strOrcamento As infBanco)
+On Error GoTo admUpdateSystem_err
+Dim cnnServidor As New ADODB.connection
+Dim cnnLocal As New ADODB.connection
+Dim rst As New ADODB.Recordset
+Dim rstLocal As New ADODB.Recordset
+Dim cmdLocal As New ADODB.Command
+
+    Set cnnServidor = OpenConnection(strBanco)
+    If cnnServidor.State = 1 Then
+        Call rst.Open("SELECT * FROM qryUpdateSystem WHERE ID = '1'", cnnServidor, adOpenStatic, adLockOptimistic)
+        If Not rst.EOF Then
+            Set cnnLocal = OpenConnection(strOrcamento)
+            If cnnLocal.State = 1 Then
+                cmdLocal.ActiveConnection = cnnLocal
+                cmdLocal.CommandType = adCmdText
+                cmdLocal.CommandText = rst.Fields("SCRIPT").value
+                Set rstLocal = cmdLocal.Execute
+'            Else
+'                MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "ERROR DE FUNÇÃO: admUpdateSystem"
+            End If
+        End If
+'    Else
+'        MsgBox "Falha na conexão com o banco de dados!", vbCritical + vbOKOnly, "ERROR DE FUNÇÃO: admUpdateSystem"
+    End If
+    
+    cnnServidor.Close
+    cnnLocal.Close
+    
+admUpdateSystem_Fim:
+    Set cnnServidor = Nothing
+    Set cnnLocal = Nothing
+    Set rst = Nothing
+    Set rstLocal = Nothing
+    Set cmdLocal = Nothing
+    
+    Exit Function
+admUpdateSystem_err:
+    MsgBox Err.Description
+    Resume admUpdateSystem_Fim
+    
+End Function
+
+
+

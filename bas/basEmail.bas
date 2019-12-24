@@ -9,7 +9,7 @@ On Error GoTo EnviarOrcamentos_err
     Dim OutApp As Object
     Dim OutMail As Object
     
-    Dim l As Integer, c As Integer ' L = LINHA | C = COLUNA
+    Dim L As Integer, c As Integer ' L = LINHA | C = COLUNA
     Dim x As Integer ' contador de linhas
     
 
@@ -25,7 +25,7 @@ On Error GoTo EnviarOrcamentos_err
         .BCC = ""
         .Subject = strAssunto
         .Body = strConteudo
-        .Attachments.add strArquivo
+        .Attachments.Add strArquivo
         .Send
     End With
     On Error GoTo 0
@@ -80,7 +80,7 @@ On Error GoTo EnviarEmail_err
             Set rstOrcamentosAnexos = dbOrcamento.OpenRecordset(strConsulta)
             
             While Not rstOrcamentosAnexos.EOF
-                .Attachments.add rstOrcamentosAnexos.Fields(strCampo).value
+                .Attachments.Add rstOrcamentosAnexos.Fields(strCampo).value
                 rstOrcamentosAnexos.MoveNext
             Wend
             

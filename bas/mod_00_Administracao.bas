@@ -545,7 +545,7 @@ admOrcamentoFormulariosLiberar_err:
 
 End Sub
 
-Public Function admOrcamentoExcluirVirtual(BaseDeDados As String, strControle As String, strNome As String, strMotivo As String) As Boolean: admOrcamentoExcluirVirtual = True
+Public Function admOrcamentoExcluirVirtual(BaseDeDados As String, strControle As String, strNOME As String, strMotivo As String) As Boolean: admOrcamentoExcluirVirtual = True
 On Error GoTo admOrcamentoExcluirVirtual_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmOrcamentoExcluir As DAO.QueryDef
@@ -556,7 +556,7 @@ Set qdfadmOrcamentoExcluir = dbOrcamento.QueryDefs("admOrcamentoExcluirVirtual")
 
 With qdfadmOrcamentoExcluir
 
-    .Parameters("NM_VENDEDOR") = strNome
+    .Parameters("NM_VENDEDOR") = strNOME
     .Parameters("NM_CONTROLE") = strControle
     .Parameters("NM_MOTIVO") = strMotivo
     
@@ -791,6 +791,9 @@ strIntervalos = "Select * from qryEtapasIntervalosEdicoes where Departamento = '
 
 Set rstIntervalos = dbOrcamento.OpenRecordset(strIntervalos)
 
+
+
+
 DesbloqueioDeGuia SenhaBloqueio
 
 'rstIntervalos.MoveFirst
@@ -902,6 +905,8 @@ Public Sub admLimparAnexos()
     ''' DESBLOQUEIA GUIA
     DesbloqueioDeGuia SenhaBloqueio
     
+    
+    
     ''' LIMPAR LINHA DE PRODUTOS
     Range("L3:N3").Select
     Range(Selection, Selection.End(xlDown)).Select
@@ -922,20 +927,20 @@ Public Sub admLimparAnexos()
     Range(Selection, Selection.End(xlDown)).Select
     Selection.ClearContents
     
-    ''' LIMPAR GRAND
-    Range("AC3:AE27").Select
+    ''' LIMPAR TRADUÇÃO
+    Range("AC3:AD3").Select
     Range(Selection, Selection.End(xlDown)).Select
     Selection.ClearContents
-'
-'    ''' LIMPAR REVISÃO
-'    Range("AF3:AG3").Select
-'    Range(Selection, Selection.End(xlDown)).Select
-'    Selection.ClearContents
-'
-'    ''' LIMPAR DIAGRAMAÇÃO
-'    Range("AI3:AJ3").Select
-'    Range(Selection, Selection.End(xlDown)).Select
-'    Selection.ClearContents
+    
+    ''' LIMPAR REVISÃO
+    Range("AF3:AG3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.ClearContents
+    
+    ''' LIMPAR DIAGRAMAÇÃO
+    Range("AI3:AJ3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.ClearContents
     
     
     
@@ -1009,7 +1014,7 @@ Public Sub admArquivosAnexosCarregar(BaseDeDados As String, strControle As Strin
 
         'Allow the user to select multiple files.
         .Filters.Clear
-        .Filters.add "Todos os arquivos", "*.*", 1
+        .Filters.Add "Todos os arquivos", "*.*", 1
         .Title = "Abrir"
         
         .AllowMultiSelect = True
@@ -1331,22 +1336,22 @@ admUsuarioNovoUsuarios_err:
     Resume admUsuarioNovoUsuarios_Fim
 End Function
 
-Public Function ExistenciaUsuario(BaseDeDados As String, strCODIGO As String, strNome As String) As Boolean: ExistenciaUsuario = False
+Public Function ExistenciaUsuario(BaseDeDados As String, strCODIGO As String, strNOME As String) As Boolean: ExistenciaUsuario = False
 On Error GoTo ExistenciaUsuario_err
 Dim dbOrcamento As DAO.Database
 Dim rstExistenciaUsuario As DAO.Recordset
 Dim strSql As String
-Dim retVal As Variant
+Dim RetVal As Variant
 
-retVal = Dir(BaseDeDados)
+RetVal = Dir(BaseDeDados)
 
-If retVal = "" Then
+If RetVal = "" Then
 
     ExistenciaUsuario = True
     
 Else
    
-    strSql = "SELECT * FROM qryUsuarios WHERE Usuario = '" & strNome & "' AND  Codigo = '" & strCODIGO & "' "
+    strSql = "SELECT * FROM qryUsuarios WHERE Usuario = '" & strNOME & "' AND  Codigo = '" & strCODIGO & "' "
     
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
     Set rstExistenciaUsuario = dbOrcamento.OpenRecordset(strSql)
@@ -1378,7 +1383,7 @@ Public Function admUsuarioNovo( _
     BaseDeDados As String, _
     strDPTO As String, _
     strCODIGO As String, _
-    strNome As String, _
+    strNOME As String, _
     strEmail As String, _
     strG_CONTAS As String, _
     strTELEFONE As String, _
@@ -1398,7 +1403,7 @@ Set qdfadmUsuarioNovo = dbOrcamento.QueryDefs("admUsuarioNovo")
 With qdfadmUsuarioNovo
 
     .Parameters("CODUSUARIO") = strCODIGO
-    .Parameters("NOME_USUARIO") = strNome
+    .Parameters("NOME_USUARIO") = strNOME
     .Parameters("EMAIL_USUARIO") = strEmail
     .Parameters("DPTO_USUARIO") = strDPTO
     
@@ -1412,11 +1417,11 @@ With qdfadmUsuarioNovo
     
 End With
 
-admUsuarioNovoDepartamentos BaseDeDados, strNome
-admUsuarioNovoFuncoes BaseDeDados, strNome
-admUsuarioNovoNotificacoes BaseDeDados, strNome
-admUsuarioNovoStatus BaseDeDados, strNome
-admUsuarioNovoUsuarios BaseDeDados, strNome
+admUsuarioNovoDepartamentos BaseDeDados, strNOME
+admUsuarioNovoFuncoes BaseDeDados, strNOME
+admUsuarioNovoNotificacoes BaseDeDados, strNOME
+admUsuarioNovoStatus BaseDeDados, strNOME
+admUsuarioNovoUsuarios BaseDeDados, strNOME
 
 qdfadmUsuarioNovo.Close
 dbOrcamento.Close
@@ -1437,7 +1442,7 @@ Public Function admUsuarioSalvar( _
     BaseDeDados As String, _
     strDPTO As String, _
     strCODIGO As String, _
-    strNome As String, _
+    strNOME As String, _
     strEmail As String, _
     strG_CONTAS As String, _
     strTELEFONE As String, _
@@ -1456,7 +1461,7 @@ Set qdfadmUsuarioSalvar = dbOrcamento.QueryDefs("admUsuarioSalvar")
 With qdfadmUsuarioSalvar
 
     .Parameters("CODUSUARIO") = strCODIGO
-    .Parameters("NOME_USUARIO") = strNome
+    .Parameters("NOME_USUARIO") = strNOME
     .Parameters("EMAIL_USUARIO") = strEmail
     .Parameters("DPTO_USUARIO") = strDPTO
     
@@ -1485,7 +1490,7 @@ admUsuarioSalvar_err:
     Resume admUsuarioSalvar_Fim
 End Function
 
-Public Function admUsuarioExcluir(BaseDeDados As String, strNome As String, Excluir As Boolean) As Boolean: admUsuarioExcluir = True
+Public Function admUsuarioExcluir(BaseDeDados As String, strNOME As String, Excluir As Boolean) As Boolean: admUsuarioExcluir = True
 On Error GoTo admUsuarioExcluir_err
 Dim dbOrcamento As DAO.Database
 Dim qdfadmUsuarioExcluir As DAO.QueryDef
@@ -1496,7 +1501,7 @@ Set qdfadmUsuarioExcluir = dbOrcamento.QueryDefs("admUsuarioExcluir")
 
 With qdfadmUsuarioExcluir
 
-    .Parameters("NOME_USUARIO") = strNome
+    .Parameters("NOME_USUARIO") = strNOME
     .Parameters("EXCLUSAO") = Excluir
     
     .Execute
@@ -1631,18 +1636,18 @@ admUsuariosPermissoesExcluir_err:
     Resume admUsuariosPermissoesExcluir_Fim
 End Function
 
-Public Function EtapaUsuario(BaseDeDados As String, strCategoria As String, strNome As String) As Boolean: EtapaUsuario = False
+Public Function EtapaUsuario(BaseDeDados As String, strCategoria As String, strNOME As String) As Boolean: EtapaUsuario = False
 On Error GoTo EtapaUsuario_err
 Dim dbOrcamento As DAO.Database
 Dim rstEtapaUsuario As DAO.Recordset
 Dim strSql As String
-Dim retVal As Variant
+Dim RetVal As Variant
 
-retVal = Dir(BaseDeDados)
+RetVal = Dir(BaseDeDados)
 
-If retVal <> "" Then
+If RetVal <> "" Then
    
-    strSql = "SELECT * FROM qryPermissoesUsuarios WHERE Usuario = '" & strNome & "' AND  Categoria = 'Status' AND Selecionado = '" & strCategoria & "' "
+    strSql = "SELECT * FROM qryPermissoesUsuarios WHERE Usuario = '" & strNOME & "' AND  Categoria = 'Status' AND Selecionado = '" & strCategoria & "' "
     
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
     Set rstEtapaUsuario = dbOrcamento.OpenRecordset(strSql)
@@ -1670,18 +1675,18 @@ EtapaUsuario_err:
     Resume EtapaUsuario_Fim
 End Function
 
-Public Function BloqueioEtapaUsuario(BaseDeDados As String, strCategoria As String, strNome As String) As Boolean: BloqueioEtapaUsuario = False
+Public Function BloqueioEtapaUsuario(BaseDeDados As String, strCategoria As String, strNOME As String) As Boolean: BloqueioEtapaUsuario = False
 On Error GoTo BloqueioEtapaUsuario_err
 Dim dbOrcamento As DAO.Database
 Dim rstBloqueioEtapaUsuario As DAO.Recordset
 Dim strSql As String
-Dim retVal As Variant
+Dim RetVal As Variant
 
-retVal = Dir(BaseDeDados)
+RetVal = Dir(BaseDeDados)
 
-If retVal <> "" Then
+If RetVal <> "" Then
    
-    strSql = "SELECT * FROM qryPermissoesUsuarios WHERE Usuario = '" & strNome & "' AND  Categoria = 'Bloqueio' AND Selecionado = '" & strCategoria & "' "
+    strSql = "SELECT * FROM qryPermissoesUsuarios WHERE Usuario = '" & strNOME & "' AND  Categoria = 'Bloqueio' AND Selecionado = '" & strCategoria & "' "
     
     Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
     Set rstBloqueioEtapaUsuario = dbOrcamento.OpenRecordset(strSql)
@@ -1714,11 +1719,11 @@ On Error GoTo UsuarioAdministrativo_err
 Dim dbOrcamento As DAO.Database
 Dim rstUsuarioAdministrativo As DAO.Recordset
 Dim strSql As String
-Dim retVal As Variant
+Dim RetVal As Variant
 
-retVal = Dir(BaseDeDados)
+RetVal = Dir(BaseDeDados)
 
-If retVal <> "" Then
+If RetVal <> "" Then
 
     strSql = "SELECT DPTO FROM qryUsuarios WHERE Usuario = '" & strUsuario & "' and DPTO IN ('Vendas')"
 
@@ -1843,10 +1848,12 @@ strConsultas(10) = "qryApoio_Formato"
 Application.ScreenUpdating = False
 
 For x = 1 To 10
-    
+
     AtualizarListagens BaseDeDados, strConsultas(x), "APOIO", 2, x
 
 Next x
+
+'AtualizarListagens BaseDeDados, "qryApoio_Clientes", "APOIO", 2, 3
 
 Application.ScreenUpdating = True
 
@@ -1854,7 +1861,7 @@ MsgBox "Atualização da guia de apoio concluida!", vbOKOnly + vbInformation, "Atu
 
 End Sub
 
-Sub AtualizarListagens(BaseDeDados As String, Consulta As String, guia As String, Linha As Integer, Coluna As Integer)
+Sub AtualizarListagens(BaseDeDados As String, Consulta As String, Guia As String, Linha As Integer, Coluna As Integer)
 Dim dbOrcamento As DAO.Database
 Dim rstListagem As DAO.Recordset
 
@@ -1863,9 +1870,9 @@ Set rstListagem = dbOrcamento.OpenRecordset("Select * from " & Consulta & " as t
 
 '' LIMPAR CELULAS
 
-Sheets(guia).Visible = -1
+Sheets(Guia).Visible = -1
 
-With Sheets(guia)
+With Sheets(Guia)
     .Select
     .Cells(Linha, Coluna).Select
     .Range(Selection, Selection.End(xlDown)).Select
@@ -1875,7 +1882,7 @@ End With
 
 Do While Not rstListagem.EOF
 
-    With Sheets(guia)
+    With Sheets(Guia)
         .Cells(Linha, Coluna).value = rstListagem.Fields("DESCRICAO")
         rstListagem.MoveNext
         Linha = Linha + 1
@@ -1883,7 +1890,7 @@ Do While Not rstListagem.EOF
     
 Loop
 
-Sheets(guia).Visible = 2
+Sheets(Guia).Visible = 2
 rstListagem.Close
 
 End Sub
@@ -1926,7 +1933,7 @@ Dim dbOrcamento As DAO.Database
 Dim qdfEXCLUSAO As DAO.QueryDef
 Dim strSql(2) As String
 
-Dim l As Integer, c As Integer
+Dim L As Integer, c As Integer
 
 Dim x As Integer ' contador de linhas
 Dim y As Integer ' contador de colunas
@@ -2300,11 +2307,11 @@ On Error GoTo ListarCamposObrigatorios_err
 Dim dbOrcamento As DAO.Database
 Dim rstSelecao As DAO.Recordset
 Dim strSql As String
-Dim retVal As Variant
+Dim RetVal As Variant
 
-retVal = Dir(BaseDeDados)
+RetVal = Dir(BaseDeDados)
 
-If retVal <> "" Then
+If RetVal <> "" Then
    
     strSql = "SELECT selecao FROM qryObrigatorios WHERE Etapa = '" & strEtapa & "' ORDER BY Ordem"
     

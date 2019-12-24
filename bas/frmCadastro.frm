@@ -18,67 +18,67 @@ Option Explicit
 Private Sub cmdCadastrar_Click()
 On Error GoTo cmdCadastrar_err
 
-Dim strMsg As String: strMsg = "Favor Preencher campo"
+Dim strMSG As String: strMSG = "Favor Preencher campo"
 Dim strTitulo As String: strTitulo = "CAMPO OBRIGATORIO!"
 
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim cadastro As Boolean: cadastro = False
+Dim Cadastro As Boolean: Cadastro = False
 
 If Me.cboClientes <> "" Then
     
-    cadastro = True
+    Cadastro = True
 Else
-    MsgBox strMsg, vbCritical + vbOKOnly, strTitulo
+    MsgBox strMSG, vbCritical + vbOKOnly, strTitulo
     Me.cboClientes.SetFocus
     Exit Sub
 End If
 
 If Me.txtResponsavel <> "" Then
     
-    cadastro = True
+    Cadastro = True
 Else
-    MsgBox strMsg, vbCritical + vbOKOnly, strTitulo
+    MsgBox strMSG, vbCritical + vbOKOnly, strTitulo
     Me.txtResponsavel.SetFocus
     Exit Sub
 End If
 
 If Me.txtTitulo <> "" Then
     
-    cadastro = True
+    Cadastro = True
 Else
-    MsgBox strMsg, vbCritical + vbOKOnly, strTitulo
+    MsgBox strMSG, vbCritical + vbOKOnly, strTitulo
     Me.txtTitulo.SetFocus
     Exit Sub
 End If
 
 If Me.cboPublisher <> "" Then
     
-    cadastro = True
+    Cadastro = True
 Else
-    MsgBox strMsg, vbCritical + vbOKOnly, strTitulo
+    MsgBox strMSG, vbCritical + vbOKOnly, strTitulo
     Me.cboPublisher.SetFocus
     Exit Sub
 End If
 
 If Me.cboJournal <> "" Then
     
-    cadastro = True
+    Cadastro = True
 Else
-    MsgBox strMsg, vbCritical + vbOKOnly, strTitulo
+    MsgBox strMSG, vbCritical + vbOKOnly, strTitulo
     Me.cboJournal.SetFocus
     Exit Sub
 End If
 
 If Me.txtVolume <> "" Then
     
-    cadastro = True
+    Cadastro = True
 Else
-    MsgBox strMsg, vbCritical + vbOKOnly, strTitulo
+    MsgBox strMSG, vbCritical + vbOKOnly, strTitulo
     Me.txtVolume.SetFocus
     Exit Sub
 End If
 
-If cadastro Then
+If Cadastro Then
         
     Range("C4") = Me.cboClientes
     Range("C5") = Me.txtResponsavel

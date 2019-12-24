@@ -12,7 +12,7 @@ Dim dbOrcamento As DAO.Database
 Dim qdfCadastroOrcamento As DAO.QueryDef
 Dim strSql As String
 
-Dim l As Integer, c As Integer ' L = LINHA | C = COLUNA
+Dim L As Integer, c As Integer ' L = LINHA | C = COLUNA
 Dim x As Integer ' contador de linhas
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -37,98 +37,98 @@ Set qdfCadastroOrcamento = dbOrcamento.QueryDefs("CadastroOrcamento")
         CadastroOrcamentoProjeto BaseDeDados, strControle, strVendedor, Range("C6").value
     
         'FECHADO COM CLIENTE ( VENDIDO )
-        l = 12
+        L = 12
         c = 3
         For x = 1 To 8
-            .Parameters(x & "FECHADO") = Cells(l, c).value
+            .Parameters(x & "FECHADO") = Cells(L, c).value
             c = c + 1
         Next x
         
         'LINHA DE PRODUTOS
-        l = 13
+        L = 13
         c = 3
         For x = 1 To 4
-            .Parameters(x & "LINHA_PRODUTO") = Cells(l, c).value
+            .Parameters(x & "LINHA_PRODUTO") = Cells(L, c).value
             c = c + 1
         Next x
         
         'FASCICULOS
-        l = 14
+        L = 14
         c = 3
         For x = 1 To 4
-            .Parameters(x & "FASCICULOS") = Cells(l, c).value
+            .Parameters(x & "FASCICULOS") = Cells(L, c).value
             c = c + 1
         Next x
                 
         'VENDA
-        l = 15
+        L = 15
         c = 3
         For x = 1 To 8
-            .Parameters(x & "VENDA") = Cells(l, c).value
+            .Parameters(x & "VENDA") = Cells(L, c).value
             c = c + 1
         Next x
                 
         'IMPOSTO
-        l = 16
+        L = 16
         c = 3
         For x = 1 To 8
-            .Parameters(x & "IMPOSTO") = Cells(l, c).value
+            .Parameters(x & "IMPOSTO") = Cells(L, c).value
             c = c + 1
         Next x
         
         'IDIOMA
-        l = 17
+        L = 17
         c = 3
         For x = 1 To 8
-            .Parameters(x & "IDIOMA") = Cells(l, c).value
+            .Parameters(x & "IDIOMA") = Cells(L, c).value
             c = c + 1
         Next x
         
         'TIRAGEM
-        l = 18
+        L = 18
         c = 3
         For x = 1 To 8
-            .Parameters(x & "TIRAGEM") = Cells(l, c).value
+            .Parameters(x & "TIRAGEM") = Cells(L, c).value
             c = c + 1
         Next x
                 
         'ESPECIFICACAO
-        l = 19
+        L = 19
         c = 3
         For x = 1 To 8
-            .Parameters(x & "ESPECIFICACAO") = Cells(l, c).value
+            .Parameters(x & "ESPECIFICACAO") = Cells(L, c).value
             c = c + 1
         Next x
                 
         'MOEDA
-        l = 20
+        L = 20
         c = 3
         For x = 1 To 8
-            .Parameters(x & "MOEDA") = Cells(l, c).value
+            .Parameters(x & "MOEDA") = Cells(L, c).value
             c = c + 1
         Next x
         
         'ROYALTY PERCENTUAL
-        l = 21
+        L = 21
         c = 3
         For x = 1 To 8
-            .Parameters(x & "ROYALTY_PERCENTUAL") = Cells(l, c).value
+            .Parameters(x & "ROYALTY_PERCENTUAL") = Cells(L, c).value
             c = c + 1
         Next x
             
         'ROYALTY ESPECIE
-        l = 22
+        L = 22
         c = 3
         For x = 1 To 8
-            .Parameters(x & "ROYALTY_ESPECIE") = Cells(l, c).value
+            .Parameters(x & "ROYALTY_ESPECIE") = Cells(L, c).value
             c = c + 1
         Next x
                 
         'RE IMPRESSAO
-        l = 23
+        L = 23
         c = 3
         For x = 1 To 8
-            .Parameters(x & "RE_IMPRESSAO") = Cells(l, c).value
+            .Parameters(x & "RE_IMPRESSAO") = Cells(L, c).value
             c = c + 1
         Next x
             
@@ -141,34 +141,34 @@ Set qdfCadastroOrcamento = dbOrcamento.QueryDefs("CadastroOrcamento")
 '        Next x
         
         'PREÇO MKT
-        l = 65
+        L = 65
         c = 3
         For x = 1 To 4
-            .Parameters(x & "PrecoMKT") = Cells(l, c).value
+            .Parameters(x & "PrecoMKT") = Cells(L, c).value
             c = c + 1
         Next x
 
         'DESCONTO PADRÃO
-        l = 71
+        L = 71
         c = 3
         For x = 1 To 4
-            .Parameters(x & "DescontoPadrao") = Cells(l, c).value
+            .Parameters(x & "DescontoPadrao") = Cells(L, c).value
             c = c + 1
         Next x
 
         'PREÇO COMPRA TOTAL
-        l = 73
+        L = 73
         c = 3
         For x = 1 To 4
-            .Parameters(x & "PrecoTotal") = Cells(l, c).value
+            .Parameters(x & "PrecoTotal") = Cells(L, c).value
             c = c + 1
         Next x
         
         'ARREDONDAMENTO
-        l = 83
+        L = 83
         c = 3
         For x = 1 To 4
-            .Parameters(x & "Arredondamento") = Cells(l, c).value
+            .Parameters(x & "Arredondamento") = Cells(L, c).value
             c = c + 1
         Next x
                 
@@ -227,7 +227,7 @@ Dim dbOrcamento As DAO.Database
 Dim qdfCadastroOrcamentoImpressao As DAO.QueryDef
 Dim strSql As String
 
-Dim l As Integer, c As Integer ' L = LINHA | C = COLUNA
+Dim L As Integer, c As Integer ' L = LINHA | C = COLUNA
 Dim x As Integer ' contador de linhas
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -239,51 +239,51 @@ With qdfCadastroOrcamentoImpressao
     .Parameters("NUMERO_CONTROLE") = strControle
 
     'TIPO
-    l = 25
+    L = 25
     c = 3
     For x = 1 To 4
-        .Parameters(x & "TIPO") = Cells(l, c).value
+        .Parameters(x & "TIPO") = Cells(L, c).value
         c = c + 1
     Next x
 
     'PAPEL
-    l = 26
+    L = 26
     c = 3
     For x = 1 To 4
-        .Parameters(x & "PAPEL") = Cells(l, c).value
+        .Parameters(x & "PAPEL") = Cells(L, c).value
         c = c + 1
     Next x
 
     'PAGINAS
-    l = 27
+    L = 27
     c = 3
     For x = 1 To 4
-        .Parameters(x & "PAGINAS") = Cells(l, c).value
+        .Parameters(x & "PAGINAS") = Cells(L, c).value
         c = c + 1
     Next x
 
     'IMPRESSAO
-    l = 28
+    L = 28
     c = 3
     For x = 1 To 4
-        .Parameters(x & "IMPRESSAO") = Cells(l, c).value
+        .Parameters(x & "IMPRESSAO") = Cells(L, c).value
         c = c + 1
     Next x
     
     'FORMATO
-    l = 29
+    L = 29
     c = 3
     For x = 1 To 4
-        .Parameters(x & "FORMATO") = Cells(l, c).value
+        .Parameters(x & "FORMATO") = Cells(L, c).value
         c = c + 1
     Next x
 
     'ACABAMENTO
-    l = 31
+    L = 31
     c = 2
     For x = 1 To 4
-        CadastroOrcamentoAcabamento BaseDeDados, strControle, strVendedor, x & "_ACABAMENTO", Cells(l, c).value
-        l = l + 1
+        CadastroOrcamentoAcabamento BaseDeDados, strControle, strVendedor, x & "_ACABAMENTO", Cells(L, c).value
+        L = L + 1
     Next x
     
     .Execute
@@ -319,7 +319,7 @@ Dim qdfCadastroCustos02 As DAO.QueryDef
 Dim qdfCadastroCustos03 As DAO.QueryDef
 Dim strSql As String
 
-Dim l As Integer, c As Integer ' L = LINHA | C = COLUNA
+Dim L As Integer, c As Integer ' L = LINHA | C = COLUNA
 Dim x As Integer ' contador de linhas
 
 Set dbOrcamento = DBEngine.OpenDatabase(BaseDeDados, False, False, "MS Access;PWD=" & SenhaBanco)
@@ -333,82 +333,82 @@ With qdfCadastroCustos01
     .Parameters("NUMERO_CONTROLE") = strControle
 
     'INDEXACAO
-    l = 37
+    L = 37
     c = 3
     For x = 1 To 8
-        .Parameters(x & "INDEXACAO") = Cells(l, c).value
+        .Parameters(x & "INDEXACAO") = Cells(L, c).value
         c = c + 1
     Next x
     
     'TRADUCAO
-    l = 38
+    L = 38
     c = 3
     For x = 1 To 8
-        .Parameters(x & "TRADUCAO") = Cells(l, c).value
+        .Parameters(x & "TRADUCAO") = Cells(L, c).value
         c = c + 1
     Next x
     
     'REVISAO ORTOGRAFICA
-    l = 39
+    L = 39
     c = 3
     For x = 1 To 8
-        .Parameters(x & "REVISAO_ORTOGRAFICA") = Cells(l, c).value
+        .Parameters(x & "REVISAO_ORTOGRAFICA") = Cells(L, c).value
         c = c + 1
     Next x
     
     'REVISAO MEDICA
-    l = 40
+    L = 40
     c = 3
     For x = 1 To 8
-        .Parameters(x & "REVISAO_MEDICA") = Cells(l, c).value
+        .Parameters(x & "REVISAO_MEDICA") = Cells(L, c).value
         c = c + 1
     Next x
     
     'CRIACAO
-    l = 41
+    L = 41
     c = 3
     For x = 1 To 8
-        .Parameters(x & "CRIACAO") = Cells(l, c).value
+        .Parameters(x & "CRIACAO") = Cells(L, c).value
         c = c + 1
     Next x
     
     'ILUSTRACAO
-    l = 42
+    L = 42
     c = 3
     For x = 1 To 8
-        .Parameters(x & "ILUSTRACAO") = Cells(l, c).value
+        .Parameters(x & "ILUSTRACAO") = Cells(L, c).value
         c = c + 1
     Next x
     
     'REVISAO
-    l = 43
+    L = 43
     c = 3
     For x = 1 To 8
-        .Parameters(x & "REVISAO") = Cells(l, c).value
+        .Parameters(x & "REVISAO") = Cells(L, c).value
         c = c + 1
     Next x
     
     'DIAGRAMACAO
-    l = 44
+    L = 44
     c = 3
     For x = 1 To 8
-        .Parameters(x & "DIAGRAMACAO") = Cells(l, c).value
+        .Parameters(x & "DIAGRAMACAO") = Cells(L, c).value
         c = c + 1
     Next x
     
     'MEDICO
-    l = 45
+    L = 45
     c = 3
     For x = 1 To 8
-        .Parameters(x & "MEDICO") = Cells(l, c).value
+        .Parameters(x & "MEDICO") = Cells(L, c).value
         c = c + 1
     Next x
     
     'GRAFICA
-    l = 46
+    L = 46
     c = 3
     For x = 1 To 8
-        .Parameters(x & "GRAFICA") = Cells(l, c).value
+        .Parameters(x & "GRAFICA") = Cells(L, c).value
         c = c + 1
     Next x
     
@@ -423,91 +423,91 @@ With qdfCadastroCustos02
     .Parameters("NUMERO_CONTROLE") = strControle
 
     'MIDIA
-    l = 47
+    L = 47
     c = 3
     For x = 1 To 8
-        .Parameters(x & "MIDIA") = Cells(l, c).value
+        .Parameters(x & "MIDIA") = Cells(L, c).value
         c = c + 1
     Next x
 
     'CORREIO
-    l = 48
+    L = 48
     c = 3
     For x = 1 To 8
-        .Parameters(x & "CORREIO") = Cells(l, c).value
+        .Parameters(x & "CORREIO") = Cells(L, c).value
         c = c + 1
     Next x
 
 
     'ULTIMA CAPA
-    l = 49
+    L = 49
     c = 3
     For x = 1 To 8
-        .Parameters(x & "ULTIMA_CAPA") = Cells(l, c).value
+        .Parameters(x & "ULTIMA_CAPA") = Cells(L, c).value
         c = c + 1
     Next x
 
     'IMPORT
-    l = 50
+    L = 50
     c = 3
     For x = 1 To 8
-        .Parameters(x & "IMPORT") = Cells(l, c).value
+        .Parameters(x & "IMPORT") = Cells(L, c).value
         c = c + 1
     Next x
 
     'TRANSPORTE NACIONAL
-    l = 51
+    L = 51
     c = 3
     For x = 1 To 8
-        .Parameters(x & "TRANSPORTE_NACIONAL") = Cells(l, c).value
+        .Parameters(x & "TRANSPORTE_NACIONAL") = Cells(L, c).value
         c = c + 1
     Next x
 
     'TRANSPORTE INTERNACIONAL
-    l = 52
+    L = 52
     c = 3
     For x = 1 To 8
-        .Parameters(x & "TRANSPORTE_INTERNACIONAL") = Cells(l, c).value
+        .Parameters(x & "TRANSPORTE_INTERNACIONAL") = Cells(L, c).value
         c = c + 1
     Next x
 
     'SEGUROS
-    l = 53
+    L = 53
     c = 3
     For x = 1 To 8
-        .Parameters(x & "SEGUROS") = Cells(l, c).value
+        .Parameters(x & "SEGUROS") = Cells(L, c).value
         c = c + 1
     Next x
 
     'EXTRAS
-    l = 54
+    L = 54
     c = 3
     For x = 1 To 8
-        .Parameters(x & "EXTRAS") = Cells(l, c).value
+        .Parameters(x & "EXTRAS") = Cells(L, c).value
         c = c + 1
     Next x
 
     'EDITOR FEE
-    l = 55
+    L = 55
     c = 3
     For x = 1 To 8
-        .Parameters(x & "EDITOR_FEE") = Cells(l, c).value
+        .Parameters(x & "EDITOR_FEE") = Cells(L, c).value
         c = c + 1
     Next x
 
     'DESP VIAGEM
-    l = 56
+    L = 56
     c = 3
     For x = 1 To 8
-        .Parameters(x & "DESP_VIAGEM") = Cells(l, c).value
+        .Parameters(x & "DESP_VIAGEM") = Cells(L, c).value
         c = c + 1
     Next x
 
     'OUTROS
-    l = 57
+    L = 57
     c = 3
     For x = 1 To 8
-        .Parameters(x & "OUTROS") = Cells(l, c).value
+        .Parameters(x & "OUTROS") = Cells(L, c).value
         c = c + 1
     Next x
 

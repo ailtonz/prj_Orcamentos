@@ -50,7 +50,7 @@ Private Sub UserForm_Activate()
 '    AmbienteDeTrabalhoCarregar
 
     admOrcamentoFormulariosLimpar
-'    admOrcamentoFormulariosLiberar Range(NomeUsuario)
+    admOrcamentoFormulariosLiberar Range(NomeUsuario)
     ActiveSheet.Name = IIf(IsNull(Range(NomeUsuario)), "SEM_USUARIO", Range(NomeUsuario))
     Range(InicioCursor).Select
     spbEtapas_Change
@@ -86,7 +86,9 @@ Dim strPendentes As String: strPendentes = "SELECT [controle] & ' ' & [usuario] 
     
     ''' CARREGA VARIAVEL DE USUÁRIOS
     sqlUsuarios = "Select * from qryUsuarios WHERE (((qryUsuarios.ExclusaoVirtual)=No)) Order By Usuario"
-       
+    
+'    Saida strSQL, "Pesquisa.log"
+    
     ''' CARREGAR LIST BOX DE PESQUISA
     ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
     
@@ -142,14 +144,14 @@ End Sub
 Private Sub cmdAlterar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim Matriz As Variant
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 
     If IsNull(lstPesquisa.value) Then
-        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "ALTERAR ORÇAMENTO!"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
         Matriz = Array()
         Matriz = Split(lstPesquisa.value, " - ")
@@ -162,13 +164,11 @@ Dim strTitulo As String
         
         admIntervalosDeEdicaoControle strBanco, CStr(Matriz(0)), CStr(Matriz(2))
         
-'        admOrcamentoFormulariosLiberar Range(NomeUsuario)
+        admOrcamentoFormulariosLiberar Range(NomeUsuario)
                                 
         Range(InicioCursor).Select
         
         ActiveSheet.Name = CStr(Matriz(0))
-            
-        listarGrandsGuia
             
         Application.ScreenUpdating = True
         
@@ -178,57 +178,18 @@ Dim strTitulo As String
 
 End Sub
 
-Private Sub listarGrandsGuia()
-Dim Prf As clsGrands
-Dim col As clsGrands
-Dim orc As clsOrcamentos
-
-carregarBanco
-
-Set orc = New clsOrcamentos
-Set Prf = New clsGrands
-
-With orc
-    .Controle = ActiveSheet.Name
-    .Vendedor = Range(GerenteDeContas)
-    .add orc
-End With
-
-Set col = Prf.getGrands(Bnc, orc)
-
-Dim lRow As Long, x As Long
-Dim ws As Worksheet
-Set ws = Worksheets(orc.Controle)
-
-''find  first empty row in database
-lRow = ws.Cells(Rows.count, 29).End(xlUp).Offset(1, 0).Row
-    
-DesbloqueioDeGuia SenhaBloqueio
-    
-For Each Prf In col.Itens
-    ws.Range("AC" & lRow).value = Prf.Profissao
-    ws.Range("AD" & lRow).value = Prf.Nome
-    ws.Range("AE" & lRow).value = Prf.ValorLiquido
-    lRow = lRow + 1
-Next Prf
-
-BloqueioDeGuia SenhaBloqueio
-
-End Sub
-
-
 Private Sub cmdCopiar_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim strUsuario As String: strUsuario = Range(NomeUsuario)
 Dim Matriz As Variant
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 
     If IsNull(lstPesquisa.value) Then
-        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "CÓPIA!"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
         Matriz = Array()
         Matriz = Split(lstPesquisa.value, " - ")
@@ -241,21 +202,21 @@ End Sub
 Private Sub cmdExcluir_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
 Dim Matriz As Variant
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 Dim varResposta As Variant
 
 
     If IsNull(Me.lstPesquisa.value) Then
-        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "EXCLUIR!"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
-        strMsg = "ATENÇÃO: Você deseja realmente EXCLUIR este registro?. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "ATENÇÃO: Você deseja realmente EXCLUIR este registro?. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "EXCLUIR!"
         
-        varResposta = MsgBox(strMsg, vbInformation + vbYesNo, strTitulo)
+        varResposta = MsgBox(strMSG, vbInformation + vbYesNo, strTitulo)
     
         If varResposta = vbYes Then
             Matriz = Array()
@@ -270,26 +231,26 @@ Dim varResposta As Variant
                     
                     admOrcamentoAtualizarEtapa Range(BancoLocal), CStr(Matriz(0)), CStr(Matriz(2)), -1
                     
-                    strMsg = "Exclusão concluida com sucesso!" & Chr(10) & Chr(13) & Chr(13)
+                    strMSG = "Exclusão concluida com sucesso!" & Chr(10) & Chr(13) & Chr(13)
                     strTitulo = "EXCLUIR!"
                     
                     ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
                 Else
-                    strMsg = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
+                    strMSG = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
                     strTitulo = "EXCLUIR!"
                 End If
             
             Else
-                strMsg = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
+                strMSG = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
                 strTitulo = "EXCLUIR!"
             End If
             
-            MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+            MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
         Else
-            strMsg = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
+            strMSG = "Operação cancelada! " & Chr(10) & Chr(13) & Chr(13)
             strTitulo = "EXCLUIR!"
             
-            MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+            MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
         End If
         
     End If
@@ -299,7 +260,7 @@ End Sub
 Private Sub cmdBanco_Click()
 ' VINCULAR BANCO DE DADOS
 
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
 Dim strBanco As String
 
@@ -312,10 +273,10 @@ strBanco = SelecionarBanco
         BloqueioDeGuia SenhaBloqueio
         
     Else
-        strMsg = "Por favor Selecione a Base de dados para uso da planilha "
+        strMSG = "Por favor Selecione a Base de dados para uso da planilha "
         strTitulo = "Seleção de Base de dados"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     End If
     
 
@@ -335,7 +296,7 @@ Dim strBanco As String: strBanco = Range(BancoLocal)
     
     ListBoxCarregar strBanco, Me, Me.lstPesquisa.Name, "Pesquisa", strSql
     
-'    admOrcamentoFormulariosLiberar Range(NomeUsuario)
+    admOrcamentoFormulariosLiberar Range(NomeUsuario)
     
     ActiveSheet.Name = Me.cboUsuario
     
@@ -353,17 +314,17 @@ End Sub
 
 Private Sub cmdVoltarEtapa_Click()
 Dim strBanco As String: strBanco = Range(BancoLocal)
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
-Dim retVal As Variant
+Dim RetVal As Variant
 Dim Matriz As Variant
 
 
     If IsNull(lstPesquisa.value) Then
-        strMsg = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "ATENÇÃO: Por favor selecione um item da lista. " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Voltar Etapa"
 
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     Else
 
 
@@ -394,17 +355,17 @@ End Sub
 ''#########################################
 
 Private Sub lstPesquisa_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
-Dim strMsg As String
+Dim strMSG As String
 Dim strTitulo As String
     
     
     If Me.cmdAlterar.Enabled Then
         cmdAlterar_Click
     Else
-        strMsg = "Função Bloqueada! " & Chr(10) & Chr(13) & Chr(13)
+        strMSG = "Função Bloqueada! " & Chr(10) & Chr(13) & Chr(13)
         strTitulo = "Alterar!"
         
-        MsgBox strMsg, vbInformation + vbOKOnly, strTitulo
+        MsgBox strMSG, vbInformation + vbOKOnly, strTitulo
     
     End If
     
