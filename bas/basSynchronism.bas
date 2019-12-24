@@ -409,18 +409,30 @@ admUpdateSystem_err:
     
 End Function
 
-Sub teste_admCadastroUpdateSystem()
+Sub teste_UpdateSystem(sDescricao As String, sScript As String)
 Dim sDataAtualizacao As String: sDataAtualizacao = Controle
 
 loadBancos
 admCadastroAtualizacao banco(0), sDataAtualizacao
-admCadastroAtualizacaoScript banco(0), sDataAtualizacao, "Objetivo da atualização", "Select * from admCategorias"
-
+admCadastroAtualizacaoScript banco(0), sDataAtualizacao, sDescricao, sScript
 
 End Sub
 
 
-Function admCadastroAtualizacao(strBanco As infBanco, sAtualizacao As String) As Boolean: admCadastroAtualizacao = True
+Sub teste_admCadastroUpdateSystem()
+Dim sDataAtualizacao As String: sDataAtualizacao = Controle
+
+loadBancos
+'admCadastroAtualizacao banco(0), sDataAtualizacao
+'admCadastroAtualizacaoScript banco(0), sDataAtualizacao, "Objetivo da atualização", "Select * from admCategorias"
+
+'' CADASTRO DA SUBCATEGORIA
+admCadastroAtualizacao banco(0), sDataAtualizacao, "1346"
+
+End Sub
+
+
+Function admCadastroAtualizacao(strBanco As infBanco, sAtualizacao As String, sIDSubCategoria As String) As Boolean: admCadastroAtualizacao = True
 On Error GoTo admCadastroAtualizacao_err
 Dim cnn As New ADODB.connection
 Set cnn = OpenConnection(strBanco)
@@ -433,6 +445,7 @@ With cmd
     .CommandText = "admCategoriaNovo"
     .CommandType = adCmdStoredProc
     .Parameters.Append .CreateParameter("@NM_CATEGORIA", adVarChar, adParamInput, 100, sAtualizacao)
+    .Parameters.Append .CreateParameter("@ID_SUBCATEGORIA", adVarChar, adParamInput, 10, sIDSubCategoria)
         
     Set rst = .Execute
     
@@ -486,6 +499,8 @@ admCadastroAtualizacaoScript_err:
     Resume admCadastroAtualizacaoScript_Fim
 
 End Function
+
+
 
 
 Sub teste_getIdSubCategoria()

@@ -114,14 +114,27 @@ Private Sub cmdAtualizarApoio_Click()
 End Sub
 
 Private Sub cmdAtualizarMoeda_Click()
-'Dim sScript As String
-'Dim sValor As String: sValor = Me.txtValorMoeda.value
-'Dim sMoeda As String: sMoeda = "Dolar"
-'Dim sID As String: sID = "1"
-'
-'sScript = "UPDATE admcategorias SET admcategorias.Descricao01 = '" & sValor & "' WHERE (((admcategorias.categoria)='" & sMoeda & "') AND ((admcategorias.codRelacao)=(SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='MOEDA' and codRelacao = 0)))"
-'
-'loadBancos
+Dim sScript As String
+Dim sValor As String: sValor = Me.txtValorMoeda.value
+Dim sMoeda As String: sMoeda = "Dolar"
+Dim sID As String: sID = "1"
+
+Dim sDataAtualizacao As String: sDataAtualizacao = Controle
+Dim sDescricao As String: sDescricao = "Atualização do dolar"
+
+sScript = "UPDATE admcategorias SET admcategorias.Descricao01 = '" & sValor & "' WHERE (((admcategorias.categoria)='" & sMoeda & "') AND ((admcategorias.codRelacao)=(SELECT admCategorias.codCategoria FROM admCategorias Where Categoria='MOEDA' and codRelacao = 0)))"
+
+loadBancos
+
+'' CADASTRO DA SUBCATEGORIA
+admCadastroAtualizacao banco(0), "UPDATESYSTEM", sDataAtualizacao, ""
+
+'' CADASTRO DA ATUALIZAÇÃO
+admCadastroAtualizacaoScript banco(0), sDataAtualizacao, sDescricao, sScript
+
+'' MSGBOX
+MsgBox "Valor do Dolar Atualizado com sucesso.", vbInformation + vbOKOnly, "Atualização de moeda"
+
 'If admUpdateMoeda(banco(0), sID, sMoeda, sScript) Then
 '    MsgBox "Valor do Dolar Atualizado com sucesso.", vbInformation + vbOKOnly, "Atualização de moeda"
 'Else
