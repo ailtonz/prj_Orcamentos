@@ -23,4 +23,14 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 End Sub
 
 
+Sub Macro2()
 
+Dim ws As Worksheet
+Set ws = Worksheets("BANCOS")
+
+ws.EnableCalculation = False
+ws.EnableCalculation = True
+
+Set ws = Nothing
+
+End Sub
